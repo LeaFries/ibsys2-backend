@@ -1,0 +1,18 @@
+version: '3.5'
+
+services:
+  ibsys2-database:
+    container_name: ibsys2-database
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: p
+      PGDATA: /data/ibsys2-database
+    volumes:
+      - ibsys2-database:/data/ibsys2-database
+    ports:
+      - "5432:5432"
+
+volumes:
+  ibsys2-database:
+    driver: local
