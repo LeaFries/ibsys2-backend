@@ -3,6 +3,7 @@ package com.ibsys.backend.core.domain.entity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 @Entity(name = "orderitem")
@@ -16,5 +17,13 @@ public class Order {
     @Positive
     private Integer quantity;
 
+    /*
+    1 = special order
+    2 = cheap vendor
+    3 = Just In Time
+    4 = fast
+    5 = normal
+     */
+    @Size(min = 1, max = 5, message = "Please choose an order type between 1 and 5.")
     private Integer modus;
 }
