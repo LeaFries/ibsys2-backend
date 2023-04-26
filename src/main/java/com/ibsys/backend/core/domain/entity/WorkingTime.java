@@ -1,19 +1,18 @@
 package com.ibsys.backend.core.domain.entity;
 
 import com.ibsys.backend.core.domain.validation.NotEqual;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.UniqueConstraint;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
-import org.hibernate.validator.constraints.UniqueElements;
+
+import static jakarta.persistence.GenerationType.IDENTITY;
 
 @Entity
 @Data
 public class WorkingTime {
     @Id
+    @GeneratedValue(strategy = IDENTITY)
     private Long id;
 
     @NotNull
