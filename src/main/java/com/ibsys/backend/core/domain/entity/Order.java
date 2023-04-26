@@ -22,7 +22,7 @@ public class Order {
     @Positive
     private Integer quantity;
 
-    /*
+    /**
     1 = special order
     2 = cheap vendor
     3 = Just In Time
