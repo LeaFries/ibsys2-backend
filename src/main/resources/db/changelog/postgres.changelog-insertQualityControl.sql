@@ -1,0 +1,1 @@
+INSERT INTO quality_control (delay, lose_quantity, type) VALUES (0, 0, 0);

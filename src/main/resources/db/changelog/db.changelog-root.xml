@@ -7,5 +7,10 @@
         https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
 
     <include file="001-test-table.xml" relativeToChangelogFile="true"/>
-
+    <changeSet id="insert-QualityControl" author="group6">
+        <preConditions>
+            <tableExists tableName="quality_control"/>
+        </preConditions>
+        <sqlFile path="db/changelog/postgres.changelog-insertQualityControl.sql"/>
+    </changeSet>
 </databaseChangeLog>
