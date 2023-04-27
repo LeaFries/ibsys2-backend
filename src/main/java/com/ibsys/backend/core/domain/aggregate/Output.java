@@ -6,7 +6,7 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class Input {
+public class Output {
     private QualityControl qualityControl;
     private List<SellWish> sellWishes;
     private List<SellDirect> sellDirects;

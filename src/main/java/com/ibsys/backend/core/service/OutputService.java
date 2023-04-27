@@ -1,13 +1,13 @@
 package com.ibsys.backend.core.service;
 
-import com.ibsys.backend.core.domain.aggregate.Input;
+import com.ibsys.backend.core.domain.aggregate.Output;
 import com.ibsys.backend.core.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class InputService {
+public class OutputService {
     private final OrderRepository orderRepository;
     private final ProductionRepository productionRepository;
     private final QualityControlRepository qualityControlRepository;
@@ -15,16 +15,16 @@ public class InputService {
     private final SellWishRepository sellWishRepository;
     private final WorkingTimeRepository workingTimeRepository;
 
-    public Input findInput() {
-        Input input = new Input();
+    public Output findInput() {
+        Output output = new Output();
 
-        input.setOrders(orderRepository.findAll());
-        input.setProductions(productionRepository.findAll());
-        input.setQualityControl(qualityControlRepository.findById(1L).get());
-        input.setSellDirects(sellDirectRepository.findAll());
-        input.setSellWishes(sellWishRepository.findAll());
-        input.setWorkingTimes(workingTimeRepository.findAll());
+        output.setOrders(orderRepository.findAll());
+        output.setProductions(productionRepository.findAll());
+        output.setQualityControl(qualityControlRepository.findById(1L).get());
+        output.setSellDirects(sellDirectRepository.findAll());
+        output.setSellWishes(sellWishRepository.findAll());
+        output.setWorkingTimes(workingTimeRepository.findAll());
 
-        return input;
+        return output;
     }
 }

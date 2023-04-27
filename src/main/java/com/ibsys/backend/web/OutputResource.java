@@ -1,7 +1,7 @@
-package com.ibsys.backend.web.controller;
+package com.ibsys.backend.web;
 
-import com.ibsys.backend.core.domain.aggregate.Input;
-import com.ibsys.backend.core.service.InputService;
+import com.ibsys.backend.core.domain.aggregate.Output;
+import com.ibsys.backend.core.service.OutputService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -12,11 +12,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/input")
 @RequiredArgsConstructor
-public class InputController {
-    private final InputService inputService;
+public class OutputResource {
+    private final OutputService outputService;
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Input> findInput() {
-        return ResponseEntity.ok(inputService.findInput());
+    public ResponseEntity<Output> findInput() {
+        return ResponseEntity.ok(outputService.findInput());
     }
 }
