@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="004-qualityControl-table" author="">
+        <createSequence sequenceName="quality_control_id_seq"/>
+        <createTable tableName="quality_control">
+            <column name="id" type="bigint" defaultValueSequenceNext="quality_control_id_seq">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="delay" type="integer"/>
+            <column name="lose_quantity" type="integer"/>
+            <column name="type" type="smallint"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="004-qualityControl-data" author="">
+        <insert tableName="quality_control">
+            <column name="delay" valueNumeric="0"/>
+            <column name="lose_quantity" valueNumeric="0"/>
+            <column name="type" valueNumeric="0"/>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>

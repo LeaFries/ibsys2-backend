@@ -4,6 +4,7 @@ import com.ibsys.backend.core.domain.Test;
 import com.ibsys.backend.core.service.TestService;
 import com.ibsys.backend.web.dto.TestDTO;
 import com.ibsys.backend.web.dto.mapper.TestMapper;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -21,11 +22,13 @@ public class TestResource {
     private final TestService testService;
     private final TestMapper testMapper;
 
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    @Operation(summary = "Test the connection to the Tomcat Webservice")
+    @GetMapping()
     ResponseEntity<String> testConnection() {
         return ResponseEntity.ok("Successfully tested connection to Tomcat Webservice");
     }
 
+    @Operation(summary = "Test the connection to the database")
     @GetMapping(path = {"/databaseconnection"},
                 produces = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<List<TestDTO>> testDatabaseConnection() {
