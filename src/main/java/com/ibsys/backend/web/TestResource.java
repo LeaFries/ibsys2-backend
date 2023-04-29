@@ -23,7 +23,7 @@ public class TestResource {
     private final TestMapper testMapper;
 
     @Operation(summary = "Test the connection to the Tomcat Webservice")
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping()
     ResponseEntity<String> testConnection() {
         return ResponseEntity.ok("Successfully tested connection to Tomcat Webservice");
     }
