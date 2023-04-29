@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="007-workingTime-table" author="">
+        <createSequence sequenceName="working_time_id_seq"/>
+        <createTable tableName="working_time">
+            <column name="id" type="bigint" defaultValueSequenceNext="working_time_id_seq">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="overtime" type="integer"/>
+            <column name="shift" type="integer">
+                <constraints nullable="false"/>
+            </column>
+            <column name="station" type="integer">
+                <constraints unique="true" nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="007-workingTime-data" author="">
+        <insert tableName="working_time">
+            <column name="station">1</column>
+            <column name="shift">1</column>
+            <column name="overtime">0</column>
+        </insert>
+        <insert tableName="working_time">
+            <column name="station">2</column>
+            <column name="shift">1</column>
+            <column name="overtime">0</column>
+        </insert>
+        <insert tableName="working_time">
+            <column name="station">3</column>
+            <column name="shift">1</column>
+            <column name="overtime">0</column>
+        </insert>
+        <insert tableName="working_time">
+            <column name="station">4</column>
+            <column name="shift">1</column>
+            <column name="overtime">0</column>
+        </insert>
+        <insert tableName="working_time">
+            <column name="station">6</column>
+            <column name="shift">1</column>
+            <column name="overtime">0</column>
+        </insert>
+        <insert tableName="working_time">
+            <column name="station">7</column>
+            <column name="shift">1</column>
+            <column name="overtime">0</column>
+        </insert>
+        <insert tableName="working_time">
+            <column name="station">8</column>
+            <column name="shift">1</column>
+            <column name="overtime">0</column>
+        </insert>
+        <insert tableName="working_time">
+            <column name="station">9</column>
+            <column name="shift">1</column>
+            <column name="overtime">0</column>
+        </insert>
+        <insert tableName="working_time">
+            <column name="station">10</column>
+            <column name="shift">1</column>
+            <column name="overtime">0</column>
+        </insert>
+        <insert tableName="working_time">
+            <column name="station">11</column>
+            <column name="shift">1</column>
+            <column name="overtime">0</column>
+        </insert>
+        <insert tableName="working_time">
+            <column name="station">12</column>
+            <column name="shift">1</column>
+            <column name="overtime">0</column>
+        </insert>
+        <insert tableName="working_time">
+            <column name="station">13</column>
+            <column name="shift">1</column>
+            <column name="overtime">0</column>
+        </insert>
+        <insert tableName="working_time">
+            <column name="station">14</column>
+            <column name="shift">1</column>
+            <column name="overtime">0</column>
+        </insert>
+        <insert tableName="working_time">
+            <column name="station">15</column>
+            <column name="shift">1</column>
+            <column name="overtime">0</column>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>
