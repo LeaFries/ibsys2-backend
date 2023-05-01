@@ -10,7 +10,7 @@ import static jakarta.persistence.GenerationType.IDENTITY;
 
 @Entity
 @Data
-public class PlannedInventory {
+public class PlannedWarehouseStock {
 
     @Id
     @GeneratedValue(strategy = IDENTITY)

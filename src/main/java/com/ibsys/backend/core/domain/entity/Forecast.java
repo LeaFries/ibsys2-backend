@@ -17,22 +17,25 @@ public class Forecast {
     @GeneratedValue(strategy = IDENTITY)
     private Long id;
 
-    @Positive
     private int product;
 
-    @Positive
-    //@Column(name = "periode_n")
     private int periodN;
 
-    @Positive
-    //@Column(name = "period_n_plus_one")
+    public Forecast(int product, int periodN) {
+        this.product = product;
+        this.periodN = periodN;
+        this.periodNplusOne = 0;
+        this.periodNplusTwo = 0;
+        this.periodNplusThree = 0;
+    }
+
     private int periodNplusOne;
 
-    @Positive
-    //@Column(name = "period_n_plus_two")
     private int periodNplusTwo;
 
-    @Positive
-    //@Column(name = "period_n_plus_three")
     private int periodNplusThree;
+
+    public Forecast() {
+        
+    }
 }
