@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="005-sellDirect-table" author="">
+        <createSequence sequenceName="sell_direct_id_seq"/>
+        <createTable tableName="sell_direct">
+            <column name="id" type="bigint" defaultValueSequenceNext="sell_direct_id_seq">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="article" type="integer">
+                <constraints unique="true" nullable="false"/>
+            </column>
+            <column name="penalty" type="double precision"/>
+            <column name="price" type="double precision"/>
+            <column name="quantity" type="integer"/>
+        </createTable>
+    </changeSet>
+
+</databaseChangeLog>
