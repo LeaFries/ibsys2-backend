@@ -1,10 +1,8 @@
 package com.ibsys.backend.core.domain.entity;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
-import jakarta.validation.constraints.Positive;
 import lombok.Data;
 
 import static jakarta.persistence.GenerationType.IDENTITY;
@@ -19,23 +17,23 @@ public class Forecast {
 
     private int product;
 
-    private int periodN;
+    private int amountCurrentPeriod;
 
-    public Forecast(int product, int periodN) {
+    public Forecast(int product, int amountCurrentPeriod) {
         this.product = product;
-        this.periodN = periodN;
-        this.periodNplusOne = 0;
-        this.periodNplusTwo = 0;
-        this.periodNplusThree = 0;
+        this.amountCurrentPeriod = amountCurrentPeriod;
+        this.amountNextPeriod = 0;
+        this.amountPeriodThirdPeriod = 0;
+        this.amountPeriodFourthPeriod = 0;
     }
 
-    private int periodNplusOne;
+    private int amountNextPeriod = 0;
 
-    private int periodNplusTwo;
+    private int amountPeriodThirdPeriod = 0;
 
-    private int periodNplusThree;
+    private int amountPeriodFourthPeriod = 0;
 
     public Forecast() {
-        
+
     }
 }

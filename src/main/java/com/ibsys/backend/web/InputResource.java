@@ -23,11 +23,8 @@ public class InputResource {
     @PostMapping
     public void start(@RequestBody InputDTO inputDTO) {
         log.debug(inputDTO.toString());
-        int forecastP1 = inputDTO.getForecast().getP1();
-        int forecastP2 = inputDTO.getForecast().getP2();
-        int forecastP3 = inputDTO.getForecast().getP3();
         //log.debug(String.valueOf(forecastP1));
-        inputService.saveProductionPlan(forecastP1, forecastP2, forecastP3);
+        inputService.saveInputData(inputDTO);
     }
 
 }
