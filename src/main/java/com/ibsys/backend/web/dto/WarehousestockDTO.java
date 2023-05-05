@@ -11,7 +11,7 @@ import java.util.List;
 @ToString
 public class WarehousestockDTO {
 
-    private List<ArticleDTO> articleDTOS;
+    private List<ArticleDTO> article;
     private String totalstockvalue;
 
 }
