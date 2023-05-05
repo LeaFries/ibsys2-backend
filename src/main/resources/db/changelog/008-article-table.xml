@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="001-article-table" author="">
+
+        <createTable tableName="article">
+            <column name="id" type="number" />
+            <column name="amount" type="number" />
+            <column name="startamount" type="number" />
+            <column name="pct" type="text" />
+            <column name="price" type="text" />
+            <column name="stockvalue" type="text" />
+            <column name="lagerbestand_vorperiode" type="number" />
+            <column name="period" type="number" />
+        </createTable>
+
+    </changeSet>
+
+    <changeSet id="001-article-table-primary-key" author="">
+
+        <addPrimaryKey tableName="article" columnNames="id" />
+
+    </changeSet>
+
+</databaseChangeLog>

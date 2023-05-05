@@ -13,4 +13,6 @@
     <include file="005-sellDirect-table.xml" relativeToChangelogFile="true"/>
     <include file="006-sellWish-table.xml" relativeToChangelogFile="true"/>
     <include file="007-workingTime-table.xml" relativeToChangelogFile="true"/>
+    <include file="008-article-table.xml" relativeToChangelogFile="true" />
+    
 </databaseChangeLog>
