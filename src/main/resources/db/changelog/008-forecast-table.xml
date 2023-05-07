@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="008-forecast-table" author="">
+        <createSequence sequenceName="forecast_id_seq"/>
+        <createTable tableName="forecast">
+            <column name="id" type="number" defaultValueSequenceNext="forecast_id_seq"/>
+            <column name="product" type="number" />
+            <column name="amountCurrentPeriod" type="number" />
+            <column name="amountNextPeriod" type="number" />
+            <column name="amountPeriodThirdPeriod" type="number" />
+            <column name="amountPeriodFourthPeriod" type="number" />
+        </createTable>
+
+    </changeSet>
+    
+    <changeSet id="001-test-table-primary-key" author="">
+
+        <addPrimaryKey tableName="test" columnNames="id" />
+
+    </changeSet>
+
+</databaseChangeLog>
