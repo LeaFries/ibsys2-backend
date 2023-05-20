@@ -19,19 +19,11 @@ public class ProductionPlan {
     @Positive
     private int product;
 
-    @Positive
-    //@Column(name = "periode_n")
-    private int periodN;
+    private int amountCurrentPeriod;
 
-    @Positive
-    //@Column(name = "period_n_plus_one")
-    private int periodNplusOne;
+    private int amountNextPeriod;
 
-    @Positive
-    //@Column(name = "period_n_plus_two")
-    private int periodNplusTwo;
+    private int amountPeriodThirdPeriod;
 
-    @Positive
-    //@Column(name = "period_n_plus_three")
-    private int periodNplusThree;
+    private int amountPeriodFourthPeriod;
 }

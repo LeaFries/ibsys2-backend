@@ -6,10 +6,10 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
         https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
 
-    <changeSet id="008-forecast-table" author="">
-        <createSequence sequenceName="forecast_id_seq"/>
-        <createTable tableName="forecast">
-            <column name="id" type="number" defaultValueSequenceNext="forecast_id_seq">
+    <changeSet id="009-ProductionPlan-table" author="">
+        <createSequence sequenceName="productplan_id_seq"/>
+        <createTable tableName="product_plan">
+            <column name="id" type="number" defaultValueSequenceNext="productplan_id_seq">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="product" type="number" />
