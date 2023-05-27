@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="009-forecast-table" author="">
+
+        <createTable tableName="forecast">
+            <column name="id" type="serial" />
+            <column name="p1" type="number" />
+            <column name="p2" type="number" />
+            <column name="p3" type="number" />
+            <column name="period" type="number" />
+        </createTable>
+
+    </changeSet>
+
+    <changeSet id="009-forcast-table-primary-key" author="">
+
+        <addPrimaryKey tableName="forecast" columnNames="id" />
+
+    </changeSet>
+
+</databaseChangeLog>

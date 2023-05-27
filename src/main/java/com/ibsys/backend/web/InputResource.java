@@ -15,23 +15,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @Slf4j
 public class InputResource {
-    private final InputService inputService;
-
-    public InputResource(InputService inputService) {
-        this.inputService = inputService;
-    }
 
     private final InputService inputService;
 
     @Operation(summary = "Starts the process with a given Input")
     @PostMapping
     public void start(@RequestBody InputDTO inputDTO) {
-        log.debug(inputDTO.toString());
-        int forecastP1 = inputDTO.getForecast().getP1();
-        int forecastP2 = inputDTO.getForecast().getP2();
-        int forecastP3 = inputDTO.getForecast().getP3();
-        //log.debug(String.valueOf(forecastP1));
-        inputService.saveProductionPlan(forecastP1, forecastP2, forecastP3);
         inputService.importInput(inputDTO);
     }
 
