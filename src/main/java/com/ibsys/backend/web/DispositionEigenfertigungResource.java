@@ -3,6 +3,7 @@ package com.ibsys.backend.web;
 import com.ibsys.backend.core.service.DispositionEigenfertigungService;
 import com.ibsys.backend.web.dto.ArticleDTO;
 import com.ibsys.backend.web.dto.mapper.ArticleMapper;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,6 +20,7 @@ public class DispositionEigenfertigungResource {
     private final DispositionEigenfertigungService dispositionEigenfertigungService;
     private final ArticleMapper articleMapper;
 
+    @Operation(summary = "Starts the Disposition Eigenfertigung")
     @PostMapping
     public void startDispositionEigenfertigung(@RequestBody List<ArticleDTO> articleDTO) {
         dispositionEigenfertigungService.updateArticles(
