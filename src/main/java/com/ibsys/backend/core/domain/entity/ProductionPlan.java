@@ -17,10 +17,10 @@ public class ProductionPlan {
     private Long id;
 
     @Positive
-    private int product;
+    private int article;
 
     @Positive
-    //@Column(name = "periode_n")
+    //@Column(name = "period_n")
     private int periodN;
 
     @Positive
