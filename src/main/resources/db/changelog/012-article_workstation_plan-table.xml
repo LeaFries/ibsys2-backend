@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="012-article_workstation_plan-table" author="">
+        <createSequence sequenceName="awp_id_seq"/>
+        <createTable tableName="article_workstation_plan">
+            <column name="id" type="serial" defaultValueSequenceNext="awp_id_seq"/>
+            <column name="article" type="number" >
+                <constraints nullable="false" foreignKeyName="fk_article" references="article(id)"/>
+            </column>
+            <column name="workstation" type="number" >
+                <constraints nullable="false" foreignKeyName="fk_workstation" references="workstation(number)"/>
+            </column>
+        </createTable>
+
+    </changeSet>
+
+    <changeSet id="012-article_workstation_plan-table-primary-key" author="">
+
+        <addPrimaryKey tableName="article_workstation_plan" columnNames="id" />
+
+    </changeSet>
+
+</databaseChangeLog>
