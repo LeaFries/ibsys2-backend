@@ -12,7 +12,4 @@ public class Workstation {
 
     @Id
     private int number;
-
-    @OneToMany(mappedBy = "workstation")
-    Set<ArticleWorkstationPlan> article_workstation_plan;
 }

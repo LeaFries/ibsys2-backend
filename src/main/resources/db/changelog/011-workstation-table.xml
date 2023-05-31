@@ -8,7 +8,7 @@
 
     <changeSet id="011-workstation-table" author="">
 
-        <createTable tableName="forecast">
+        <createTable tableName="workstation">
             <column name="number" type="number" />
         </createTable>
 
@@ -16,7 +16,7 @@
 
     <changeSet id="011-workstation-table-primary-key" author="">
 
-        <addPrimaryKey tableName="number" columnNames="number" />
+        <addPrimaryKey tableName="workstation" columnNames="number" />
 
     </changeSet>
 
