@@ -6,22 +6,18 @@ import lombok.Data;
 @Entity
 @Data
 @Table(name = "article_workstation_plan")
-public class Article_Workstation_Plan {
+public class ArticleWorkstationPlan {
 
         @Id
         Long id;
 
-        @ManyToOne
-        @JoinColumn(name = "article_number")
-        Article article;
+        private int articleNumber;
 
-        @ManyToOne
-        @JoinColumn(name = "workstation_number")
-        Workstation workstation;
+        private int workstationNumber;
 
-        int workingTime;
+        private int workingTime;
 
-        int setUpTime;
+        private int setUpTime;
 
 
         // additional properties

@@ -31,7 +31,4 @@ public class Article {
     private int period;
     @Column(name = "lagerbestand_vorperiode")
     private int lagerbestandVorperiode;
-
-    @OneToMany(mappedBy = "article")
-    Set<Article_Workstation_Plan> article_workstation_plan;
 }
