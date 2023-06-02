@@ -7,7 +7,7 @@ import lombok.ToString;
 @Builder
 @Getter
 @ToString
-public class CapacityPlanningDTO {
+public class InputCapacityPlanningDTO {
 
     private int articleNumber;
     private int orderQuantity;
