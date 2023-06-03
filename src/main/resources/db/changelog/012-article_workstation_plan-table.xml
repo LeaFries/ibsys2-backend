@@ -7,8 +7,9 @@
         https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
 
     <changeSet id="012-article_workstation_plan-table" author="">
+        <createSequence sequenceName="awp_id_seq"/>
         <createTable tableName="article_workstation_plan">
-            <column name="id" type="serial"/>
+            <column name="id" type="serial" defaultValueSequenceNext="awp_id_seq"/>
             <column name="articleNumber" type="number" />
             <column name="workstationNumber" type="number" />
         </createTable>
@@ -19,6 +20,21 @@
 
         <addPrimaryKey tableName="article_workstation_plan" columnNames="id" />
 
+    </changeSet>
+
+    <changeSet id="012-article_workstation_plan-table" author="">
+        <insert tableName="article_workstation_plan">
+            <column name="articleNumber" value="4" />
+            <column name="workstationNumber" value="10" />
+            <column name="workingTime" value="6" />
+            <column name="setUpTime" value="20" />
+        </insert>
+        <insert tableName="article_workstation_plan">
+            <column name="articleNumber" value="5" />
+            <column name="workstationNumber" value="11" />
+            <column name="workingTime" value="3" />
+            <column name="setUpTime" value="25" />
+        </insert>
     </changeSet>
 
 </databaseChangeLog>

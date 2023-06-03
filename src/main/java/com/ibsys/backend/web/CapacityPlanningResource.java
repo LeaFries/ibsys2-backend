@@ -1,10 +1,8 @@
 package com.ibsys.backend.web;
 
-import com.ibsys.backend.core.domain.entity.Waitinglist;
 import com.ibsys.backend.core.service.CapacityPlanningService;
-import com.ibsys.backend.core.service.DispositionEigenfertigungService;
 import com.ibsys.backend.web.dto.InputCapacityPlanningDTO;
-import com.ibsys.backend.web.dto.OutputCapacityPlanningDTO;
+import com.ibsys.backend.core.domain.aggregate.OutputCapacityPlanning;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +22,8 @@ public class CapacityPlanningResource {
 
     @Operation(summary = "Starts the Capacity Planning")
     @PostMapping
-    public ResponseEntity<OutputCapacityPlanningDTO> startCapacityPlanning(@RequestBody List<InputCapacityPlanningDTO> inputCapacityPlanningDTO) {
+    public ResponseEntity<String> startCapacityPlanning(@RequestBody List<InputCapacityPlanningDTO> inputCapacityPlanningDTO) {
+        capacityPlanningService.calculateCapacityPlan(inputCapacityPlanningDTO);
         return ResponseEntity.ok(capacityPlanningService.getOutput());
     }
 
