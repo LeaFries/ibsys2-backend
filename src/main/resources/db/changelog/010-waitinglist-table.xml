@@ -17,6 +17,7 @@
             <column name="item" type="number" />
             <column name="amount" type="number" />
             <column name="timeneed" type="number" />
+            <column name="workplace_fk" type="serial" />
         </createTable>
 
     </changeSet>
