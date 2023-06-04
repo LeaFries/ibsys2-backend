@@ -6,9 +6,9 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
         https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
 
-    <changeSet id="010-waitinglist-table" author="">
+    <changeSet id="010-waitinglist-workplace-table" author="">
 
-        <createTable tableName="waitinglist">
+        <createTable tableName="waitinglist_workplace">
             <column name="id" type="serial" />
             <column name="period" type="number" />
             <column name="order_number" type="number" />
@@ -22,9 +22,9 @@
 
     </changeSet>
 
-    <changeSet id="010-waitinglist-table-primary-key" author="">
+    <changeSet id="010-waitinglist-workplace-table-primary-key" author="">
 
-        <addPrimaryKey tableName="waitinglist" columnNames="id" />
+        <addPrimaryKey tableName="waitinglist_workplace" columnNames="id" />
 
     </changeSet>
 

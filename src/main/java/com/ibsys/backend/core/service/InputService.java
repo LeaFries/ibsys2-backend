@@ -3,16 +3,16 @@ package com.ibsys.backend.core.service;
 import com.ibsys.backend.core.domain.entity.Article;
 import com.ibsys.backend.core.domain.entity.Forecast;
 import com.ibsys.backend.core.domain.entity.StuecklistenGruppe;
-import com.ibsys.backend.core.domain.entity.Waitinglist;
+import com.ibsys.backend.core.domain.entity.WaitinglistWorkplace;
 import com.ibsys.backend.core.domain.entity.Workplace;
 import com.ibsys.backend.core.repository.ArticleRepository;
 import com.ibsys.backend.core.repository.ForecastRepository;
-import com.ibsys.backend.core.repository.WaitinglistRepository;
+import com.ibsys.backend.core.repository.WaitinglistWorkplaceRepository;
 import com.ibsys.backend.core.repository.WorkplaceRepository;
 import com.ibsys.backend.web.dto.InputDTO;
 import com.ibsys.backend.web.dto.mapper.ArticleMapper;
 import com.ibsys.backend.web.dto.mapper.ForecastMapper;
-import com.ibsys.backend.web.dto.mapper.WaitinglistMapper;
+import com.ibsys.backend.web.dto.mapper.WaitinglistWorkplaceMapper;
 import com.ibsys.backend.web.dto.mapper.WorkplaceMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -28,12 +28,12 @@ public class InputService {
 
     private final ForecastRepository forecastRepository;
     private final ArticleRepository articleRepository;
-    private final WaitinglistRepository waitinglistRepository;
+    private final WaitinglistWorkplaceRepository waitinglistWorkplaceRepository;
     private final WorkplaceRepository workplaceRepository;
 
     private final ArticleMapper articleMapper;
     private final ForecastMapper forecastMapper;
-    private final WaitinglistMapper waitinglistMapper;
+    private final WaitinglistWorkplaceMapper waitinglistWorkplaceMapper;
     private final WorkplaceMapper workplaceMapper;
 
     @Transactional
@@ -64,13 +64,13 @@ public class InputService {
                     if(workplaceDTO.getWaitinglist() == null) {
                         return;
                     }
-                    List<Waitinglist> waitinglist = workplaceDTO.getWaitinglist().stream()
+                    List<WaitinglistWorkplace> waitinglistWorkplace = workplaceDTO.getWaitinglist().stream()
                             .map(waitinglistDTO -> {
                                 waitinglistDTO.setWorkplace(workplace);
-                                return waitinglistMapper.toWaitinglist(waitinglistDTO);
+                                return waitinglistWorkplaceMapper.toWaitingWorkplacelist(waitinglistDTO);
                             })
                             .toList();
-                    waitinglistRepository.saveAllAndFlush(waitinglist);
+                    waitinglistWorkplaceRepository.saveAllAndFlush(waitinglistWorkplace);
                 }
         );
     }
@@ -92,8 +92,8 @@ public class InputService {
     }
 
     @Transactional
-    public void importWaitinglist(List<Waitinglist> waitinglist) {
-        waitinglistRepository.saveAllAndFlush(waitinglist);
+    public void importWaitinglist(List<WaitinglistWorkplace> waitinglistWorkplace) {
+        waitinglistWorkplaceRepository.saveAllAndFlush(waitinglistWorkplace);
     }
 
 }
