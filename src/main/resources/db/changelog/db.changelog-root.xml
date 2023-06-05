@@ -16,6 +16,7 @@
     <include file="008-article-table.xml" relativeToChangelogFile="true" />
     <include file="009-forecast-table.xml" relativeToChangelogFile="true" />
     <include file="010-waitinglist-table.xml" relativeToChangelogFile="true" />
+    <include file="011-workplace-table.xml" relativeToChangelogFile="true" />
     <include file="012-productionPlan-table.xml" relativeToChangelogFile="true"/>
     
 </databaseChangeLog>

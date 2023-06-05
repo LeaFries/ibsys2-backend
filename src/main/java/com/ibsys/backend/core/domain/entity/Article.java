@@ -2,6 +2,7 @@ package com.ibsys.backend.core.domain.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.*;
@@ -32,5 +33,10 @@ public class Article {
     private int period;
     @Column(name = "lagerbestand_vorperiode")
     private int lagerbestandVorperiode;
+    @Column(name = "geplanter_sicherheitsbestand")
+    private int geplanterSicherheitsbestand;
+    @Column(name = "stuecklisten_gruppe")
+    @Enumerated
+    private StuecklistenGruppe stuecklistenGruppe;
 
 }
