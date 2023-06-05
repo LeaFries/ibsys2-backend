@@ -1,5 +1,6 @@
 package com.ibsys.backend.core.service;
 
+import com.ibsys.backend.core.domain.aggregate.CapacityPlanningResult;
 import com.ibsys.backend.core.domain.entity.ArticleWorkstationPlan;
 import com.ibsys.backend.core.domain.entity.CapacityPlanColumn;
 import com.ibsys.backend.core.repository.ArticleWorkstationPlanRepository;
@@ -8,12 +9,13 @@ import com.ibsys.backend.web.dto.InputCapacityPlanningDTO;
 import com.ibsys.backend.core.domain.aggregate.OutputCapacityPlanning;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.cfg.NotYetImplementedException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import com.ibsys.backend.core.domain.aggregate.OutputCapacityPlanning;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -38,18 +40,52 @@ public class CapacityPlanningService {
                      awpItem.getSetUpTime()
                      );
              capacityPlanColumnRepository.saveAndFlush(cp);
-             log.debug("Calculate Test Result: " + String.valueOf(cp));
+             log.debug("Calculate Test Result: " + cp);
          }
-
-
-
       }
+    }
 
+    public OutputCapacityPlanning getOutput() {
+        OutputCapacityPlanning output = new OutputCapacityPlanning();
+        output.setWorkingTimePlan(capacityPlanColumnRepository.findAll());
+        output.setCapacityPlanningResult(calculateResult());
+       return output;
+    }
+
+    public CapacityPlanningResult calculateResult() {
+
+        //List<Integer> capacity_reqs = new ArrayList<>();
+        Map<Integer, Integer> capacity_reqs = new HashMap<>();
+
+        for (int i = 1;i<=15;i++) {
+            if (i == 5) continue;
+            List<CapacityPlanColumn> workstationWorkingsTimes =
+                    capacityPlanColumnRepository.findByWorkstationNumber(i);
+
+            int sum = getSumWorkingTimeFromWorkstation(workstationWorkingsTimes);
+
+            capacity_reqs.put(i, sum);
+
+            //capacity_reqs.add(sum);
+
+        }
+        CapacityPlanningResult result = new CapacityPlanningResult();
+
+        //result.setNewCapacity_reqs(capacity_reqs);
+
+        result.setNewCapacity_reqs(capacity_reqs);
+
+
+        return result;
 
     }
 
-    public String getOutput() {
-       return "it works";
+    private int getSumWorkingTimeFromWorkstation(List<CapacityPlanColumn> workstationWorkingsTimes) {
+        int sum = 0;
+        for(CapacityPlanColumn cp: workstationWorkingsTimes) {
+            sum+=cp.getWorkingTime();
+        }
+        return sum;
     }
 
 }

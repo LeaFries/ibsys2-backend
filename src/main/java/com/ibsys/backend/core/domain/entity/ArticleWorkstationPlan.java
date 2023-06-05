@@ -14,12 +14,16 @@ public class ArticleWorkstationPlan {
         @GeneratedValue(strategy = IDENTITY)
         Long id;
 
+        @Column(name = "article_number")
         private int articleNumber;
 
+        @Column(name = "workstation_number")
         private int workstationNumber;
 
+        @Column(name = "working_time")
         private int workingTime;
 
+        @Column(name = "set_up_time")
         private int setUpTime;
 
 

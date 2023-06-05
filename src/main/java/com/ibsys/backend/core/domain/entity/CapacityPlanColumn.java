@@ -25,7 +25,7 @@ public class CapacityPlanColumn {
 
     private int articleNumber;
 
-    private int workstation;
+    private int workstationNumber;
 
     private int workingTime;
 
@@ -33,7 +33,7 @@ public class CapacityPlanColumn {
 
     public CapacityPlanColumn(int articleNumber, int workstationNumber, int workingTime, int setUpTime) {
         this.articleNumber = articleNumber;
-        this.workstation = workstationNumber;
+        this.workstationNumber = workstationNumber;
         this.workingTime = workingTime;
         this.setUpTime = setUpTime;
     }

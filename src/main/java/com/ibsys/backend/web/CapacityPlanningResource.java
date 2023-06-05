@@ -22,7 +22,7 @@ public class CapacityPlanningResource {
 
     @Operation(summary = "Starts the Capacity Planning")
     @PostMapping
-    public ResponseEntity<String> startCapacityPlanning(@RequestBody List<InputCapacityPlanningDTO> inputCapacityPlanningDTO) {
+    public ResponseEntity<OutputCapacityPlanning> startCapacityPlanning(@RequestBody List<InputCapacityPlanningDTO> inputCapacityPlanningDTO) {
         capacityPlanningService.calculateCapacityPlan(inputCapacityPlanningDTO);
         return ResponseEntity.ok(capacityPlanningService.getOutput());
     }
