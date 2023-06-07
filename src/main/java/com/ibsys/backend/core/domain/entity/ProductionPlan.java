@@ -1,12 +1,10 @@
 package com.ibsys.backend.core.domain.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Positive;
 import lombok.Data;
 
-import static jakarta.persistence.GenerationType.IDENTITY;
+import static jakarta.persistence.GenerationType.*;
 
 @Entity
 @Data
@@ -20,18 +18,18 @@ public class ProductionPlan {
     private int article;
 
     @Positive
-    //@Column(name = "period_n")
+    @Column(name = "period_n")
     private int periodN;
 
     @Positive
-    //@Column(name = "period_n_plus_one")
+    @Column(name = "period_n_plus_one")
     private int periodNplusOne;
 
     @Positive
-    //@Column(name = "period_n_plus_two")
+    @Column(name = "period_n_plus_two")
     private int periodNplusTwo;
 
     @Positive
-    //@Column(name = "period_n_plus_three")
+    @Column(name = "period_n_plus_three")
     private int periodNplusThree;
 }
