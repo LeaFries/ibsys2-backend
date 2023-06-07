@@ -6,10 +6,10 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
         https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
 
-    <changeSet id="012-productionPlan-table" author="">
-        <createSequence sequenceName="production_plan_id_seq"/>
-        <createTable tableName="production_plan">
-            <column name="id" type="bigint" defaultValueSequenceNext="production_plan_id_seq">
+    <changeSet id="013-productionInPeriod-table" author="">
+        <createSequence sequenceName="production_in_period_id_seq"/>
+        <createTable tableName="production_in_period">
+            <column name="id" type="bigint" defaultValueSequenceNext="production_in_period_id_seq">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="article" type="integer">
