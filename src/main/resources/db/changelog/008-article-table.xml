@@ -17,6 +17,8 @@
             <column name="stockvalue" type="text" />
             <column name="lagerbestand_vorperiode" type="number" />
             <column name="period" type="number" />
+            <column name="geplanter_sicherheitsbestand" type="number" />
+            <column name="stuecklisten_gruppe" type="varchar(100)" />
         </createTable>
 
     </changeSet>

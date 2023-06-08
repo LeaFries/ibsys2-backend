@@ -7,14 +7,12 @@ import lombok.ToString;
 @Builder
 @Getter
 @ToString
-public class WaitinglistDTO {
-
+public class OrdersInWorkWorkplaceDTO {
+    private int id;
     private int period;
-    private int order;
-    private int firstbatch;
-    private int lastbatch;
+    private int orderNumber;
+    private int batch;
     private int item;
     private int amount;
     private long timeneed;
-
 }

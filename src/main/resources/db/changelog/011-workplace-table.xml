@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="011-workplace-table" author="">
+
+        <createTable tableName="workplace">
+            <column name="id" type="serial" />
+            <column name="setupevent" type="number" />
+            <column name="idletime" type="number" />
+            <column name="wageidletimecosts" type="text" />
+            <column name="wagecosts" type="text" />
+            <column name="machineidletimecosts" type="text" />
+            <column name="timeneed" type="number" />
+            <column name="period" type="number" />
+            <column name="order_number" type="number" />
+            <column name="bach" type="number" />
+            <column name="item" type="number" />
+            <column name="amount" type="number" />
+        </createTable>
+
+    </changeSet>
+
+    <changeSet id="011-workplace-table-primary-key" author="">
+
+        <addPrimaryKey tableName="workplace" columnNames="id" />
+
+    </changeSet>
+
+    <changeSet id="011-waitinglist-workplace-table-foreign-key" author="">
+
+        <addForeignKeyConstraint baseTableName="waitinglist_workplace"
+                                 baseColumnNames="workplace_fk"
+                                 constraintName="workplace_fk"
+                                 referencedTableName="workplace"
+                                 referencedColumnNames="id" />
+
+    </changeSet>
+
+</databaseChangeLog>
