@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="011-workstation-table" author="">
+
+        <createTable tableName="workstation">
+            <column name="number" type="number" />
+        </createTable>
+
+    </changeSet>
+
+    <changeSet id="011-workstation-table-primary-key" author="">
+
+        <addPrimaryKey tableName="workstation" columnNames="number" />
+
+    </changeSet>
+
+</databaseChangeLog>

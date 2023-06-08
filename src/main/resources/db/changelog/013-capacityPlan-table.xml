@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="013-Capacity_Plan-table" author="">
+        <createSequence sequenceName="cp_id_seq"/>
+        <createTable tableName="capacity_plan">
+            <column name="id" type="bigint" defaultValueSequenceNext="cp_id_seq"/>
+            <column name="article_number" type="number" />
+            <column name="workstation_number" type="number" />
+            <column name="working_time" type="number" />
+            <column name="set_up_time" type="number" />
+        </createTable>
+
+    </changeSet>
+
+    <changeSet id="013-Capacity_Plan-table-primary-key" author="">
+
+        <addPrimaryKey tableName="capacity_plan" columnNames="id" />
+
+    </changeSet>
+
+</databaseChangeLog>

@@ -23,7 +23,7 @@ public class OutputService {
         output.setQualityControl(qualityControlRepository.findById(1L).get());
         output.setSellDirects(sellDirectRepository.findAll());
         output.setSellWishes(sellWishRepository.findAll());
-        output.setWorkingTimes(workingTimeRepository.findAll());
+        output.setWorkstationsWithOverTime(workingTimeRepository.findAll());
 
         return output;
     }

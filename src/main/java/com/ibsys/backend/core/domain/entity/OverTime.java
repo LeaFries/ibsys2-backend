@@ -10,7 +10,7 @@ import static jakarta.persistence.GenerationType.IDENTITY;
 
 @Entity
 @Data
-public class WorkingTime {
+public class OverTime {
     @Id
     @GeneratedValue(strategy = IDENTITY)
     private Long id;
