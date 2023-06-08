@@ -15,7 +15,6 @@
             <column name="pct" type="text" />
             <column name="price" type="text" />
             <column name="stockvalue" type="text" />
-            <column name="lagerbestand_vorperiode" type="number" />
             <column name="period" type="number" />
             <column name="geplanter_sicherheitsbestand" type="number" />
             <column name="stuecklisten_gruppe" type="varchar(100)" />
