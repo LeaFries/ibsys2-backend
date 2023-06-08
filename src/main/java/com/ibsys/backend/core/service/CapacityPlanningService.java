@@ -4,10 +4,10 @@ import ch.qos.logback.core.joran.conditional.IfAction;
 import com.ibsys.backend.core.domain.aggregate.CapacityPlanningResult;
 import com.ibsys.backend.core.domain.entity.ArticleWorkstationPlan;
 import com.ibsys.backend.core.domain.entity.CapacityPlanColumn;
-import com.ibsys.backend.core.domain.entity.Waitinglist;
+import com.ibsys.backend.core.domain.entity.WaitinglistWorkplace;
 import com.ibsys.backend.core.repository.ArticleWorkstationPlanRepository;
 import com.ibsys.backend.core.repository.CapacityPlanColumnRepository;
-import com.ibsys.backend.core.repository.WaitinglistRepository;
+import com.ibsys.backend.core.repository.WaitinglistWorkplaceRepository;
 import com.ibsys.backend.web.dto.InputCapacityPlanningDTO;
 import com.ibsys.backend.core.domain.aggregate.OutputCapacityPlanning;
 import lombok.RequiredArgsConstructor;
@@ -24,7 +24,7 @@ public class CapacityPlanningService {
 
     private final ArticleWorkstationPlanRepository articleWorkstationPlanRepository;
     private final CapacityPlanColumnRepository capacityPlanColumnRepository;
-    private final WaitinglistRepository waitinglistRepository;
+    private final WaitinglistWorkplaceRepository waitinglistRepository;
 
     @Transactional
     public void calculateCapacityPlan(List<InputCapacityPlanningDTO> inputCapacityPlanningDTO) {
@@ -71,7 +71,7 @@ public class CapacityPlanningService {
             List<CapacityPlanColumn> workstationWorkingsTimes =
                     capacityPlanColumnRepository.findByWorkstationNumber(i);
 
-            Optional<Waitinglist> waitinglist = waitinglistRepository.findById(i);
+            Optional<WaitinglistWorkplace> waitinglist = waitinglistRepository.findById((long) i);
 
             int sumNewCapacityReg = getSumWorkingTimeFromWorkstation(workstationWorkingsTimes);
             int sumNewSetUpTime = getSumSetUpTimeFromWorkstation(workstationWorkingsTimes);
