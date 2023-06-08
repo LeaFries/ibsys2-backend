@@ -1,9 +1,6 @@
 package com.ibsys.backend.core.domain.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Data;
 
 @Entity
@@ -13,15 +10,21 @@ public class PurchasePartDisposition {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "item_number")
     private Integer itemNumber;
 
+    @Column(name = "initial_stock")
     private Integer initialStock;
 
+    @Column(name = "requirement_n")
     private Integer requirementN;
 
+    @Column(name = "requirement_n_plus_one")
     private Integer requirementNplusOne;
 
+    @Column(name = "requirement_n_plus_two")
     private Integer requirementNplusTwo;
 
+    @Column(name = "requirement_n_plus_three")
     private Integer requirementNplusThree;
 }
