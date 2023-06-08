@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -47,7 +48,7 @@ public class DispositionEigenfertigungService {
     @Transactional
     public void dispositionEigenfertigungStart(final DispositionEigenfertigungInputDTO inputDTO) {
         updateArticles(inputDTO.getGeplanterSicherheitsbestand());
-        dispositionEigenfertigung();
+        dispositionEigenfertigung(Collections.emptyList());
     }
 
     @Transactional
