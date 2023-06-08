@@ -31,8 +31,6 @@ public class Article {
     private String stockvalue;
     @Column(name = "period")
     private int period;
-    @Column(name = "lagerbestand_vorperiode")
-    private int lagerbestandVorperiode;
     @Column(name = "geplanter_sicherheitsbestand")
     private int geplanterSicherheitsbestand;
     @Column(name = "stuecklisten_gruppe")

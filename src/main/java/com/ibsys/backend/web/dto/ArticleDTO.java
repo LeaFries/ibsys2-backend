@@ -15,6 +15,5 @@ public class ArticleDTO {
     private String pct;
     private String price;
     private String stockvalue;
-    private int lagerbestandVorperiode;
 
 }
