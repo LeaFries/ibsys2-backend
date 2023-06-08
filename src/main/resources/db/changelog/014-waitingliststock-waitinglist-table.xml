@@ -6,7 +6,7 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
         https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
 
-    <changeSet id="013-waitingliststock-waitinglist-table" author="">
+    <changeSet id="014-waitingliststock-waitinglist-table" author="">
 
         <createTable tableName="waitingliststock_waitinglist">
             <column name="id" type="serial" />
@@ -21,7 +21,7 @@
 
     </changeSet>
 
-    <changeSet id="013-waitingliststock-waitinglist-table-primary-key" author="">
+    <changeSet id="014-waitingliststock-waitinglist-table-primary-key" author="">
 
         <addPrimaryKey tableName="waitingliststock_waitinglist" columnNames="id" />
 
