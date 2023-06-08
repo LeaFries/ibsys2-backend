@@ -1,15 +1,7 @@
 package com.ibsys.backend.core.service;
 
-import com.ibsys.backend.core.domain.entity.Article;
-import com.ibsys.backend.core.domain.entity.Forecast;
-import com.ibsys.backend.core.domain.entity.StuecklistenGruppe;
-import com.ibsys.backend.core.domain.entity.WaitinglistWorkplace;
-import com.ibsys.backend.core.domain.entity.Workplace;
-import com.ibsys.backend.core.repository.ArticleRepository;
-import com.ibsys.backend.core.repository.ForecastRepository;
-import com.ibsys.backend.core.repository.OrdersInWorkWorkplaceRepository;
-import com.ibsys.backend.core.repository.WaitinglistWorkplaceRepository;
-import com.ibsys.backend.core.repository.WorkplaceRepository;
+import com.ibsys.backend.core.domain.entity.*;
+import com.ibsys.backend.core.repository.*;
 import com.ibsys.backend.web.dto.InputDTO;
 import com.ibsys.backend.web.dto.mapper.ArticleMapper;
 import com.ibsys.backend.web.dto.mapper.ForecastMapper;
@@ -33,7 +25,7 @@ public class InputService {
     private final WaitinglistWorkplaceRepository waitinglistWorkplaceRepository;
     private final WorkplaceRepository workplaceRepository;
     private final OrdersInWorkWorkplaceRepository ordersInWorkWorkplaceRepository;
-
+    private final PurchasePartDispositionRepository purchasePartDispositionRepository;
     private final ArticleMapper articleMapper;
     private final ForecastMapper forecastMapper;
     private final WaitinglistWorkplaceMapper waitinglistWorkplaceMapper;
@@ -100,7 +92,15 @@ public class InputService {
             }
             return article;
         }).toList();
+        List<PurchasePartDisposition> purchasePartDispositions = purchasePartDispositionRepository.findAll();
 
+        for (int i = 0; i < purchasePartDispositions.size(); i++) {
+            int itemNumber = purchasePartDispositions.get(i).getItemNumber();
+
+            purchasePartDispositions.get(i).setInitialStock(articles.get(itemNumber-1).getAmount());
+        }
+
+        purchasePartDispositionRepository.saveAllAndFlush(purchasePartDispositions);
         articleRepository.saveAllAndFlush(articles);
     }
 
