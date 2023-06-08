@@ -19,7 +19,7 @@ public class InputDTO {
     private List<OrderDTO> futureinwardstockmovement;
     private IdletimecostsDTO idletimecosts;
     private List<WorkplaceDTO> waitinglistworkstations;
-    private List<WorkplaceDTO> workplace;
+    private List<MissingPartDTO> waitingliststock;
     private List<OrdersInWorkWorkplaceDTO> ordersinwork;
     private List<OrderDTO> completedorders;
     private CycletimesDTO cycletimes;
