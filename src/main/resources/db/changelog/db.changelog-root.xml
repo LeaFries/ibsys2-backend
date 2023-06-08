@@ -15,11 +15,12 @@
     <include file="007-workingTime-table.xml" relativeToChangelogFile="true"/>
     <include file="008-article-table.xml" relativeToChangelogFile="true" />
     <include file="009-forecast-table.xml" relativeToChangelogFile="true" />
-    <include file="010-waitinglist-table.xml" relativeToChangelogFile="true" />
+    <include file="010-waitinglist-workplace-table.xml" relativeToChangelogFile="true" />
     <include file="011-workplace-table.xml" relativeToChangelogFile="true" />
     <include file="012-productionPlan-table.xml" relativeToChangelogFile="true"/>
     <include file="013-productionInPeriod-table.xml" relativeToChangelogFile="true"/>
     <include file="014-kQuantityNeed-table.xml" relativeToChangelogFile="true"/>
     <include file="015-purchasePartDisposition.xml" relativeToChangelogFile="true"/>
-    
+    <include file="016-orders-in-work-workplace.xml" relativeToChangelogFile="true"/>
+
 </databaseChangeLog>
