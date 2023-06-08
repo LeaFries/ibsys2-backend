@@ -7,11 +7,13 @@ import com.ibsys.backend.core.domain.entity.WaitinglistWorkplace;
 import com.ibsys.backend.core.domain.entity.Workplace;
 import com.ibsys.backend.core.repository.ArticleRepository;
 import com.ibsys.backend.core.repository.ForecastRepository;
+import com.ibsys.backend.core.repository.OrdersInWorkWorkplaceRepository;
 import com.ibsys.backend.core.repository.WaitinglistWorkplaceRepository;
 import com.ibsys.backend.core.repository.WorkplaceRepository;
 import com.ibsys.backend.web.dto.InputDTO;
 import com.ibsys.backend.web.dto.mapper.ArticleMapper;
 import com.ibsys.backend.web.dto.mapper.ForecastMapper;
+import com.ibsys.backend.web.dto.mapper.OrdersInWorkWorkplaceMapper;
 import com.ibsys.backend.web.dto.mapper.WaitinglistWorkplaceMapper;
 import com.ibsys.backend.web.dto.mapper.WorkplaceMapper;
 import lombok.RequiredArgsConstructor;
@@ -30,11 +32,13 @@ public class InputService {
     private final ArticleRepository articleRepository;
     private final WaitinglistWorkplaceRepository waitinglistWorkplaceRepository;
     private final WorkplaceRepository workplaceRepository;
+    private final OrdersInWorkWorkplaceRepository ordersInWorkWorkplaceRepository;
 
     private final ArticleMapper articleMapper;
     private final ForecastMapper forecastMapper;
     private final WaitinglistWorkplaceMapper waitinglistWorkplaceMapper;
     private final WorkplaceMapper workplaceMapper;
+    private final OrdersInWorkWorkplaceMapper ordersInWorkWorkplaceMapper;
 
     @Transactional
     public void importForcast(Forecast forecast) {
@@ -52,6 +56,8 @@ public class InputService {
         importForcast(forecastMapper.toForecast(inputDTO.getForecast(), inputDTO.getPeriod()));
 
         importWaitinglistWorkstation(inputDTO);
+
+        importOrdersInWorkWorkplace(inputDTO);
 
     }
 
@@ -73,6 +79,13 @@ public class InputService {
                     waitinglistWorkplaceRepository.saveAllAndFlush(waitinglistWorkplace);
                 }
         );
+    }
+
+    @Transactional
+    public void importOrdersInWorkWorkplace(InputDTO inputDTO) {
+        ordersInWorkWorkplaceRepository.saveAllAndFlush(inputDTO.getOrdersinwork().stream()
+                .map(ordersInWorkWorkplaceMapper::toOrdersInWorkWorkplace)
+                .toList());
     }
 
     @Transactional
