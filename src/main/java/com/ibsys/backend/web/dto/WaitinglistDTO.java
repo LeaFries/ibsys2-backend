@@ -15,6 +15,6 @@ public class WaitinglistDTO {
     private int lastbatch;
     private int item;
     private int amount;
-    private long timeNeed;
+    private long timeneed;
 
 }
