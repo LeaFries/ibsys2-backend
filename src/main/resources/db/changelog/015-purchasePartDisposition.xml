@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="015-purchasePartDisposition-table" author="">
+        <createSequence sequenceName="purchase_part_disposition_seq"/>
+        <createTable tableName="purchase_part_disposition">
+            <column name="id" type="bigint" defaultValueSequenceNext="purchase_part_disposition_seq">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="item_number" type="integer"/>
+            <column name="initial_stock" type="integer"/>
+            <column name="requirement_n" type="integer"/>
+            <column name="requirement_n_plus_one" type="integer"/>
+            <column name="requirement_n_plus_two" type="integer"/>
+            <column name="requirement_n_plus_three" type="integer"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="015-purchasePartDisposition-data" author="">
+        <insert tableName="purchase_part_disposition">
+            <column name="item_number">21</column>
+        </insert>
+        <insert tableName="purchase_part_disposition">
+            <column name="item_number">22</column>
+        </insert>
+        <insert tableName="purchase_part_disposition">
+            <column name="item_number">23</column>
+        </insert>
+        <insert tableName="purchase_part_disposition">
+            <column name="item_number">24</column>
+        </insert>
+        <insert tableName="purchase_part_disposition">
+            <column name="item_number">25</column>
+        </insert>
+        <insert tableName="purchase_part_disposition">
+            <column name="item_number">27</column>
+        </insert>
+        <insert tableName="purchase_part_disposition">
+            <column name="item_number">28</column>
+        </insert>
+        <insert tableName="purchase_part_disposition">
+            <column name="item_number">32</column>
+        </insert>
+        <insert tableName="purchase_part_disposition">
+            <column name="item_number">33</column>
+        </insert>
+        <insert tableName="purchase_part_disposition">
+            <column name="item_number">34</column>
+        </insert>
+        <insert tableName="purchase_part_disposition">
+            <column name="item_number">35</column>
+        </insert>
+        <insert tableName="purchase_part_disposition">
+            <column name="item_number">36</column>
+        </insert>
+        <insert tableName="purchase_part_disposition">
+            <column name="item_number">37</column>
+        </insert>
+        <insert tableName="purchase_part_disposition">
+            <column name="item_number">38</column>
+        </insert>
+        <insert tableName="purchase_part_disposition">
+            <column name="item_number">39</column>
+        </insert>
+        <insert tableName="purchase_part_disposition">
+            <column name="item_number">40</column>
+        </insert>
+        <insert tableName="purchase_part_disposition">
+            <column name="item_number">41</column>
+        </insert>
+        <insert tableName="purchase_part_disposition">
+            <column name="item_number">42</column>
+        </insert>
+        <insert tableName="purchase_part_disposition">
+            <column name="item_number">43</column>
+        </insert>
+        <insert tableName="purchase_part_disposition">
+            <column name="item_number">44</column>
+        </insert>
+        <insert tableName="purchase_part_disposition">
+            <column name="item_number">45</column>
+        </insert>
+        <insert tableName="purchase_part_disposition">
+            <column name="item_number">46</column>
+        </insert>
+        <insert tableName="purchase_part_disposition">
+            <column name="item_number">47</column>
+        </insert>
+        <insert tableName="purchase_part_disposition">
+            <column name="item_number">48</column>
+        </insert>
+        <insert tableName="purchase_part_disposition">
+            <column name="item_number">52</column>
+        </insert>
+        <insert tableName="purchase_part_disposition">
+            <column name="item_number">53</column>
+        </insert>
+        <insert tableName="purchase_part_disposition">
+            <column name="item_number">57</column>
+        </insert>
+        <insert tableName="purchase_part_disposition">
+            <column name="item_number">58</column>
+        </insert>
+        <insert tableName="purchase_part_disposition">
+            <column name="item_number">59</column>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>
