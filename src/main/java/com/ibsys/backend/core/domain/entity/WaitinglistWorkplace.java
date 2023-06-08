@@ -16,14 +16,14 @@ import lombok.Setter;
 import lombok.ToString;
 
 @Entity
-@Table(name = "waitinglist")
+@Table(name = "waitinglist_workplace")
 @Builder
 @Getter
 @Setter
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-public class Waitinglist {
+public class WaitinglistWorkplace {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;

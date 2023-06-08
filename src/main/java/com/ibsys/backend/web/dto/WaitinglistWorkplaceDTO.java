@@ -10,7 +10,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class WaitinglistDTO {
+public class WaitinglistWorkplaceDTO {
 
     private int period;
     private int order;

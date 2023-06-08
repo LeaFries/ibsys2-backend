@@ -17,7 +17,7 @@ public class WorkplaceDTO {
     private String wagecosts;
     private String machineidletimecosts;
     private long timeneed;
-    private List<WaitinglistDTO> waitinglist;
+    private List<WaitinglistWorkplaceDTO> waitinglist;
     private int period;
     private int order;
     private int batch;

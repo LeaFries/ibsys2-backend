@@ -31,9 +31,9 @@
 
     </changeSet>
 
-    <changeSet id="011-waitinglist-table-foreign-key" author="">
+    <changeSet id="011-waitinglist-workplace-table-foreign-key" author="">
 
-        <addForeignKeyConstraint baseTableName="waitinglist"
+        <addForeignKeyConstraint baseTableName="waitinglist_workplace"
                                  baseColumnNames="workplace_fk"
                                  constraintName="workplace_fk"
                                  referencedTableName="workplace"
