@@ -18,5 +18,6 @@
     <include file="010-waitinglist-workplace-table.xml" relativeToChangelogFile="true" />
     <include file="011-workplace-table.xml" relativeToChangelogFile="true" />
     <include file="012-orders-in-work-workplace.xml" relativeToChangelogFile="true" />
+    <include file="013-waitingliststock-waitinglist-table.xml" relativeToChangelogFile="true" />
 
 </databaseChangeLog>

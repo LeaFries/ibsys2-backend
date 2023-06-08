@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -26,8 +27,8 @@ public class DispositionEigenfertigungResource {
 
     @Operation(summary = "Starts the Disposition Eigenfertigung")
     @PostMapping
-    public ResponseEntity<DispositionEigenfertigungResultDTO> startDispositionEigenfertigung(@RequestBody final DispositionEigenfertigungInputDTO inputDTOS) {
-        DispositionEigenfertigungResultDTO result = dispositionEigenfertigungService.dispositionEigenfertigungStart(inputDTOS);
+    public ResponseEntity<List<DispositionEigenfertigungResultDTO>> startDispositionEigenfertigung(@RequestBody final DispositionEigenfertigungInputDTO inputDTOS) {
+        List<DispositionEigenfertigungResultDTO> result = dispositionEigenfertigungService.dispositionEigenfertigungStart(inputDTOS);
         return ResponseEntity.ok(result);
     }
 
