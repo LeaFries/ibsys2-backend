@@ -1,5 +1,6 @@
 package com.ibsys.backend.core.domain.entity;
 
+import com.ibsys.backend.core.domain.status.OrderColor;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -33,4 +34,18 @@ public class PurchasePartDisposition {
 
     @Column(name = "requirement_n_plus_three")
     private Integer requirementNplusThree;
+
+    @Column(name = "order_quantity")
+    private Integer orderQuantity;
+
+    // 4 - Fast - Eilbestellung
+    // 5 - Normal - Normalbestellung
+    @Column(name = "order_type")
+    private Integer orderType;
+
+    // 0 - green
+    // 1 = yellow
+    // 2 = red
+    @Column(name = "order_color")
+    private OrderColor orderColor;
 }
