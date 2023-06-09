@@ -12,5 +12,5 @@ public class Output {
     private List<SellDirect> sellDirects;
     private List<OrderItem> orderItems;
     private List<Production> productions;
-    private List<OverTime> workstationsWithOverTime;
+    private List<OverTime> workstations;
 }

@@ -36,7 +36,7 @@ public class Workplace {
     private String machineidletimecosts;
 
     @Column(name = "timeneed")
-    private long timeneed;
+    private int timeneed;
 
     @Column(name = "period")
     private int period;
