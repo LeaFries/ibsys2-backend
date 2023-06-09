@@ -3,6 +3,7 @@ package com.ibsys.backend.core.service;
 import com.ibsys.backend.core.domain.entity.KQuantityNeed;
 import com.ibsys.backend.core.domain.entity.ProductionInPeriod;
 import com.ibsys.backend.core.domain.entity.PurchasePartDisposition;
+import com.ibsys.backend.core.domain.status.OrderColor;
 import com.ibsys.backend.core.repository.KQuantityNeedRepository;
 import com.ibsys.backend.core.repository.ProductionInPeriodRepository;
 import com.ibsys.backend.core.repository.PurchasePartDispositionRepository;
@@ -60,6 +61,53 @@ public class PurchasePartDispositionService {
 
         List<PurchasePartDisposition> purchasePartDispositions = purchasePartDispositionRepository.findAll();
 
+        determineOrderNecessity(purchasePartDispositions);
+
         return purchasePartDispositions;
     }
+
+    private void determineOrderNecessity(List<PurchasePartDisposition> purchasePartDispositions) {
+        double points = 0;
+
+        for(PurchasePartDisposition ppD : purchasePartDispositions) {
+            if ((ppD.getInitialStock() - ppD.getRequirementN() > 0)) {
+                points++;
+                if ((ppD.getInitialStock() - ppD.getRequirementN() - ppD.getRequirementNplusOne() > 0)) {
+                    points++;
+                    if((ppD.getInitialStock()
+                            - ppD.getRequirementN()
+                            - ppD.getRequirementNplusOne()
+                            - ppD.getRequirementNplusTwo() > 0)) {
+                        points++;
+                        if((ppD.getInitialStock()
+                                - ppD.getRequirementN()
+                                - ppD.getRequirementNplusOne()
+                                - ppD.getRequirementNplusTwo()
+                                - ppD.getRequirementNplusThree() > 0)) {
+                            points++;
+                        }
+                    }
+                }
+            }
+
+            if(points - ppD.getDeliveryTime() >= 1) {
+                ppD.setOrderColor(OrderColor.green);
+            }
+            else if (points - ppD.getDeliveryTime() <= -1) {
+                ppD.setOrderQuantity(ppD.getDiscountQuantity());
+                ppD.setOrderType(4);
+                ppD.setOrderColor(OrderColor.red);
+            }
+            else {
+                ppD.setOrderQuantity(ppD.getDiscountQuantity());
+                ppD.setOrderType(5);
+                ppD.setOrderColor(OrderColor.yellow);
+            }
+
+            points = 0;
+        }
+
+        purchasePartDispositionRepository.saveAllAndFlush(purchasePartDispositions);
+    }
+
 }
