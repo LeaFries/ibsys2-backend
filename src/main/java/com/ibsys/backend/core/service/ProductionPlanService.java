@@ -33,12 +33,20 @@ public class ProductionPlanService {
     }
 
     public List<ProductionInPeriod> addProductionInPeriod(List<ProductionInPeriodDTO> productionInPeriodDTOS) {
-        List<ProductionInPeriod> productionInPeriods = productionInPeriodMapper
+        List<ProductionInPeriod> newProductionInPeriods = productionInPeriodMapper
                                                         .toProductionInPeriodList(productionInPeriodDTOS);
 
-        List<ProductionInPeriod> newProductionInPeriods = productionInPeriodRepository
-                                                            .saveAllAndFlush(productionInPeriods);
+        List<ProductionInPeriod> productionInPeriods = productionInPeriodRepository.findAll();
 
-        return newProductionInPeriods;
+        for(int i = 0; i < productionInPeriods.size(); i++) {
+            productionInPeriods.get(i).setPeriodN(newProductionInPeriods.get(i).getPeriodN());
+            productionInPeriods.get(i).setPeriodNplusOne(newProductionInPeriods.get(i).getPeriodNplusOne());
+            productionInPeriods.get(i).setPeriodNplusTwo(newProductionInPeriods.get(i).getPeriodNplusTwo());
+            productionInPeriods.get(i).setPeriodNplusThree(newProductionInPeriods.get(i).getPeriodNplusThree());
+        }
+
+        productionInPeriodRepository.saveAllAndFlush(productionInPeriods);
+
+        return productionInPeriods;
     }
 }
