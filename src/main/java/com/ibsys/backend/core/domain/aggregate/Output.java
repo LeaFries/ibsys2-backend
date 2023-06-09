@@ -10,7 +10,7 @@ public class Output {
     private QualityControl qualityControl;
     private List<SellWish> sellWishes;
     private List<SellDirect> sellDirects;
-    private List<Order> orders;
+    private List<OrderItem> orderItems;
     private List<Production> productions;
     private List<WorkingTime> workingTimes;
 }
