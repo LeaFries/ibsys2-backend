@@ -1,0 +1,23 @@
+[
+  {
+    "article": 1,
+    "periodN": 80,
+    "periodNplusOne": 150,
+    "periodNplusTwo": 160,
+    "periodNplusThree": 150
+  },
+  {
+    "article": 2,
+    "periodN": 200,
+    "periodNplusOne": 150,
+    "periodNplusTwo": 150,
+    "periodNplusThree": 150
+  },
+  {
+    "article": 3,
+    "periodN": 100,
+    "periodNplusOne": 130,
+    "periodNplusTwo": 150,
+    "periodNplusThree": 150
+  }
+]
