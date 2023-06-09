@@ -2,6 +2,7 @@ package com.ibsys.backend.web;
 
 import com.ibsys.backend.core.service.DispositionEigenfertigungService;
 import com.ibsys.backend.web.dto.DispositionEigenfertigungInputDTO;
+import com.ibsys.backend.web.dto.DispositionEigenfertigungResultDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -25,8 +27,9 @@ public class DispositionEigenfertigungResource {
 
     @Operation(summary = "Starts the Disposition Eigenfertigung")
     @PostMapping
-    public void startDispositionEigenfertigung(@RequestBody final DispositionEigenfertigungInputDTO inputDTOS) {
-        dispositionEigenfertigungService.dispositionEigenfertigungStart(inputDTOS);
+    public ResponseEntity<List<DispositionEigenfertigungResultDTO>> startDispositionEigenfertigung(@RequestBody final DispositionEigenfertigungInputDTO inputDTOS) {
+        List<DispositionEigenfertigungResultDTO> result = dispositionEigenfertigungService.dispositionEigenfertigungStart(inputDTOS);
+        return ResponseEntity.ok(result);
     }
 
     @GetMapping

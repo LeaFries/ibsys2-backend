@@ -1,24 +1,18 @@
 package com.ibsys.backend.web.dto;
 
-import com.ibsys.backend.core.domain.entity.Workplace;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.Setter;
 import lombok.ToString;
 
 @Builder
 @Getter
-@Setter
 @ToString
-public class WaitinglistWorkplaceDTO {
-
+public class WaitingliststockWaitinglistDTO {
     private int period;
-    private int order;
+    private int orderNumber;
     private int firstbatch;
     private int lastbatch;
     private int item;
     private int amount;
-    private long timeneed;
-    private Workplace workplace;
-
+    private int timeNeed;
 }

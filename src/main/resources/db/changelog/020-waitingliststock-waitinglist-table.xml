@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="014-waitingliststock-waitinglist-table" author="">
+
+        <createTable tableName="waitingliststock_waitinglist">
+            <column name="id" type="serial" />
+            <column name="time_need" type="number" />
+            <column name="period" type="number" />
+            <column name="order_number" type="number" />
+            <column name="lastbatch" type="number" />
+            <column name="firstbatch" type="number" />
+            <column name="item" type="number" />
+            <column name="amount" type="number" />
+        </createTable>
+
+    </changeSet>
+
+    <changeSet id="014-waitingliststock-waitinglist-table-primary-key" author="">
+
+        <addPrimaryKey tableName="waitingliststock_waitinglist" columnNames="id" />
+
+    </changeSet>
+
+</databaseChangeLog>

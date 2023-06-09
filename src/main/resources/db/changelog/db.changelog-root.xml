@@ -21,6 +21,11 @@
     <include file="013-productionInPeriod-table.xml" relativeToChangelogFile="true"/>
     <include file="014-kQuantityNeed-table.xml" relativeToChangelogFile="true"/>
     <include file="015-purchasePartDisposition.xml" relativeToChangelogFile="true"/>
-    <include file="016-orders-in-work-workplace.xml" relativeToChangelogFile="true"/>
+    <include file="017-orders-in-work-workplace.xml" relativeToChangelogFile="true"/>
+    <include file="017-orders-in-work-workplace.xml" relativeToChangelogFile="true" />
+    <include file="018-articleWorkstationPlan-table.xml" relativeToChangelogFile="true" />
+    <include file="019-capacityPlan-table.xml" relativeToChangelogFile="true" />
+    <include file="020-waitingliststock-waitinglist-table.xml" relativeToChangelogFile="true" />
+
 
 </databaseChangeLog>
