@@ -1,6 +1,5 @@
 package com.ibsys.backend.core.service;
 
-import ch.qos.logback.core.joran.conditional.IfAction;
 import com.ibsys.backend.core.domain.aggregate.CapacityPlanningResult;
 import com.ibsys.backend.core.domain.entity.ArticleWorkstationPlan;
 import com.ibsys.backend.core.domain.entity.CapacityPlanColumn;
@@ -64,6 +63,7 @@ public class CapacityPlanningService {
         Map<Integer, Integer> capacityReqsMap = new HashMap<>();
         Map<Integer, Integer> newSetUpTimeMap = new HashMap<>();
         Map<Integer, Integer> behindScheduleCapacityMap = new HashMap<>();
+        Map<Integer, Integer> behindScheduleSetUpTimeMap = new HashMap<>();
 
 
         for (int i = 1;i<=15;i++) {
@@ -72,17 +72,23 @@ public class CapacityPlanningService {
                     capacityPlanColumnRepository.findByWorkstationNumber(i);
 
             Optional<WaitinglistWorkplace> waitinglist = waitinglistRepository.findById((long) i);
+            if(waitinglist.get().getTimeneed() !=0) {
+               int workstation_id = waitinglist.get().getWorkplace().getId();
+               int article_id = waitinglist.get().getItem();
+               ArticleWorkstationPlan awpSetUpTime = articleWorkstationPlanRepository.findByWorkstationNumberAndArticleNumber(
+                       article_id,
+                       workstation_id);
+
+               awpSetUpTime.getSetUpTime();
+
+            }
 
             int sumNewCapacityReg = getSumWorkingTimeFromWorkstation(workstationWorkingsTimes);
             int sumNewSetUpTime = getSumSetUpTimeFromWorkstation(workstationWorkingsTimes);
 
             capacityReqsMap.put(i, sumNewCapacityReg);
             newSetUpTimeMap.put(i, sumNewSetUpTime);
-            if (waitinglist.isPresent()) {
-                behindScheduleCapacityMap.put(i, waitinglist.get().getTimeneed());
-            }else {
-                log.debug("waitinglist was not present");
-            }
+            behindScheduleCapacityMap.put(i, waitinglist.get().getTimeneed());
 
 
             //capacityReqsMap.add(sumNewCapacityReg);
@@ -112,7 +118,8 @@ public class CapacityPlanningService {
     private int getSumSetUpTimeFromWorkstation(List<CapacityPlanColumn> workstationSetUpTimes) {
         int sum = 0;
         for(CapacityPlanColumn cp: workstationSetUpTimes) {
-            sum+=cp.getSetUpTime();
+            if(cp.getWorkingTime()!=0)
+                sum+=cp.getSetUpTime();
         }
         return sum;
     }

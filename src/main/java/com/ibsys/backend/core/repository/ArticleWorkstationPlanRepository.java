@@ -12,4 +12,6 @@ public interface ArticleWorkstationPlanRepository extends JpaRepository<ArticleW
 
     List<ArticleWorkstationPlan> findByArticleNumber(int articleNumber);
 
+    ArticleWorkstationPlan findByWorkstationNumberAndArticleNumber(int articleNumber, int workstationNumber);
+
 }
