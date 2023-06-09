@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="014-kQuantityNeed-table" author="">
+        <createSequence sequenceName="k_quantity_need_seq"/>
+        <createTable tableName="k_quantity_need">
+            <column name="id" type="bigint" defaultValueSequenceNext="k_quantity_need_seq">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="item_number" type="integer"/>
+            <column name="p1" type="integer"/>
+            <column name="p2" type="integer"/>
+            <column name="p3" type="integer"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="014-kQuantityNeed-data" author="">
+        <insert tableName="k_quantity_need">
+            <column name="item_number">21</column>
+            <column name="p1">1</column>
+            <column name="p2">0</column>
+            <column name="p3">0</column>
+        </insert>
+        <insert tableName="k_quantity_need">
+            <column name="item_number">22</column>
+            <column name="p1">0</column>
+            <column name="p2">1</column>
+            <column name="p3">0</column>
+        </insert>
+        <insert tableName="k_quantity_need">
+            <column name="item_number">23</column>
+            <column name="p1">0</column>
+            <column name="p2">0</column>
+            <column name="p3">1</column>
+        </insert>
+        <insert tableName="k_quantity_need">
+            <column name="item_number">24</column>
+            <column name="p1">7</column>
+            <column name="p2">7</column>
+            <column name="p3">7</column>
+        </insert>
+        <insert tableName="k_quantity_need">
+            <column name="item_number">25</column>
+            <column name="p1">4</column>
+            <column name="p2">4</column>
+            <column name="p3">4</column>
+        </insert>
+        <insert tableName="k_quantity_need">
+            <column name="item_number">27</column>
+            <column name="p1">2</column>
+            <column name="p2">2</column>
+            <column name="p3">2</column>
+        </insert>
+        <insert tableName="k_quantity_need">
+            <column name="item_number">28</column>
+            <column name="p1">4</column>
+            <column name="p2">5</column>
+            <column name="p3">6</column>
+        </insert>
+        <insert tableName="k_quantity_need">
+            <column name="item_number">32</column>
+            <column name="p1">3</column>
+            <column name="p2">3</column>
+            <column name="p3">3</column>
+        </insert>
+        <insert tableName="k_quantity_need">
+            <column name="item_number">33</column>
+            <column name="p1">0</column>
+            <column name="p2">0</column>
+            <column name="p3">2</column>
+        </insert>
+        <insert tableName="k_quantity_need">
+            <column name="item_number">34</column>
+            <column name="p1">0</column>
+            <column name="p2">0</column>
+            <column name="p3">72</column>
+        </insert>
+        <insert tableName="k_quantity_need">
+            <column name="item_number">35</column>
+            <column name="p1">4</column>
+            <column name="p2">4</column>
+            <column name="p3">4</column>
+        </insert>
+        <insert tableName="k_quantity_need">
+            <column name="item_number">36</column>
+            <column name="p1">1</column>
+            <column name="p2">1</column>
+            <column name="p3">1</column>
+        </insert>
+        <insert tableName="k_quantity_need">
+            <column name="item_number">37</column>
+            <column name="p1">1</column>
+            <column name="p2">1</column>
+            <column name="p3">1</column>
+        </insert>
+        <insert tableName="k_quantity_need">
+            <column name="item_number">38</column>
+            <column name="p1">1</column>
+            <column name="p2">1</column>
+            <column name="p3">1</column>
+        </insert>
+        <insert tableName="k_quantity_need">
+            <column name="item_number">39</column>
+            <column name="p1">2</column>
+            <column name="p2">2</column>
+            <column name="p3">2</column>
+        </insert>
+        <insert tableName="k_quantity_need">
+            <column name="item_number">40</column>
+            <column name="p1">1</column>
+            <column name="p2">1</column>
+            <column name="p3">1</column>
+        </insert>
+        <insert tableName="k_quantity_need">
+            <column name="item_number">41</column>
+            <column name="p1">1</column>
+            <column name="p2">1</column>
+            <column name="p3">1</column>
+        </insert>
+        <insert tableName="k_quantity_need">
+            <column name="item_number">42</column>
+            <column name="p1">2</column>
+            <column name="p2">2</column>
+            <column name="p3">2</column>
+        </insert>
+        <insert tableName="k_quantity_need">
+            <column name="item_number">43</column>
+            <column name="p1">1</column>
+            <column name="p2">1</column>
+            <column name="p3">1</column>
+        </insert>
+        <insert tableName="k_quantity_need">
+            <column name="item_number">44</column>
+            <column name="p1">3</column>
+            <column name="p2">3</column>
+            <column name="p3">3</column>
+        </insert>
+        <insert tableName="k_quantity_need">
+            <column name="item_number">45</column>
+            <column name="p1">1</column>
+            <column name="p2">1</column>
+            <column name="p3">1</column>
+        </insert>
+        <insert tableName="k_quantity_need">
+            <column name="item_number">46</column>
+            <column name="p1">1</column>
+            <column name="p2">1</column>
+            <column name="p3">1</column>
+        </insert>
+        <insert tableName="k_quantity_need">
+            <column name="item_number">47</column>
+            <column name="p1">1</column>
+            <column name="p2">1</column>
+            <column name="p3">1</column>
+        </insert>
+        <insert tableName="k_quantity_need">
+            <column name="item_number">48</column>
+            <column name="p1">2</column>
+            <column name="p2">2</column>
+            <column name="p3">2</column>
+        </insert>
+        <insert tableName="k_quantity_need">
+            <column name="item_number">52</column>
+            <column name="p1">2</column>
+            <column name="p2">0</column>
+            <column name="p3">0</column>
+        </insert>
+        <insert tableName="k_quantity_need">
+            <column name="item_number">53</column>
+            <column name="p1">72</column>
+            <column name="p2">0</column>
+            <column name="p3">0</column>
+        </insert>
+        <insert tableName="k_quantity_need">
+            <column name="item_number">57</column>
+            <column name="p1">0</column>
+            <column name="p2">2</column>
+            <column name="p3">0</column>
+        </insert>
+        <insert tableName="k_quantity_need">
+            <column name="item_number">58</column>
+            <column name="p1">0</column>
+            <column name="p2">72</column>
+            <column name="p3">0</column>
+        </insert>
+        <insert tableName="k_quantity_need">
+            <column name="item_number">59</column>
+            <column name="p1">2</column>
+            <column name="p2">2</column>
+            <column name="p3">2</column>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>

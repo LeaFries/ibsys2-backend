@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="016-orders-in-work-workplace" author="">
+
+        <createTable tableName="orders_in_work_workplace">
+            <column name="id" type="serial" />
+            <column name="period" type="number" />
+            <column name="order_number" type="number" />
+            <column name="batch" type="number" />
+            <column name="item" type="number" />
+            <column name="amount" type="number" />
+            <column name="timeneed" type="number" />
+        </createTable>
+
+    </changeSet>
+
+    <changeSet id="016-orders-in-work-workplace-primary-key" author="">
+
+        <addPrimaryKey tableName="orders_in_work_workplace" columnNames="id" />
+
+    </changeSet>
+
+</databaseChangeLog>

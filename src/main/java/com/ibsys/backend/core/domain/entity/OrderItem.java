@@ -11,7 +11,7 @@ import static jakarta.persistence.GenerationType.IDENTITY;
 
 @Entity(name = "orderitem")
 @Data
-public class Order {
+public class OrderItem {
     @Id
     @GeneratedValue(strategy = IDENTITY)
     private Long id;
@@ -28,6 +28,5 @@ public class Order {
     4 = fast
     5 = normal
      */
-    @Size(min = 1, max = 5, message = "Please choose an order type between 1 and 5.")
     private Integer modus;
 }

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="013-productionInPeriod-table" author="">
+        <createSequence sequenceName="production_in_period_id_seq"/>
+        <createTable tableName="production_in_period">
+            <column name="id" type="bigint" defaultValueSequenceNext="production_in_period_id_seq">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="article" type="integer">
+                <constraints unique="true" nullable="false"/>
+            </column>
+            <column name="period_n" type="integer" defaultValue="0"/>
+            <column name="period_n_plus_one" type="integer" defaultValue="0"/>
+            <column name="period_n_plus_two" type="integer" defaultValue="0"/>
+            <column name="period_n_plus_three" type="integer" defaultValue="0"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="013-productionInPeriod-data" author="">
+        <insert tableName="production_in_period">
+            <column name="article">1</column>
+        </insert>
+        <insert tableName="production_in_period">
+            <column name="article">2</column>
+        </insert>
+        <insert tableName="production_in_period">
+            <column name="article">3</column>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>
