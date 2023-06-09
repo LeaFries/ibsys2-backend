@@ -16,6 +16,9 @@ public class PurchasePartDisposition {
     @Column(name = "delivery_time")
     private Double deliveryTime;
 
+    @Column(name = "discount_quantity")
+    private Integer discountQuantity;
+
     @Column(name = "initial_stock")
     private Integer initialStock;
 
