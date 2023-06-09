@@ -926,26 +926,22 @@
       "timeneed": "0"
     }
   ],
-  "waitingliststock": {
-    "missingpart": {
-      "id": "12",
-      "workplace": {
-        "id": "2",
-        "timeneed": "300",
-        "waitinglist": [
-          {
-            "period": "6",
-            "order": "38",
-            "firstbatch": "9",
-            "lastbatch": "14",
-            "item": "30",
-            "amount": "60",
-            "timeNeed": "300"
-          }
-        ]
-      }
+"waitingliststock": [
+    {
+      "id": 12,
+      "waitinglist": [
+        {
+          "period": 6,
+          "orderNumber": 38,
+          "firstbatch": 9,
+          "lastbatch": 14,
+          "item": 30,
+          "amount": 60,
+          "timeNeed": 300
+        }
+      ]
     }
-  },
+],
   "ordersinwork": [
     {
       "id": "1",
