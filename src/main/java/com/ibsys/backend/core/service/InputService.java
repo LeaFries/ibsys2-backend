@@ -1,5 +1,9 @@
 package com.ibsys.backend.core.service;
 
+
+import com.ibsys.backend.core.domain.entity.*;
+import com.ibsys.backend.core.repository.*;
+
 import com.ibsys.backend.core.domain.entity.Article;
 import com.ibsys.backend.core.domain.entity.Forecast;
 import com.ibsys.backend.core.domain.entity.StuecklistenGruppe;
@@ -37,6 +41,7 @@ public class InputService {
     private final WaitinglistWorkplaceRepository waitinglistWorkplaceRepository;
     private final WorkplaceRepository workplaceRepository;
     private final OrdersInWorkWorkplaceRepository ordersInWorkWorkplaceRepository;
+    private final PurchasePartDispositionRepository purchasePartDispositionRepository;
     private final WaitingliststockWaitlinglistRepository waitingliststockWaitlinglistRepository;
 
     private final ArticleMapper articleMapper;
@@ -124,7 +129,15 @@ public class InputService {
             }
             return article;
         }).toList();
+        List<PurchasePartDisposition> purchasePartDispositions = purchasePartDispositionRepository.findAll();
 
+        for (int i = 0; i < purchasePartDispositions.size(); i++) {
+            int itemNumber = purchasePartDispositions.get(i).getItemNumber();
+
+            purchasePartDispositions.get(i).setInitialStock(articles.get(itemNumber-1).getAmount());
+        }
+
+        purchasePartDispositionRepository.saveAllAndFlush(purchasePartDispositions);
         articleRepository.saveAllAndFlush(articles);
     }
 

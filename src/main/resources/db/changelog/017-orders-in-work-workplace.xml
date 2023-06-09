@@ -6,7 +6,7 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
         https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
 
-    <changeSet id="012-orders-in-work-workplace" author="">
+    <changeSet id="016-orders-in-work-workplace" author="">
 
         <createTable tableName="orders_in_work_workplace">
             <column name="id" type="serial" />
@@ -20,7 +20,7 @@
 
     </changeSet>
 
-    <changeSet id="012-orders-in-work-workplace-primary-key" author="">
+    <changeSet id="016-orders-in-work-workplace-primary-key" author="">
 
         <addPrimaryKey tableName="orders_in_work_workplace" columnNames="id" />
 
