@@ -1,10 +1,7 @@
 package com.ibsys.backend.core.service;
 
 import com.ibsys.backend.core.domain.aggregate.CapacityPlanningResult;
-import com.ibsys.backend.core.domain.entity.ArticleWorkstationPlan;
-import com.ibsys.backend.core.domain.entity.CapacityPlanColumn;
-import com.ibsys.backend.core.domain.entity.WaitinglistWorkplace;
-import com.ibsys.backend.core.domain.entity.Workplace;
+import com.ibsys.backend.core.domain.entity.*;
 import com.ibsys.backend.core.repository.ArticleWorkstationPlanRepository;
 import com.ibsys.backend.core.repository.CapacityPlanColumnRepository;
 import com.ibsys.backend.core.repository.WaitinglistWorkplaceRepository;
@@ -26,6 +23,7 @@ public class CapacityPlanningService {
     private final ArticleWorkstationPlanRepository articleWorkstationPlanRepository;
     private final CapacityPlanColumnRepository capacityPlanColumnRepository;
     private final WorkplaceRepository WorkplaceRepository;
+    private final WaitinglistWorkplaceRepository waitinglistWorkplaceRepository;
 
     @Transactional
     public void calculateCapacityPlan(List<InputCapacityPlanningDTO> inputCapacityPlanningDTO) {
@@ -65,6 +63,7 @@ public class CapacityPlanningService {
         Map<Integer, Integer> capacityReqsMap = new HashMap<>();
         Map<Integer, Integer> newSetUpTimeMap = new HashMap<>();
         Map<Integer, Integer> behindScheduleCapacityMap = new HashMap<>();
+        Map<Integer, Integer> behindScheduleSetUpTimeMap = new HashMap<>();
 
 
         for (int i = 1;i<=15;i++) {
@@ -86,8 +85,24 @@ public class CapacityPlanningService {
                 behindScheduleCapacityMap.put(i, 0);
             }
 
+            behindScheduleSetUpTimeMap.put(i, 0);
 
             //capacityReqsMap.add(sumNewCapacityReg);
+        }
+
+        //behindScheduleCapcitySetUpTime
+        List<WaitinglistWorkplace> waitinglistWorkplaces = waitinglistWorkplaceRepository.findAll();
+        for (WaitinglistWorkplace waitinglistWorkplace: waitinglistWorkplaces) {
+            int workstationNumber = waitinglistWorkplace.getWorkplace().getId();
+            int articleNumber = waitinglistWorkplace.getItem();
+            ArticleWorkstationPlan awpSetUpTime =
+                    articleWorkstationPlanRepository.findByWorkstationNumberAndArticleNumber(
+                            workstationNumber,
+                            articleNumber);
+
+            //sumBehindScheduleSetUpTime +=awpSetUpTime.getSetUpTime();
+            behindScheduleSetUpTimeMap.put(workstationNumber,
+                    behindScheduleSetUpTimeMap.get(workstationNumber)+awpSetUpTime.getSetUpTime());
 
         }
 
@@ -98,6 +113,7 @@ public class CapacityPlanningService {
         result.setNewCapacity_reqs(capacityReqsMap);
         result.setNewSetUpTime(newSetUpTimeMap);
         result.setBehindScheduleCapacity(behindScheduleCapacityMap);
+        result.setBehindScheduleSetUpTime(behindScheduleSetUpTimeMap);
 
 
 

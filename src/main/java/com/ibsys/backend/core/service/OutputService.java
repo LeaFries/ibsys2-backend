@@ -31,7 +31,7 @@ public class OutputService {
         output.setQualityControl(qualityControlRepository.findById(1L).get());
         output.setSellDirects(sellDirectRepository.findAll());
         output.setSellWishes(sellWishRepository.findAll());
-        output.setWorkstationsWithOverTime(workingTimeRepository.findAll());
+        output.setWorkstations(workingTimeRepository.findAll());
 
         return output;
     }
