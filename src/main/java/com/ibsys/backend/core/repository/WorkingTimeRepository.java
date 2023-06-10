@@ -6,4 +6,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface WorkingTimeRepository extends JpaRepository<OverTime, Long> {
+
+    OverTime findByStation(int station);
+
 }

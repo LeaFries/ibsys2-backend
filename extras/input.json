@@ -818,7 +818,7 @@
   "waitinglistworkstations": [
     {
       "id": "1",
-      "timeneed": "240",
+      "timeneed": "480",
       "waitinglist": [
         {
           "period": "6",
@@ -826,6 +826,15 @@
           "firstbatch": "11",
           "lastbatch": "14",
           "item": "29",
+          "amount": "40",
+          "timeneed": "240"
+        },
+        {
+          "period": "6",
+          "order": "67",
+          "firstbatch": "11",
+          "lastbatch": "14",
+          "item": "49",
           "amount": "40",
           "timeneed": "240"
         }

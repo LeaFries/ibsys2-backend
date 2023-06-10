@@ -1,0 +1,132 @@
+[
+  {
+    "articleNumber": 4,
+    "orderQuantity": 200
+  },
+
+  {
+    "articleNumber": 5,
+    "orderQuantity": 100
+  },
+
+  {
+    "articleNumber": 6,
+    "orderQuantity": 50
+  },
+
+  {
+    "articleNumber": 7,
+    "orderQuantity": 200
+  },
+
+  {
+    "articleNumber": 8,
+    "orderQuantity": 100
+  },
+  {
+    "articleNumber": 9,
+    "orderQuantity": 50
+  },
+  
+  {
+    "articleNumber": 10,
+    "orderQuantity": 200
+  },
+  
+  {
+    "articleNumber": 11,
+    "orderQuantity": 100
+  },
+  
+  {
+    "articleNumber": 12,
+    "orderQuantity": 50
+  },
+  
+  {
+    "articleNumber": 13,
+    "orderQuantity": 200
+  },
+  
+  {
+    "articleNumber": 14,
+    "orderQuantity": 100
+  },
+
+  {
+    "articleNumber": 15,
+    "orderQuantity": 50
+  },
+  {
+    "articleNumber": 16,
+    "orderQuantity": 350
+  },
+  {
+    "articleNumber": 17,
+    "orderQuantity": 350
+  },
+  {
+    "articleNumber": 18,
+    "orderQuantity": 200
+  },
+  {
+    "articleNumber": 19,
+    "orderQuantity": 100
+  },
+  {
+    "articleNumber": 20,
+    "orderQuantity": 50
+  },
+  {
+    "articleNumber": 26,
+    "orderQuantity": 350
+  },
+  {
+    "articleNumber": 49,
+    "orderQuantity": 200
+  },
+  {
+    "articleNumber": 54,
+    "orderQuantity": 100
+  },
+  {
+    "articleNumber": 29,
+    "orderQuantity": 50
+  },
+  {
+    "articleNumber": 50,
+    "orderQuantity": 200
+  },
+  {
+    "articleNumber": 55,
+    "orderQuantity": 100
+  },
+  {
+    "articleNumber": 30,
+    "orderQuantity": 50
+  },
+  {
+    "articleNumber": 51,
+    "orderQuantity": 200
+  },
+  {
+    "articleNumber": 56,
+    "orderQuantity": 100
+  },
+  {
+    "articleNumber": 31,
+    "orderQuantity": 50
+  },
+  {
+    "articleNumber": 1,
+    "orderQuantity": 200
+  },
+  {
+    "articleNumber": 2,
+    "orderQuantity": 100
+  },
+  {
+    "articleNumber": 3,
+    "orderQuantity": 50
+  }
+]

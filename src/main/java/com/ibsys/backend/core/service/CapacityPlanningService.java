@@ -2,10 +2,7 @@ package com.ibsys.backend.core.service;
 
 import com.ibsys.backend.core.domain.aggregate.CapacityPlanningResult;
 import com.ibsys.backend.core.domain.entity.*;
-import com.ibsys.backend.core.repository.ArticleWorkstationPlanRepository;
-import com.ibsys.backend.core.repository.CapacityPlanColumnRepository;
-import com.ibsys.backend.core.repository.WaitinglistWorkplaceRepository;
-import com.ibsys.backend.core.repository.WorkplaceRepository;
+import com.ibsys.backend.core.repository.*;
 import com.ibsys.backend.web.dto.InputCapacityPlanningDTO;
 import com.ibsys.backend.core.domain.aggregate.OutputCapacityPlanning;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +21,7 @@ public class CapacityPlanningService {
     private final CapacityPlanColumnRepository capacityPlanColumnRepository;
     private final WorkplaceRepository WorkplaceRepository;
     private final WaitinglistWorkplaceRepository waitinglistWorkplaceRepository;
+    private final WorkingTimeRepository overtimeRepository;
 
     @Transactional
     public void calculateCapacityPlan(List<InputCapacityPlanningDTO> inputCapacityPlanningDTO) {
@@ -45,7 +43,7 @@ public class CapacityPlanningService {
                      setUpTime
                      );
              capacityPlanColumnRepository.saveAndFlush(cp);
-             log.debug("Calculate Test Result: " + cp);
+             log.debug("Calculated: " + cp);
          }
       }
     }
@@ -54,16 +52,18 @@ public class CapacityPlanningService {
         OutputCapacityPlanning output = new OutputCapacityPlanning();
         output.setWorkingTimePlan(capacityPlanColumnRepository.findAll());
         output.setCapacityPlanningResult(calculateResult());
+        log.debug("build" + output);
        return output;
     }
 
     public CapacityPlanningResult calculateResult() {
 
-        //List<Integer> capacityReqsMap = new ArrayList<>();
-        Map<Integer, Integer> capacityReqsMap = new HashMap<>();
+        Map<Integer, Integer> newCapacityReqsMap = new HashMap<>();
         Map<Integer, Integer> newSetUpTimeMap = new HashMap<>();
         Map<Integer, Integer> behindScheduleCapacityMap = new HashMap<>();
         Map<Integer, Integer> behindScheduleSetUpTimeMap = new HashMap<>();
+        Map<Integer, Integer> totalCapacityReqsMap = new HashMap<>();
+        List<OverTime> workstationWithOvertime = new ArrayList<>();
 
 
         for (int i = 1;i<=15;i++) {
@@ -75,9 +75,10 @@ public class CapacityPlanningService {
             int sumNewCapacityReg = getSumWorkingTimeFromWorkstation(workstationWorkingsTimes);
             int sumNewSetUpTime = getSumSetUpTimeFromWorkstation(workstationWorkingsTimes);
 
-            capacityReqsMap.put(i, sumNewCapacityReg);
+            newCapacityReqsMap.put(i, sumNewCapacityReg);
             newSetUpTimeMap.put(i, sumNewSetUpTime);
 
+            //behindScheduleCapacity
             Workplace waitinglistForWorkstation = WorkplaceRepository.findById(i).orElse(null);
             if(waitinglistForWorkstation!=null) {
                 behindScheduleCapacityMap.put(i, waitinglistForWorkstation.getTimeneed());
@@ -85,9 +86,10 @@ public class CapacityPlanningService {
                 behindScheduleCapacityMap.put(i, 0);
             }
 
+            //filling for building sum
             behindScheduleSetUpTimeMap.put(i, 0);
+            totalCapacityReqsMap.put(i, 0);
 
-            //capacityReqsMap.add(sumNewCapacityReg);
         }
 
         //behindScheduleCapcitySetUpTime
@@ -106,16 +108,57 @@ public class CapacityPlanningService {
 
         }
 
+        //totalCapacityReqs
+        for (Map.Entry<Integer, Integer> entry: totalCapacityReqsMap.entrySet()) {
+            int key = entry.getKey();
+            int sum = newCapacityReqsMap.get(key) +
+                    newSetUpTimeMap.get(key) +
+                    behindScheduleCapacityMap.get(key) +
+                    behindScheduleSetUpTimeMap.get(key);
+            totalCapacityReqsMap.put(key, totalCapacityReqsMap.get(key) + sum);
+
+            //Overtime
+            OverTime overTime = new OverTime();
+            overTime.setStation(key);
+            if (sum <= 2400) {
+                overTime.setShift(1);
+                overTime.setOvertime(0);
+            } else if (sum <= 3600) {
+                overTime.setShift(1);
+                overTime.setOvertime(sum - 2400);
+            } else if (sum <= 4800) {
+                overTime.setShift(2);
+                overTime.setOvertime(0);
+            } else if (sum <= 6000) {
+                overTime.setShift(2);
+                overTime.setOvertime(sum - 4800);
+            } else {
+                overTime.setShift(3);
+                overTime.setOvertime(0);
+            }
+
+            OverTime overTimeFromDB = overtimeRepository.findByStation(key);
+            overTimeFromDB.setShift(overTime.getShift());
+            overTimeFromDB.setOvertime(overTime.getOvertime());
+            overtimeRepository.saveAndFlush(overTimeFromDB);
+            //workstationWithOvertime = overtimeRepository.findAll();
+
+        }
+
+
+
         CapacityPlanningResult result = new CapacityPlanningResult();
 
-        //result.setNewCapacity_reqs(capacityReqsMap);
+        //result.setNewCapacity_reqs(newCapacityReqsMap);
 
-        result.setNewCapacity_reqs(capacityReqsMap);
+        result.setNewCapacity_reqs(newCapacityReqsMap);
         result.setNewSetUpTime(newSetUpTimeMap);
         result.setBehindScheduleCapacity(behindScheduleCapacityMap);
         result.setBehindScheduleSetUpTime(behindScheduleSetUpTimeMap);
+        result.setTotalCapacityRequirement(totalCapacityReqsMap);
+        result.setWorkstationsWithOverTime(overtimeRepository.findAll());
 
-
+        log.debug("build" + result);
 
         return result;
 
