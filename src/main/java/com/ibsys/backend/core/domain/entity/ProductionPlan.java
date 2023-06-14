@@ -17,19 +17,15 @@ public class ProductionPlan {
     @Positive
     private int article;
 
-    @Positive
     @Column(name = "period_n")
     private int periodN;
 
-    @Positive
     @Column(name = "period_n_plus_one")
     private int periodNplusOne;
 
-    @Positive
     @Column(name = "period_n_plus_two")
     private int periodNplusTwo;
 
-    @Positive
     @Column(name = "period_n_plus_three")
     private int periodNplusThree;
 }

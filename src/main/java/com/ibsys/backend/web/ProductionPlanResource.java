@@ -8,11 +8,9 @@ import com.ibsys.backend.web.dto.ProductionInPeriodDTO;
 import com.ibsys.backend.web.dto.ProductionPlanDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -23,8 +21,14 @@ public class ProductionPlanResource {
 
     private final ProductionPlanService productionPlanService;
 
+    @Operation(summary = "Provides the initial forecast information")
+    @GetMapping("/forecast")
+    public ResponseEntity<List<ProductionPlan>> findInitialProductionPlan() {
+        return ResponseEntity.ok(productionPlanService.findProductionPlan());
+    }
+
     @Operation(summary = "This endpoint is supposed to be manually filled with the production plan forecast")
-    @PostMapping("/forecast")
+    @PostMapping("/forecast/new")
     public ResponseEntity<List<ProductionPlan>> addProductionPlan(@RequestBody List<ProductionPlanDTO> productionPlans) {
 
         return ResponseEntity.ok(productionPlanService.addProductionPlan(productionPlans));

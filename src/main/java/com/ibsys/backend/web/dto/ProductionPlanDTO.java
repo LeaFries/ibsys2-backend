@@ -14,9 +14,6 @@ public class ProductionPlanDTO {
     private int article;
 
     @Positive
-    private int periodN;
-
-    @Positive
     private int periodNplusOne;
 
     @Positive

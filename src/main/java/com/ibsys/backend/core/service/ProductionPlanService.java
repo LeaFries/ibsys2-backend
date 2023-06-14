@@ -1,8 +1,10 @@
 package com.ibsys.backend.core.service;
 
+import com.ibsys.backend.core.domain.entity.Forecast;
 import com.ibsys.backend.core.domain.entity.ProductionInPeriod;
 import com.ibsys.backend.core.domain.entity.ProductionPlan;
 import com.ibsys.backend.core.domain.entity.SellDirect;
+import com.ibsys.backend.core.repository.ForecastRepository;
 import com.ibsys.backend.core.repository.ProductionInPeriodRepository;
 import com.ibsys.backend.core.repository.ProductionPlanRepository;
 import com.ibsys.backend.core.repository.SellDirectRepository;
@@ -15,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -22,17 +25,24 @@ import java.util.List;
 public class ProductionPlanService {
     private final ProductionPlanRepository productionPlanRepository;
     private final ProductionInPeriodRepository productionInPeriodRepository;
+    private final ForecastRepository forecastRepository;
     private final SellDirectRepository sellDirectRepository;
     private final ProductionInPeriodMapper productionInPeriodMapper;
     private final ProductionPlanMapper productionPlanMapper;
 
     public List<ProductionPlan> addProductionPlan(List<ProductionPlanDTO> productionPlanDTOS) {
 
-        List<ProductionPlan> productionPlans = productionPlanMapper.toProductionPlanList(productionPlanDTOS);
+        List<ProductionPlan> productionPlans = productionPlanRepository.findAll();
 
-        List<ProductionPlan> newProductionplans = productionPlanRepository.saveAllAndFlush(productionPlans);
+        for (int i = 0; i < productionPlans.size(); i++) {
+            productionPlans.get(i).setPeriodNplusOne(productionPlanDTOS.get(i).getPeriodNplusOne());
+            productionPlans.get(i).setPeriodNplusTwo(productionPlanDTOS.get(i).getPeriodNplusTwo());
+            productionPlans.get(i).setPeriodNplusThree(productionPlanDTOS.get(i).getPeriodNplusThree());
+        }
 
-        return newProductionplans;
+        productionPlanRepository.saveAllAndFlush(productionPlans);
+
+        return productionPlans;
     }
 
     public List<ProductionInPeriod> addProductionInPeriod(List<ProductionInPeriodDTO> productionInPeriodDTOS) {
@@ -52,6 +62,31 @@ public class ProductionPlanService {
 
         return productionInPeriods;
     }
+
+    public List<ProductionPlan> findProductionPlan() {
+        List<ProductionPlan> productionPlans = productionPlanRepository.findAll();
+        Optional<Forecast> forecast = forecastRepository.findById(1L);
+
+        if (forecast.isEmpty()) {
+            productionPlans.get(0).setPeriodN(0);
+            productionPlans.get(1).setPeriodN(0);
+            productionPlans.get(2).setPeriodN(0);
+        }
+        else {
+            productionPlans.get(0).setPeriodN(forecast.get().getP1());
+            productionPlans.get(1).setPeriodN(forecast.get().getP2());
+            productionPlans.get(2).setPeriodN(forecast.get().getP3());
+
+        }
+
+        productionPlanRepository.saveAllAndFlush(productionPlans);
+
+        return productionPlans;
+    }
+/*
+    public List<ProductionPlan> findPlannedBikeStock() {
+
+    }*/
 
     public List<SellDirect> addSellDirect(List<SellDirect> newSellDirects) {
         List<SellDirect> sellDirects = sellDirectRepository.findAll();
