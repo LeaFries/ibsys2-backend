@@ -1,5 +1,6 @@
 package com.ibsys.backend.core.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -14,6 +15,7 @@ import static jakarta.persistence.GenerationType.IDENTITY;
 public class OrderItem {
     @Id
     @GeneratedValue(strategy = IDENTITY)
+    @JsonIgnore()
     private Long id;
 
     private Integer article;
