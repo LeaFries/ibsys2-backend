@@ -15,11 +15,23 @@
             <column name="article" type="integer">
                 <constraints unique="true" nullable="false"/>
             </column>
-            <column name="period_n" type="integer"/>
-            <column name="period_n_plus_one" type="integer"/>
-            <column name="period_n_plus_two" type="integer"/>
-            <column name="period_n_plus_three" type="integer"/>
+            <column name="period_n" type="integer" defaultValue="0"/>
+            <column name="period_n_plus_one" type="integer" defaultValue="0"/>
+            <column name="period_n_plus_two" type="integer" defaultValue="0"/>
+            <column name="period_n_plus_three" type="integer" defaultValue="0"/>
         </createTable>
+    </changeSet>
+
+    <changeSet id="013-productionInPeriod-data" author="">
+        <insert tableName="production_plan">
+            <column name="article">1</column>
+        </insert>
+        <insert tableName="production_plan">
+            <column name="article">2</column>
+        </insert>
+        <insert tableName="production_plan">
+            <column name="article">3</column>
+        </insert>
     </changeSet>
 
 </databaseChangeLog>

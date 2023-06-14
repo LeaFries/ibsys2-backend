@@ -1,0 +1,26 @@
+[
+  {
+    "item": {
+      "article": 1,
+      "quantity": 100,
+      "price": 100.5,
+      "penalty": 10.1
+    }
+  },
+  {
+    "item": {
+      "article": 2,
+      "quantity": 120,
+      "price": 110.7,
+      "penalty": 10.2
+    }
+  },
+  {
+    "item": {
+      "article": 3,
+      "quantity": 50,
+      "price": 90.2,
+      "penalty": 10.3
+    }
+  }
+]

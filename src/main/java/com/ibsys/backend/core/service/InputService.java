@@ -129,6 +129,8 @@ public class InputService {
             }
             return article;
         }).toList();
+
+        // Feed the stock values for the purchase parts into the purchase-part-disposition table
         List<PurchasePartDisposition> purchasePartDispositions = purchasePartDispositionRepository.findAll();
 
         for (int i = 0; i < purchasePartDispositions.size(); i++) {

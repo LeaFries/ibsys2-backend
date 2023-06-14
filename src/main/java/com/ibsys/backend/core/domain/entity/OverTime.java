@@ -1,6 +1,8 @@
 package com.ibsys.backend.core.domain.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.ibsys.backend.core.domain.validation.NotEqual;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
@@ -15,6 +17,8 @@ import static jakarta.persistence.GenerationType.IDENTITY;
 @Entity
 @Data
 @Table(name = "working_time")
+@JsonTypeName("workingtime")
+@JsonTypeInfo(include = JsonTypeInfo.As.WRAPPER_OBJECT, use = JsonTypeInfo.Id.NAME)
 public class OverTime {
     @Id
     @GeneratedValue(strategy = IDENTITY)

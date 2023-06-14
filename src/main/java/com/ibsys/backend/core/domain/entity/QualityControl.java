@@ -20,6 +20,7 @@ public class QualityControl {
 
     private Type type;
 
+    @JsonProperty("losequantity")
     private Integer loseQuantity;
 
     private Integer delay;

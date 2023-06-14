@@ -15,10 +15,22 @@
             <column name="article" type="integer">
                 <constraints unique="true" nullable="false"/>
             </column>
-            <column name="penalty" type="double precision"/>
-            <column name="price" type="double precision"/>
-            <column name="quantity" type="integer"/>
+            <column name="penalty" type="numeric" defaultValue="0.0"/>
+            <column name="price" type="numeric" defaultValue="0.0"/>
+            <column name="quantity" type="integer" defaultValue="0"/>
         </createTable>
+    </changeSet>
+
+    <changeSet id="005-sellDirect-data" author="">
+        <insert tableName="sell_direct">
+            <column name="article">1</column>
+        </insert>
+        <insert tableName="sell_direct">
+            <column name="article">2</column>
+        </insert>
+        <insert tableName="sell_direct">
+            <column name="article">3</column>
+        </insert>
     </changeSet>
 
 </databaseChangeLog>
