@@ -15,8 +15,20 @@
             <column name="article" type="integer">
                 <constraints unique="true" nullable="false"/>
             </column>
-            <column name="quantity" type="integer"/>
+            <column name="quantity" type="integer" defaultValue="0"/>
         </createTable>
+    </changeSet>
+
+    <changeSet id="006-sellWish-data" author="">
+        <insert tableName="sell_wish">
+            <column name="article">1</column>
+        </insert>
+        <insert tableName="sell_wish">
+            <column name="article">2</column>
+        </insert>
+        <insert tableName="sell_wish">
+            <column name="article">3</column>
+        </insert>
     </changeSet>
 
 </databaseChangeLog>

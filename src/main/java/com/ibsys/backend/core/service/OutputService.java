@@ -1,7 +1,9 @@
 package com.ibsys.backend.core.service;
 
 import com.ibsys.backend.core.domain.aggregate.Output;
+import com.ibsys.backend.core.domain.entity.Forecast;
 import com.ibsys.backend.core.domain.entity.OrderItem;
+import com.ibsys.backend.core.domain.entity.SellWish;
 import com.ibsys.backend.core.repository.*;
 import com.ibsys.backend.web.dto.OrderItemDTO;
 import com.ibsys.backend.web.dto.mapper.OrderItemMapper;
@@ -10,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -20,6 +23,7 @@ public class OutputService {
     private final SellDirectRepository sellDirectRepository;
     private final SellWishRepository sellWishRepository;
     private final WorkingTimeRepository workingTimeRepository;
+    private final ForecastRepository forecastRepository;
 
     private final OrderItemMapper orderItemMapper;
 
@@ -30,6 +34,9 @@ public class OutputService {
         output.setProductions(productionRepository.findAll());
         output.setQualityControl(qualityControlRepository.findById(1L).get());
         output.setSellDirects(sellDirectRepository.findAll());
+
+        feedSellWish();
+
         output.setSellWishes(sellWishRepository.findAll());
         output.setWorkstations(workingTimeRepository.findAll());
 
@@ -43,5 +50,21 @@ public class OutputService {
         orderRepository.saveAllAndFlush(orderItems);
 
         return orderItemDTOS;
+    }
+
+    private void feedSellWish() {
+        Optional<Forecast> forecast = forecastRepository.findById(1L);
+
+        if (forecast.isEmpty()) {
+            return;
+        }
+
+        List<SellWish> sellWishes = sellWishRepository.findAll();
+
+        sellWishes.get(0).setQuantity(forecast.get().getP1());
+        sellWishes.get(1).setQuantity(forecast.get().getP2());
+        sellWishes.get(2).setQuantity(forecast.get().getP3());
+
+        sellWishRepository.saveAllAndFlush(sellWishes);
     }
 }
