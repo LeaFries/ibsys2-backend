@@ -2,8 +2,10 @@ package com.ibsys.backend.core.service;
 
 import com.ibsys.backend.core.domain.entity.ProductionInPeriod;
 import com.ibsys.backend.core.domain.entity.ProductionPlan;
+import com.ibsys.backend.core.domain.entity.SellDirect;
 import com.ibsys.backend.core.repository.ProductionInPeriodRepository;
 import com.ibsys.backend.core.repository.ProductionPlanRepository;
+import com.ibsys.backend.core.repository.SellDirectRepository;
 import com.ibsys.backend.web.dto.ProductionInPeriodDTO;
 import com.ibsys.backend.web.dto.ProductionPlanDTO;
 import com.ibsys.backend.web.dto.mapper.ProductionInPeriodMapper;
@@ -20,6 +22,7 @@ import java.util.List;
 public class ProductionPlanService {
     private final ProductionPlanRepository productionPlanRepository;
     private final ProductionInPeriodRepository productionInPeriodRepository;
+    private final SellDirectRepository sellDirectRepository;
     private final ProductionInPeriodMapper productionInPeriodMapper;
     private final ProductionPlanMapper productionPlanMapper;
 
@@ -48,5 +51,19 @@ public class ProductionPlanService {
         productionInPeriodRepository.saveAllAndFlush(productionInPeriods);
 
         return productionInPeriods;
+    }
+
+    public List<SellDirect> addSellDirect(List<SellDirect> newSellDirects) {
+        List<SellDirect> sellDirects = sellDirectRepository.findAll();
+
+        for (int i = 0; i < newSellDirects.size(); i++) {
+            sellDirects.get(i).setPenalty(newSellDirects.get(i).getPenalty());
+            sellDirects.get(i).setPrice(newSellDirects.get(i).getPrice());
+            sellDirects.get(i).setQuantity(newSellDirects.get(i).getQuantity());
+        }
+
+        sellDirectRepository.saveAllAndFlush(sellDirects);
+
+        return sellDirects;
     }
 }
