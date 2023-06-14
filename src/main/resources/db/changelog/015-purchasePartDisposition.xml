@@ -15,7 +15,7 @@
             <column name="item_number" type="integer"/>
             <column name="delivery_time" type="numeric"/>
             <column name="discount_quantity" type="integer"/>
-            <column name="initial_stock" type="integer"/>
+            <column name="initial_stock" type="integer" defaultValue="0"/>
             <column name="requirement_n" type="integer"/>
             <column name="requirement_n_plus_one" type="integer"/>
             <column name="requirement_n_plus_two" type="integer"/>
