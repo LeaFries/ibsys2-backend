@@ -42,6 +42,12 @@ public class ProductionPlanResource {
         return ResponseEntity.ok(productionPlanService.addProductionInPeriod(productionInPeriodDTOS));
     }
 
+    @Operation(summary = "Shows the calculation of the planned bike stock")
+    @GetMapping("/plannedbikestock")
+    public ResponseEntity<List<ProductionPlan>> findPlannedBikeStock() {
+        return ResponseEntity.ok(productionPlanService.findPlannedBikeStock());
+    }
+
     @Operation(summary = "This endpoint is supposed to be manually filled with the sell direct")
     @PostMapping("/selldirect")
     public ResponseEntity<List<SellDirect>> addSellDirect(

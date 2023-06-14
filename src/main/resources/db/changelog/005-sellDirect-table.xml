@@ -15,8 +15,8 @@
             <column name="article" type="integer">
                 <constraints unique="true" nullable="false"/>
             </column>
-            <column name="penalty" type="double precision" defaultValue="0.0"/>
-            <column name="price" type="double precision" defaultValue="0.0"/>
+            <column name="penalty" type="numeric" defaultValue="0.0"/>
+            <column name="price" type="numeric" defaultValue="0.0"/>
             <column name="quantity" type="integer" defaultValue="0"/>
         </createTable>
     </changeSet>

@@ -1,6 +1,7 @@
 package com.ibsys.backend.core.domain.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import jakarta.persistence.Column;
@@ -27,8 +28,6 @@ public class SellDirect {
 
     @NotNull
     @Column(unique = true)
-    @Min(value = 1, message = "Bike can be at lowest 1.")
-    @Max(value = 3, message = "Bike can be at highest 3")
     private Integer article;
 
     private Integer quantity;
