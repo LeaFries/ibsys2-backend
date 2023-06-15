@@ -26,6 +26,8 @@ public class CapacityPlanningService {
     @Transactional
     public void calculateCapacityPlan(List<InputCapacityPlanningDTO> inputCapacityPlanningDTO) {
 
+        capacityPlanColumnRepository.deleteAll();
+
       for (InputCapacityPlanningDTO cpDTO: inputCapacityPlanningDTO){
          List<ArticleWorkstationPlan> awpList =
                  articleWorkstationPlanRepository.findByArticleNumber(cpDTO.getArticleNumber());
@@ -52,7 +54,7 @@ public class CapacityPlanningService {
         OutputCapacityPlanning output = new OutputCapacityPlanning();
         output.setWorkingTimePlan(capacityPlanColumnRepository.findAll());
         output.setCapacityPlanningResult(calculateResult());
-        log.debug("build" + output);
+        log.debug("build " + output);
        return output;
     }
 
@@ -158,7 +160,7 @@ public class CapacityPlanningService {
         result.setTotalCapacityRequirement(totalCapacityReqsMap);
         result.setWorkstationsWithOverTime(overtimeRepository.findAll());
 
-        log.debug("build" + result);
+        log.debug("build " + result);
 
         return result;
 
