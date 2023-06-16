@@ -99,13 +99,13 @@ public class InputService {
         List<WaitingliststockWaitinglist> waitinglists = new ArrayList<>();
         inputDTO.getWaitingliststock().stream()
                 .forEach(
-                        missingPartDTO -> {
-                            missingPartDTO.getWaitinglist()
-                                    .forEach( waitinglistDTO -> {
-                                                waitinglists.add(waitingliststockWaitinglistMapper.toWaitingliststockWaitlinglist(waitinglistDTO));
-                                            }
-                                    );
-                        }
+                        missingPartDTO ->
+                                missingPartDTO.getWorkplace()
+                                    .forEach( workplaceDTO ->
+                                            workplaceDTO.getWaitinglist().forEach(
+                                                waitinglistDTO -> waitinglists.add(waitingliststockWaitinglistMapper.toWaitingliststockWaitlinglist(waitinglistDTO))
+                                            )
+                                    )
                 );
         waitingliststockWaitlinglistRepository.saveAllAndFlush(waitinglists);
     }

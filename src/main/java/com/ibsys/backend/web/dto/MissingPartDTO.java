@@ -12,6 +12,6 @@ import java.util.List;
 public class MissingPartDTO {
 
     private int id;
-    private List<WaitingliststockWaitinglistDTO> waitinglist;
+    private List<WaitingliststockWorkplaceDTO> workplace;
 
 }
