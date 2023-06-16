@@ -3,12 +3,14 @@ package com.ibsys.backend.core.service;
 import com.ibsys.backend.core.domain.entity.Article;
 import com.ibsys.backend.core.domain.entity.Forecast;
 import com.ibsys.backend.core.domain.entity.OrdersInWorkWorkplace;
+import com.ibsys.backend.core.domain.entity.Production;
 import com.ibsys.backend.core.domain.entity.StuecklistenGruppe;
 import com.ibsys.backend.core.domain.entity.WaitinglistWorkplace;
 import com.ibsys.backend.core.domain.entity.WaitingliststockWaitinglist;
 import com.ibsys.backend.core.repository.ArticleRepository;
 import com.ibsys.backend.core.repository.ForecastRepository;
 import com.ibsys.backend.core.repository.OrdersInWorkWorkplaceRepository;
+import com.ibsys.backend.core.repository.ProductionRepository;
 import com.ibsys.backend.core.repository.WaitinglistWorkplaceRepository;
 import com.ibsys.backend.core.repository.WaitingliststockWaitlinglistRepository;
 import com.ibsys.backend.web.dto.DispositionEigenfertigungInputDTO;
@@ -33,6 +35,7 @@ public class DispositionEigenfertigungService {
     private final WaitinglistWorkplaceRepository waitinglistWorkplaceRepository;
     private final OrdersInWorkWorkplaceRepository ordersInWorkWorkplaceRepository;
     private final WaitingliststockWaitlinglistRepository waitingliststockWaitlinglistRepository;
+    private final ProductionRepository productionRepository;
 
     @Transactional
     public void updateArticles(final Map<Integer, Integer> geplanterSicherheitsbestand) {
@@ -137,6 +140,11 @@ public class DispositionEigenfertigungService {
                             log.debug(rechnung);
                             dispositionResult.put(article.getId(), produktionsauftraege);
                             articleRepository.saveAndFlush(article);
+                            Production production = Production.builder()
+                                    .article(article.getId())
+                                    .quantity(produktionsauftraege)
+                                    .build();
+                            productionRepository.saveAndFlush(production);
                         }
                 );
         return DispositionEigenfertigungResultDTO.builder()
@@ -215,6 +223,11 @@ public class DispositionEigenfertigungService {
                             log.debug(rechnung);
                             dispositionResult.put(article.getId(), produktionsauftraege);
                             articleRepository.saveAndFlush(article);
+                            Production production = Production.builder()
+                                    .article(article.getId())
+                                    .quantity(produktionsauftraege)
+                                    .build();
+                            productionRepository.saveAndFlush(production);
                         }
                 );
         return DispositionEigenfertigungResultDTO.builder()
@@ -293,6 +306,11 @@ public class DispositionEigenfertigungService {
                             log.debug(rechnung);
                             dispositionResult.put(article.getId(), produktionsauftraege);
                             articleRepository.saveAndFlush(article);
+                            Production production = Production.builder()
+                                    .article(article.getId())
+                                    .quantity(produktionsauftraege)
+                                    .build();
+                            productionRepository.saveAndFlush(production);
                         }
                 );
         return DispositionEigenfertigungResultDTO.builder()
