@@ -67,33 +67,33 @@ public class PurchasePartDispositionService {
     }
 
     private void determineOrderNecessity(List<PurchasePartDisposition> purchasePartDispositions) {
-        double points = 0;
+        double lastingPeriod = 0;
 
         for(PurchasePartDisposition ppD : purchasePartDispositions) {
             if ((ppD.getInitialStock() - ppD.getRequirementN() > 0)) {
-                points++;
+                lastingPeriod++;
                 if ((ppD.getInitialStock() - ppD.getRequirementN() - ppD.getRequirementNplusOne() > 0)) {
-                    points++;
+                    lastingPeriod++;
                     if((ppD.getInitialStock()
                             - ppD.getRequirementN()
                             - ppD.getRequirementNplusOne()
                             - ppD.getRequirementNplusTwo() > 0)) {
-                        points++;
+                        lastingPeriod++;
                         if((ppD.getInitialStock()
                                 - ppD.getRequirementN()
                                 - ppD.getRequirementNplusOne()
                                 - ppD.getRequirementNplusTwo()
                                 - ppD.getRequirementNplusThree() > 0)) {
-                            points++;
+                            lastingPeriod++;
                         }
                     }
                 }
             }
 
-            if(points - ppD.getDeliveryTime() >= 1) {
+            if(lastingPeriod - ppD.getDeliveryTimeWithDeviation() >= 1) {
                 ppD.setOrderColor(OrderColor.green);
             }
-            else if (points - ppD.getDeliveryTime() <= -1) {
+            else if (lastingPeriod - ppD.getDeliveryTimeWithDeviation() <= -1) {
                 ppD.setOrderQuantity(ppD.getDiscountQuantity());
                 ppD.setOrderType(4);
                 ppD.setOrderColor(OrderColor.red);
@@ -104,7 +104,7 @@ public class PurchasePartDispositionService {
                 ppD.setOrderColor(OrderColor.yellow);
             }
 
-            points = 0;
+            lastingPeriod = 0;
         }
 
         purchasePartDispositionRepository.saveAllAndFlush(purchasePartDispositions);

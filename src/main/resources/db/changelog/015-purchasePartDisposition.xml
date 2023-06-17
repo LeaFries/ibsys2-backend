@@ -13,7 +13,7 @@
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="item_number" type="integer"/>
-            <column name="delivery_time" type="numeric"/>
+            <column name="delivery_time_with_deviation" type="numeric"/>
             <column name="discount_quantity" type="integer"/>
             <column name="initial_stock" type="integer" defaultValue="0"/>
             <column name="requirement_n" type="integer"/>
@@ -29,147 +29,147 @@
     <changeSet id="015-purchasePartDisposition-data" author="">
         <insert tableName="purchase_part_disposition">
             <column name="item_number">21</column>
-            <column name="delivery_time">2.2</column>
+            <column name="delivery_time_with_deviation">2.2</column>
             <column name="discount_quantity">300</column>
         </insert>
         <insert tableName="purchase_part_disposition">
             <column name="item_number">22</column>
-            <column name="delivery_time">2.1</column>
+            <column name="delivery_time_with_deviation">2.1</column>
             <column name="discount_quantity">300</column>
         </insert>
         <insert tableName="purchase_part_disposition">
             <column name="item_number">23</column>
-            <column name="delivery_time">1.4</column>
+            <column name="delivery_time_with_deviation">1.4</column>
             <column name="discount_quantity">300</column>
         </insert>
         <insert tableName="purchase_part_disposition">
             <column name="item_number">24</column>
-            <column name="delivery_time">3.5</column>
+            <column name="delivery_time_with_deviation">3.5</column>
             <column name="discount_quantity">6100</column>
         </insert>
         <insert tableName="purchase_part_disposition">
             <column name="item_number">25</column>
-            <column name="delivery_time">1.1</column>
+            <column name="delivery_time_with_deviation">1.1</column>
             <column name="discount_quantity">3600</column>
         </insert>
         <insert tableName="purchase_part_disposition">
             <column name="item_number">27</column>
-            <column name="delivery_time">1.1</column>
+            <column name="delivery_time_with_deviation">1.1</column>
             <column name="discount_quantity">1800</column>
         </insert>
         <insert tableName="purchase_part_disposition">
             <column name="item_number">28</column>
-            <column name="delivery_time">2.1</column>
+            <column name="delivery_time_with_deviation">2.1</column>
             <column name="discount_quantity">4500</column>
         </insert>
         <insert tableName="purchase_part_disposition">
             <column name="item_number">32</column>
-            <column name="delivery_time">2.6</column>
+            <column name="delivery_time_with_deviation">2.6</column>
             <column name="discount_quantity">2700</column>
         </insert>
         <insert tableName="purchase_part_disposition">
             <column name="item_number">33</column>
-            <column name="delivery_time">2.4</column>
+            <column name="delivery_time_with_deviation">2.4</column>
             <column name="discount_quantity">900</column>
         </insert>
         <insert tableName="purchase_part_disposition">
             <column name="item_number">34</column>
-            <column name="delivery_time">1.9</column>
+            <column name="delivery_time_with_deviation">1.9</column>
             <column name="discount_quantity">22000</column>
         </insert>
         <insert tableName="purchase_part_disposition">
             <column name="item_number">35</column>
-            <column name="delivery_time">2.6</column>
+            <column name="delivery_time_with_deviation">2.6</column>
             <column name="discount_quantity">3600</column>
         </insert>
         <insert tableName="purchase_part_disposition">
             <column name="item_number">36</column>
-            <column name="delivery_time">1.3</column>
+            <column name="delivery_time_with_deviation">1.3</column>
             <column name="discount_quantity">900</column>
         </insert>
         <insert tableName="purchase_part_disposition">
             <column name="item_number">37</column>
-            <column name="delivery_time">1.8</column>
+            <column name="delivery_time_with_deviation">1.8</column>
             <column name="discount_quantity">900</column>
         </insert>
         <insert tableName="purchase_part_disposition">
             <column name="item_number">38</column>
-            <column name="delivery_time">2.1</column>
+            <column name="delivery_time_with_deviation">2.1</column>
             <column name="discount_quantity">300</column>
         </insert>
         <insert tableName="purchase_part_disposition">
             <column name="item_number">39</column>
-            <column name="delivery_time">1.8</column>
+            <column name="delivery_time_with_deviation">1.8</column>
             <column name="discount_quantity">1800</column>
         </insert>
         <insert tableName="purchase_part_disposition">
             <column name="item_number">40</column>
-            <column name="delivery_time">1.9</column>
+            <column name="delivery_time_with_deviation">1.9</column>
             <column name="discount_quantity">900</column>
         </insert>
         <insert tableName="purchase_part_disposition">
             <column name="item_number">41</column>
-            <column name="delivery_time">1.1</column>
+            <column name="delivery_time_with_deviation">1.1</column>
             <column name="discount_quantity">900</column>
         </insert>
         <insert tableName="purchase_part_disposition">
             <column name="item_number">42</column>
-            <column name="delivery_time">1.5</column>
+            <column name="delivery_time_with_deviation">1.5</column>
             <column name="discount_quantity">1800</column>
         </insert>
         <insert tableName="purchase_part_disposition">
             <column name="item_number">43</column>
-            <column name="delivery_time">2.5</column>
+            <column name="delivery_time_with_deviation">2.5</column>
             <column name="discount_quantity">2700</column>
         </insert>
         <insert tableName="purchase_part_disposition">
             <column name="item_number">44</column>
-            <column name="delivery_time">1.2</column>
+            <column name="delivery_time_with_deviation">1.2</column>
             <column name="discount_quantity">900</column>
         </insert>
         <insert tableName="purchase_part_disposition">
             <column name="item_number">45</column>
-            <column name="delivery_time">2.0</column>
+            <column name="delivery_time_with_deviation">2.0</column>
             <column name="discount_quantity">900</column>
         </insert>
         <insert tableName="purchase_part_disposition">
             <column name="item_number">46</column>
-            <column name="delivery_time">1.2</column>
+            <column name="delivery_time_with_deviation">1.2</column>
             <column name="discount_quantity">900</column>
         </insert>
         <insert tableName="purchase_part_disposition">
             <column name="item_number">47</column>
-            <column name="delivery_time">1.2</column>
+            <column name="delivery_time_with_deviation">1.2</column>
             <column name="discount_quantity">900</column>
         </insert>
         <insert tableName="purchase_part_disposition">
             <column name="item_number">48</column>
-            <column name="delivery_time">1.2</column>
+            <column name="delivery_time_with_deviation">1.2</column>
             <column name="discount_quantity">1800</column>
         </insert>
         <insert tableName="purchase_part_disposition">
             <column name="item_number">52</column>
-            <column name="delivery_time">2.0</column>
+            <column name="delivery_time_with_deviation">2.0</column>
             <column name="discount_quantity">600</column>
         </insert>
         <insert tableName="purchase_part_disposition">
             <column name="item_number">53</column>
-            <column name="delivery_time">1.8</column>
+            <column name="delivery_time_with_deviation">1.8</column>
             <column name="discount_quantity">22000</column>
         </insert>
         <insert tableName="purchase_part_disposition">
             <column name="item_number">57</column>
-            <column name="delivery_time">2.0</column>
+            <column name="delivery_time_with_deviation">2.0</column>
             <column name="discount_quantity">600</column>
         </insert>
         <insert tableName="purchase_part_disposition">
             <column name="item_number">58</column>
-            <column name="delivery_time">2.1</column>
+            <column name="delivery_time_with_deviation">2.1</column>
             <column name="discount_quantity">22000</column>
         </insert>
         <insert tableName="purchase_part_disposition">
             <column name="item_number">59</column>
-            <column name="delivery_time">0.9</column>
+            <column name="delivery_time_with_deviation">0.9</column>
             <column name="discount_quantity">1800</column>
         </insert>
     </changeSet>
