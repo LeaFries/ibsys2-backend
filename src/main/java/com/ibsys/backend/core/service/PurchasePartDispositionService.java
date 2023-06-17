@@ -4,6 +4,7 @@ import com.ibsys.backend.core.domain.entity.KQuantityNeed;
 import com.ibsys.backend.core.domain.entity.ProductionInPeriod;
 import com.ibsys.backend.core.domain.entity.PurchasePartDisposition;
 import com.ibsys.backend.core.domain.status.OrderColor;
+import com.ibsys.backend.core.repository.ForecastRepository;
 import com.ibsys.backend.core.repository.KQuantityNeedRepository;
 import com.ibsys.backend.core.repository.ProductionInPeriodRepository;
 import com.ibsys.backend.core.repository.PurchasePartDispositionRepository;
@@ -20,6 +21,7 @@ public class PurchasePartDispositionService {
     private final PurchasePartDispositionRepository purchasePartDispositionRepository;
     private final ProductionInPeriodRepository productionInPeriodRepository;
     private final KQuantityNeedRepository kQuantityNeedRepository;
+    private final ForecastRepository forecastRepository;
 
     public List<PurchasePartDisposition> findPurchasePartDisposition() {
 
@@ -68,6 +70,13 @@ public class PurchasePartDispositionService {
 
     private void determineOrderNecessity(List<PurchasePartDisposition> purchasePartDispositions) {
         double lastingPeriod = 0;
+
+        int periodN = forecastRepository.findById(1L).get().getPeriod() + 1;
+        int periodNplusOne = forecastRepository.findById(1L).get().getPeriod() + 2;
+        int periodNplusTwo = forecastRepository.findById(1L).get().getPeriod() + 3;
+        int periodNplusThree = forecastRepository.findById(1L).get().getPeriod() + 4;
+
+
 
         for(PurchasePartDisposition ppD : purchasePartDispositions) {
             if ((ppD.getInitialStock() - ppD.getRequirementN() > 0)) {

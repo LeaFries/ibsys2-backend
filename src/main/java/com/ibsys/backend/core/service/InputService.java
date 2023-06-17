@@ -43,6 +43,7 @@ public class InputService {
     private final OrdersInWorkWorkplaceRepository ordersInWorkWorkplaceRepository;
     private final PurchasePartDispositionRepository purchasePartDispositionRepository;
     private final WaitingliststockWaitlinglistRepository waitingliststockWaitlinglistRepository;
+    private final FutureInwardStockmovementRepository futureInwardStockmovementRepository;
 
     private final ArticleMapper articleMapper;
     private final ForecastMapper forecastMapper;
@@ -70,8 +71,9 @@ public class InputService {
 
         importOrdersInWorkWorkplace(inputDTO);
 
-        importWaitingliststockWaitinglist(inputDTO);
+        //importWaitingliststockWaitinglist(inputDTO);
 
+        importFutureInwardStockmovement(inputDTO);
     }
 
     @Transactional
@@ -146,6 +148,16 @@ public class InputService {
     @Transactional
     public void importWaitinglist(List<WaitinglistWorkplace> waitinglistWorkplace) {
         waitinglistWorkplaceRepository.saveAllAndFlush(waitinglistWorkplace);
+    }
+
+    @Transactional
+    public void importFutureInwardStockmovement(InputDTO inputDTO) {
+        List<FutureInwardStockmovement> futureInwardStockmovements = inputDTO
+                .getFutureinwardstockmovement()
+                .stream()
+                .toList();
+
+        futureInwardStockmovementRepository.saveAllAndFlush(futureInwardStockmovements);
     }
 
 }

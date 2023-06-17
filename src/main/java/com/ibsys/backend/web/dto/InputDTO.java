@@ -1,5 +1,6 @@
 package com.ibsys.backend.web.dto;
 
+import com.ibsys.backend.core.domain.entity.FutureInwardStockmovement;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
@@ -16,7 +17,7 @@ public class InputDTO {
     private ForecastDTO forecast;
     private WarehousestockDTO warehousestock;
     private List<OrderDTO> inwardstockmovement;
-    private List<OrderDTO> futureinwardstockmovement;
+    private List<FutureInwardStockmovement> futureinwardstockmovement;
     private IdletimecostsDTO idletimecosts;
     private List<WorkplaceDTO> waitinglistworkstations;
     private List<MissingPartDTO> waitingliststock;
