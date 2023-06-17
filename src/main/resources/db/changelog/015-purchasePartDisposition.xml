@@ -22,6 +22,8 @@
             <column name="requirement_n_plus_one" type="integer"/>
             <column name="requirement_n_plus_two" type="integer"/>
             <column name="requirement_n_plus_three" type="integer"/>
+            <column name="future_period_arrival" type="numeric" defaultValue="0.0"/>
+            <column name="future_period_amount" type="integer" defaultValue="0"/>
             <column name="order_quantity" type="integer" defaultValue="0"/>
             <column name="order_type" type="integer"/>
             <column name="order_color" type="smallint"/>

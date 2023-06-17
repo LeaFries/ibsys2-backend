@@ -111,6 +111,9 @@ public class PurchasePartDispositionService {
 
                 double periodArrival = currentPeriod + remainingDeliveryTime;
 
+                ppD.setFuturePeriodArrival(periodArrival);
+                ppD.setFuturePeriodAmount(incomingOrder.getAmount());
+
                 truncatedPeriodArrival = (int)Math.floor(periodArrival);
 
                 if (periodN == truncatedPeriodArrival) {

@@ -41,6 +41,12 @@ public class PurchasePartDisposition {
     @Column(name = "requirement_n_plus_three")
     private Integer requirementNplusThree;
 
+    @Column(name = "future_period_arrival")
+    private Double futurePeriodArrival;
+
+    @Column(name = "future_period_amount")
+    private Integer futurePeriodAmount;
+
     @Column(name = "order_quantity")
     private Integer orderQuantity;
 
