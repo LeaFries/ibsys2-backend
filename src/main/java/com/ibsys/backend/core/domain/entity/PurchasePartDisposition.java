@@ -20,6 +20,9 @@ public class PurchasePartDisposition {
     @Column(name = "delivery_time_fast")
     private Double deliveryTimeFast;
 
+    @Column(name = "delivery_time_jit_with_deviation")
+    private Double deliveryTimeJITwithDeviation;
+
     @Column(name = "discount_quantity")
     private Integer discountQuantity;
 

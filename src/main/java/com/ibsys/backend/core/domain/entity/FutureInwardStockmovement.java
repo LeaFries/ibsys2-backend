@@ -14,6 +14,7 @@ public class FutureInwardStockmovement {
     private Integer orderperiod;
 
     /**
+     3 = JIT
      4 = fast
      5 = normal
      */

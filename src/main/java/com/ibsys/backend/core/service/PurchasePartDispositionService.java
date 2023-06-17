@@ -105,6 +105,9 @@ public class PurchasePartDispositionService {
                 else if (incomingOrder.getMode() == 4) {
                     remainingDeliveryTime = ppD.getDeliveryTimeFast() + alreadyElapsedDeliveryTime;
                 }
+                else if (incomingOrder.getMode() == 3) {
+                    remainingDeliveryTime = ppD.getDeliveryTimeJITwithDeviation() + alreadyElapsedDeliveryTime;
+                }
 
                 double periodArrival = currentPeriod + remainingDeliveryTime;
 
