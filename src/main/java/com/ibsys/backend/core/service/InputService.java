@@ -71,7 +71,7 @@ public class InputService {
 
         importOrdersInWorkWorkplace(inputDTO);
 
-        //importWaitingliststockWaitinglist(inputDTO);
+        importWaitingliststockWaitinglist(inputDTO);
 
         importFutureInwardStockmovement(inputDTO);
     }
