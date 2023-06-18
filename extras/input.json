@@ -818,7 +818,7 @@
   "waitinglistworkstations": [
     {
       "id": "1",
-      "timeneed": "480",
+      "timeneed": "240",
       "waitinglist": [
         {
           "period": "6",
@@ -826,15 +826,6 @@
           "firstbatch": "11",
           "lastbatch": "14",
           "item": "29",
-          "amount": "40",
-          "timeneed": "240"
-        },
-        {
-          "period": "6",
-          "order": "67",
-          "firstbatch": "11",
-          "lastbatch": "14",
-          "item": "49",
           "amount": "40",
           "timeneed": "240"
         }
@@ -860,15 +851,15 @@
       "id": "7",
       "timeneed": "260",
       "waitinglist": [
-          {
-            "period": "6",
-            "order": "36",
-            "firstbatch": "2",
-            "lastbatch": "14",
-            "item": "12",
-            "amount": "130",
-            "timeneed": "260"
-          }
+        {
+          "period": "6",
+          "order": "36",
+          "firstbatch": "2",
+          "lastbatch": "14",
+          "item": "12",
+          "amount": "130",
+          "timeneed": "260"
+        }
       ]
     },
     {
@@ -907,15 +898,15 @@
       "id": "11",
       "timeneed": "30",
       "waitinglist": [
-          {
-            "period": "6",
-            "order": "37",
-            "firstbatch": "14",
-            "lastbatch": "14",
-            "item": "6",
-            "amount": "10",
-            "timeneed": "30"
-          }
+        {
+          "period": "6",
+          "order": "37",
+          "firstbatch": "14",
+          "lastbatch": "14",
+          "item": "6",
+          "amount": "10",
+          "timeneed": "30"
+        }
       ]
     },
     {
@@ -935,22 +926,28 @@
       "timeneed": "0"
     }
   ],
-"waitingliststock": [
+  "waitingliststock": [
     {
-      "id": 12,
-      "waitinglist": [
+      "id": 0,
+      "workplace": [
         {
-          "period": 6,
-          "orderNumber": 38,
-          "firstbatch": 9,
-          "lastbatch": 14,
-          "item": 30,
-          "amount": 60,
-          "timeNeed": 300
+          "waitinglist": [
+            {
+              "period": 0,
+              "orderNumber": 0,
+              "firstbatch": 0,
+              "lastbatch": 0,
+              "item": 0,
+              "amount": 0,
+              "timeNeed": 0
+            }
+          ],
+          "id": 0,
+          "timeneed": 0
         }
       ]
     }
-],
+  ],
   "ordersinwork": [
     {
       "id": "1",
