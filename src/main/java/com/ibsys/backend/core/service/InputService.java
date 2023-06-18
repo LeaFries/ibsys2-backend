@@ -152,6 +152,8 @@ public class InputService {
 
     @Transactional
     public void importFutureInwardStockmovement(InputDTO inputDTO) {
+        futureInwardStockmovementRepository.deleteAll();
+
         List<FutureInwardStockmovement> futureInwardStockmovements = inputDTO
                 .getFutureinwardstockmovement()
                 .stream()
