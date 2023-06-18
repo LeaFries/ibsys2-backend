@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="021-futureInwardStockmovement-table" author="">
+        <createSequence sequenceName="purchase_part_disposition_seq"/>
+        <createTable tableName="future_inward_stockmovement">
+            <column name="id" type="bigint" defaultValueSequenceNext="purchase_part_disposition_seq">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="order_period" type="integer"/>
+            <column name="mode" type="integer"/>
+            <column name="article" type="integer"/>
+            <column name="amount" type="integer"/>
+        </createTable>
+    </changeSet>
+
+
+</databaseChangeLog>

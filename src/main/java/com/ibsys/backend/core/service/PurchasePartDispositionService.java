@@ -1,17 +1,17 @@
 package com.ibsys.backend.core.service;
 
+import com.ibsys.backend.core.domain.entity.FutureInwardStockmovement;
 import com.ibsys.backend.core.domain.entity.KQuantityNeed;
 import com.ibsys.backend.core.domain.entity.ProductionInPeriod;
 import com.ibsys.backend.core.domain.entity.PurchasePartDisposition;
 import com.ibsys.backend.core.domain.status.OrderColor;
-import com.ibsys.backend.core.repository.KQuantityNeedRepository;
-import com.ibsys.backend.core.repository.ProductionInPeriodRepository;
-import com.ibsys.backend.core.repository.PurchasePartDispositionRepository;
+import com.ibsys.backend.core.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -20,6 +20,8 @@ public class PurchasePartDispositionService {
     private final PurchasePartDispositionRepository purchasePartDispositionRepository;
     private final ProductionInPeriodRepository productionInPeriodRepository;
     private final KQuantityNeedRepository kQuantityNeedRepository;
+    private final ForecastRepository forecastRepository;
+    private final FutureInwardStockmovementRepository futureInwardStockmovementRepository;
 
     public List<PurchasePartDisposition> findPurchasePartDisposition() {
 
@@ -67,44 +69,106 @@ public class PurchasePartDispositionService {
     }
 
     private void determineOrderNecessity(List<PurchasePartDisposition> purchasePartDispositions) {
-        double points = 0;
+        double lastingPeriod = 0;
+
+        int currentPeriod = forecastRepository.findById(1L).get().getPeriod();
+
+        int periodN = currentPeriod + 1;
+        int periodNplusOne = currentPeriod + 2;
+        int periodNplusTwo = currentPeriod + 3;
+        int periodNplusThree = currentPeriod + 4;
 
         for(PurchasePartDisposition ppD : purchasePartDispositions) {
-            if ((ppD.getInitialStock() - ppD.getRequirementN() > 0)) {
-                points++;
-                if ((ppD.getInitialStock() - ppD.getRequirementN() - ppD.getRequirementNplusOne() > 0)) {
-                    points++;
-                    if((ppD.getInitialStock()
+
+            Optional<FutureInwardStockmovement> futureInwardStockmovement = futureInwardStockmovementRepository
+                    .findFutureInwardStockmovementByArticle(ppD.getItemNumber());
+
+            // placeholder value
+            int truncatedPeriodArrival = -1;
+
+            int incomingAmountN = 0;
+            int incomingAmountNplusOne = 0;
+            int incomingAmountNplusTwo = 0;
+            int incomingAmountNplusThree = 0;
+
+            // If a future inwards stockmovement exists for that specific article
+            if (!futureInwardStockmovement.isEmpty()) {
+                FutureInwardStockmovement incomingOrder = futureInwardStockmovement.get();
+
+                double alreadyElapsedDeliveryTime = incomingOrder.getOrderperiod() - currentPeriod;
+                double remainingDeliveryTime = 0.0;
+
+                // Check if the order mode is normal or fast
+                if (incomingOrder.getMode() == 5) {
+                    remainingDeliveryTime = ppD.getDeliveryTimeWithDeviation() + alreadyElapsedDeliveryTime;
+                }
+                else if (incomingOrder.getMode() == 4) {
+                    remainingDeliveryTime = ppD.getDeliveryTimeFast() + alreadyElapsedDeliveryTime;
+                }
+                else if (incomingOrder.getMode() == 3) {
+                    remainingDeliveryTime = ppD.getDeliveryTimeJITwithDeviation() + alreadyElapsedDeliveryTime;
+                }
+
+                double periodArrival = currentPeriod + remainingDeliveryTime;
+
+                ppD.setFuturePeriodArrival(periodArrival);
+                ppD.setFuturePeriodAmount(incomingOrder.getAmount());
+
+                truncatedPeriodArrival = (int)Math.floor(periodArrival);
+
+                if (periodN == truncatedPeriodArrival) {
+                    incomingAmountN = incomingOrder.getAmount();
+                }
+                else if (periodNplusOne == truncatedPeriodArrival) {
+                    incomingAmountNplusOne = incomingOrder.getAmount();
+                }
+                else if (periodNplusTwo == truncatedPeriodArrival) {
+                    incomingAmountNplusTwo = incomingOrder.getAmount();
+                }
+                else if (periodNplusThree == truncatedPeriodArrival) {
+                    incomingAmountNplusThree = incomingOrder.getAmount();
+                }
+            }
+
+            if ((ppD.getInitialStock() + incomingAmountN - ppD.getRequirementN() > 0)) {
+                lastingPeriod++;
+                if ((ppD.getInitialStock() + incomingAmountNplusOne - ppD.getRequirementN() - ppD.getRequirementNplusOne() > 0)) {
+                    lastingPeriod++;
+                    if((ppD.getInitialStock() + incomingAmountNplusTwo
                             - ppD.getRequirementN()
                             - ppD.getRequirementNplusOne()
                             - ppD.getRequirementNplusTwo() > 0)) {
-                        points++;
-                        if((ppD.getInitialStock()
+                        lastingPeriod++;
+                        if((ppD.getInitialStock() + incomingAmountNplusThree
                                 - ppD.getRequirementN()
                                 - ppD.getRequirementNplusOne()
                                 - ppD.getRequirementNplusTwo()
                                 - ppD.getRequirementNplusThree() > 0)) {
-                            points++;
+                            lastingPeriod++;
                         }
                     }
                 }
             }
 
-            if(points - ppD.getDeliveryTime() >= 1) {
+            if(lastingPeriod - ppD.getDeliveryTimeWithDeviation() >= 1) {
                 ppD.setOrderColor(OrderColor.green);
             }
-            else if (points - ppD.getDeliveryTime() <= -1) {
+            else if (lastingPeriod - ppD.getDeliveryTimeWithDeviation() <= -1) {
                 ppD.setOrderQuantity(ppD.getDiscountQuantity());
                 ppD.setOrderType(4);
                 ppD.setOrderColor(OrderColor.red);
             }
-            else {
+            else if (lastingPeriod - ppD.getDeliveryTimeWithDeviation() > -1
+                    && lastingPeriod - ppD.getDeliveryTimeWithDeviation() <= 0) {
                 ppD.setOrderQuantity(ppD.getDiscountQuantity());
                 ppD.setOrderType(5);
                 ppD.setOrderColor(OrderColor.yellow);
             }
+            else {
+                ppD.setOrderColor(OrderColor.yellow);
+            }
 
-            points = 0;
+            lastingPeriod = 0;
         }
 
         purchasePartDispositionRepository.saveAllAndFlush(purchasePartDispositions);
