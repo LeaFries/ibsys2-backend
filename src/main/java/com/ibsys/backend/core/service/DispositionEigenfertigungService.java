@@ -75,6 +75,8 @@ public class DispositionEigenfertigungService {
         HashMap<Integer, Integer> dispositionResult = new HashMap<>();
         Forecast vertriebswunsch = forecastRepository.findById(1L).orElse(null);
         List<Article> allArticles = articleRepository.findAll();
+        List<Production> productions = new ArrayList<>();
+        List<Article> resultArticles = new ArrayList<>();
 
         reihenfolge.stream()
                 .forEach(
@@ -139,14 +141,17 @@ public class DispositionEigenfertigungService {
                                     + produktionsauftraege;
                             log.debug(rechnung);
                             dispositionResult.put(article.getId(), produktionsauftraege);
-                            articleRepository.saveAndFlush(article);
+                            resultArticles.add(article);
                             Production production = Production.builder()
                                     .article(article.getId())
                                     .quantity(produktionsauftraege)
                                     .build();
-                            productionRepository.saveAndFlush(production);
+                            productions.add(production);
                         }
                 );
+        articleRepository.saveAll(resultArticles);
+        productionRepository.saveAll(productions);
+
         return DispositionEigenfertigungResultDTO.builder()
                 .produktGruppe(1)
                 .articlesProduktionsmenge(dispositionResult)
@@ -158,6 +163,8 @@ public class DispositionEigenfertigungService {
         HashMap<Integer, Integer> dispositionResult = new HashMap<>();
         Forecast vertriebswunsch = forecastRepository.findById(1L).orElse(null);
         List<Article> allArticles = articleRepository.findAll();
+        List<Production> productions = new ArrayList<>();
+        List<Article> resultArticles = new ArrayList<>();
 
         reihenfolge.stream()
                 .forEach(
@@ -222,14 +229,16 @@ public class DispositionEigenfertigungService {
                                     + produktionsauftraege;
                             log.debug(rechnung);
                             dispositionResult.put(article.getId(), produktionsauftraege);
-                            articleRepository.saveAndFlush(article);
+                            resultArticles.add(article);
                             Production production = Production.builder()
                                     .article(article.getId())
                                     .quantity(produktionsauftraege)
                                     .build();
-                            productionRepository.saveAndFlush(production);
+                            productions.add(production);
                         }
                 );
+        articleRepository.saveAll(resultArticles);
+        productionRepository.saveAll(productions);
         return DispositionEigenfertigungResultDTO.builder()
                 .produktGruppe(2)
                 .articlesProduktionsmenge(dispositionResult)
@@ -241,6 +250,8 @@ public class DispositionEigenfertigungService {
         HashMap<Integer, Integer> dispositionResult = new HashMap<>();
         Forecast vertriebswunsch = forecastRepository.findById(1L).orElse(null);
         List<Article> allArticles = articleRepository.findAll();
+        List<Production> productions = new ArrayList<>();
+        List<Article> resultArticles = new ArrayList<>();
 
         reihenfolge.stream()
                 .forEach(
@@ -305,14 +316,16 @@ public class DispositionEigenfertigungService {
                                     + produktionsauftraege;
                             log.debug(rechnung);
                             dispositionResult.put(article.getId(), produktionsauftraege);
-                            articleRepository.saveAndFlush(article);
+                            resultArticles.add(article);
                             Production production = Production.builder()
                                     .article(article.getId())
                                     .quantity(produktionsauftraege)
                                     .build();
-                            productionRepository.saveAndFlush(production);
+                            productions.add(production);
                         }
                 );
+        articleRepository.saveAll(resultArticles);
+        productionRepository.saveAll(productions);
         return DispositionEigenfertigungResultDTO.builder()
                 .produktGruppe(3)
                 .articlesProduktionsmenge(dispositionResult)
