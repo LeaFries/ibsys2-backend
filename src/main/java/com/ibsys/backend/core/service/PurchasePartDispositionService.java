@@ -165,7 +165,6 @@ public class PurchasePartDispositionService {
                 ppD.setOrderColor(OrderColor.yellow);
             }
             else {
-                ppD.setOrderQuantity(ppD.getDiscountQuantity());
                 ppD.setOrderColor(OrderColor.yellow);
             }
 
