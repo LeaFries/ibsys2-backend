@@ -17,4 +17,5 @@ import java.util.Map;
 @ToString
 public class DispositionEigenfertigungInputDTO {
     private Map<Integer,Integer> geplanterSicherheitsbestand;
+    private Map<Integer, Integer> zuesaetlicheProduktionsauftaege;
 }

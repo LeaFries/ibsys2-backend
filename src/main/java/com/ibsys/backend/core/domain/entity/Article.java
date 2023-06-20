@@ -39,5 +39,7 @@ public class Article {
     private StuecklistenGruppe stuecklistenGruppe;
     @Column(name = "warteschlange")
     private int warteschlange;
+    @Column(name = "zusaetzliche_produktionsauftraege")
+    private int zuesaetlicheProduktionsauftaege;
 
 }
