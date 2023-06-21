@@ -32,7 +32,12 @@ public class CapacityPlanningService {
          List<ArticleWorkstationPlan> awpList =
                  articleWorkstationPlanRepository.findByArticleNumber(cpDTO.getArticleNumber());
          for (ArticleWorkstationPlan awpItem: awpList) {
-             int workingTime = cpDTO.getOrderQuantity() * awpItem.getWorkingTime();
+             int orderQuantity = cpDTO.getOrderQuantity();
+             int workingTime = 0;
+             if (orderQuantity >= 0) {
+                 workingTime = cpDTO.getOrderQuantity() * awpItem.getWorkingTime();
+             }
+
              int setUpTime = 0;
              if(workingTime!=0) {
                  setUpTime = awpItem.getSetUpTime();

@@ -14,8 +14,14 @@ public class PurchasePartDisposition {
     @Column(name = "item_number")
     private Integer itemNumber;
 
-    @Column(name = "delivery_time")
-    private Double deliveryTime;
+    @Column(name = "delivery_time_with_deviation")
+    private Double deliveryTimeWithDeviation;
+
+    @Column(name = "delivery_time_fast")
+    private Double deliveryTimeFast;
+
+    @Column(name = "delivery_time_jit_with_deviation")
+    private Double deliveryTimeJITwithDeviation;
 
     @Column(name = "discount_quantity")
     private Integer discountQuantity;
@@ -34,6 +40,12 @@ public class PurchasePartDisposition {
 
     @Column(name = "requirement_n_plus_three")
     private Integer requirementNplusThree;
+
+    @Column(name = "future_period_arrival")
+    private Double futurePeriodArrival;
+
+    @Column(name = "future_period_amount")
+    private Integer futurePeriodAmount;
 
     @Column(name = "order_quantity")
     private Integer orderQuantity;

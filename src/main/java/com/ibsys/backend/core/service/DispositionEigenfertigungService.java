@@ -1,18 +1,7 @@
 package com.ibsys.backend.core.service;
 
-import com.ibsys.backend.core.domain.entity.Article;
-import com.ibsys.backend.core.domain.entity.Forecast;
-import com.ibsys.backend.core.domain.entity.OrdersInWorkWorkplace;
-import com.ibsys.backend.core.domain.entity.Production;
-import com.ibsys.backend.core.domain.entity.StuecklistenGruppe;
-import com.ibsys.backend.core.domain.entity.WaitinglistWorkplace;
-import com.ibsys.backend.core.domain.entity.WaitingliststockWaitinglist;
-import com.ibsys.backend.core.repository.ArticleRepository;
-import com.ibsys.backend.core.repository.ForecastRepository;
-import com.ibsys.backend.core.repository.OrdersInWorkWorkplaceRepository;
-import com.ibsys.backend.core.repository.ProductionRepository;
-import com.ibsys.backend.core.repository.WaitinglistWorkplaceRepository;
-import com.ibsys.backend.core.repository.WaitingliststockWaitlinglistRepository;
+import com.ibsys.backend.core.domain.entity.*;
+import com.ibsys.backend.core.repository.*;
 import com.ibsys.backend.web.dto.DispositionEigenfertigungInputDTO;
 import com.ibsys.backend.web.dto.DispositionEigenfertigungResultDTO;
 import lombok.RequiredArgsConstructor;
@@ -20,10 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.IntStream;
 
 @Service
@@ -37,6 +23,7 @@ public class DispositionEigenfertigungService {
     private final OrdersInWorkWorkplaceRepository ordersInWorkWorkplaceRepository;
     private final WaitingliststockWaitlinglistRepository waitingliststockWaitlinglistRepository;
     private final ProductionRepository productionRepository;
+    private final ProductionInPeriodRepository productionInPeriodRepository;
 
     @Transactional
     public void updateArticles(final Map<Integer, Integer> geplanterSicherheitsbestand, final Map<Integer, Integer> setZuesaetlicheProduktionsauftaege) {
@@ -78,6 +65,19 @@ public class DispositionEigenfertigungService {
         log.debug("");
         log.debug("");
         DispositionEigenfertigungResultDTO dispositionEigenfertigungResultDTO122 = dispositionEigenfertigung(List.of(3,26,31,16,17,30,6,12,29,9,15,20), StuecklistenGruppe.GRUPPE_3);
+
+        // Put the production for bike 1, 2, 3 into the production-in-period table, for the matrix multiplication
+        Production firstBike = productionRepository.findProductionByArticle(1).get();
+        Production secondBike = productionRepository.findProductionByArticle(2).get();
+        Production thirdBike = productionRepository.findProductionByArticle(3).get();
+
+        List<ProductionInPeriod> productionInPeriods = productionInPeriodRepository.findAllById(Arrays.asList(1L, 2L, 3L));
+
+        productionInPeriods.get(0).setPeriodN(firstBike.getQuantity());
+        productionInPeriods.get(1).setPeriodN(secondBike.getQuantity());
+        productionInPeriods.get(2).setPeriodN(thirdBike.getQuantity());
+
+        productionInPeriodRepository.saveAllAndFlush(productionInPeriods);
 
         return List.of(dispositionEigenfertigungResultDTOP1, dispositionEigenfertigungResultDTOP2, dispositionEigenfertigungResultDTOP3, dispositionEigenfertigungResultDTO, dispositionEigenfertigungResultDTO12, dispositionEigenfertigungResultDTO122);
     }
