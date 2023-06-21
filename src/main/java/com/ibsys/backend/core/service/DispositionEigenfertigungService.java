@@ -44,27 +44,15 @@ public class DispositionEigenfertigungService {
     @Transactional
     public List<DispositionEigenfertigungResultDTO> dispositionEigenfertigungStart(final DispositionEigenfertigungInputDTO inputDTO) {
         updateArticles(inputDTO.getGeplanterSicherheitsbestand(), inputDTO.getZuesaetlicheProduktionsauftaege());
-        DispositionEigenfertigungResultDTO dispositionEigenfertigungResultDTOP1 = dispositionEigenfertigungP1(List.of(1,26,51,16,17,50,4,10,49,7,13,18));
+        DispositionEigenfertigungResultDTO dispositionEigenfertigungResultDTO1 = dispositionEigenfertigung(List.of(1,26,51,16,17,50,4,10,49,7,13,18), StuecklistenGruppe.GRUPPE_1);
         log.debug("");
         log.debug("");
         log.debug("");
-        DispositionEigenfertigungResultDTO dispositionEigenfertigungResultDTOP2 = dispositionEigenfertigungP2(List.of(2,26,56,16,17,55,5,11,54,8,14,19));
+        DispositionEigenfertigungResultDTO dispositionEigenfertigungResultDTO2 = dispositionEigenfertigung(List.of(2,26,56,16,17,55,5,11,54,8,14,19), StuecklistenGruppe.GRUPPE_2);
         log.debug("");
         log.debug("");
         log.debug("");
-        DispositionEigenfertigungResultDTO dispositionEigenfertigungResultDTOP3 = dispositionEigenfertigungP3(List.of(3,26,31,16,17,30,6,12,29,9,15,20));
-        log.debug("");
-        log.debug("");
-        log.debug("");
-        DispositionEigenfertigungResultDTO dispositionEigenfertigungResultDTO = dispositionEigenfertigung(List.of(1,26,51,16,17,50,4,10,49,7,13,18), StuecklistenGruppe.GRUPPE_1);
-        log.debug("");
-        log.debug("");
-        log.debug("");
-        DispositionEigenfertigungResultDTO dispositionEigenfertigungResultDTO12 = dispositionEigenfertigung(List.of(2,26,56,16,17,55,5,11,54,8,14,19), StuecklistenGruppe.GRUPPE_2);
-        log.debug("");
-        log.debug("");
-        log.debug("");
-        DispositionEigenfertigungResultDTO dispositionEigenfertigungResultDTO122 = dispositionEigenfertigung(List.of(3,26,31,16,17,30,6,12,29,9,15,20), StuecklistenGruppe.GRUPPE_3);
+        DispositionEigenfertigungResultDTO dispositionEigenfertigungResultDTO3 = dispositionEigenfertigung(List.of(3,26,31,16,17,30,6,12,29,9,15,20), StuecklistenGruppe.GRUPPE_3);
 
         // Put the production for bike 1, 2, 3 into the production-in-period table, for the matrix multiplication
         Production firstBike = productionRepository.findProductionByArticle(1).get();
@@ -79,7 +67,7 @@ public class DispositionEigenfertigungService {
 
         productionInPeriodRepository.saveAllAndFlush(productionInPeriods);
 
-        return List.of(dispositionEigenfertigungResultDTOP1, dispositionEigenfertigungResultDTOP2, dispositionEigenfertigungResultDTOP3, dispositionEigenfertigungResultDTO, dispositionEigenfertigungResultDTO12, dispositionEigenfertigungResultDTO122);
+        return List.of(dispositionEigenfertigungResultDTO1, dispositionEigenfertigungResultDTO2, dispositionEigenfertigungResultDTO3);
     }
 
     public DispositionEigenfertigungResultDTO dispositionEigenfertigung(final List<Integer> reihenfolge, final StuecklistenGruppe stuecklistenGruppe) {
