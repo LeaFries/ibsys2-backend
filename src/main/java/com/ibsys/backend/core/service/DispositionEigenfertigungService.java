@@ -84,6 +84,10 @@ public class DispositionEigenfertigungService {
                         index -> {
                             Article article = allArticles.stream().filter(allArticle -> allArticle.getId() == index).findFirst().orElse(null);
 
+                            if(article == null) {
+                                throw new RuntimeException("Dieser Artikel ist noch nicht in der Datenbank verhanden: " + index);
+                            }
+
                             int vertriebswunschCurrentArticle = getVertriebswunsch(stuecklistenGruppe, vertriebswunsch);
 
                             int auftraegeInWarteschlange = sumUpAuftraegeInWarteschlange(article.getId());
@@ -174,7 +178,7 @@ public class DispositionEigenfertigungService {
         } else if(stuecklistenGruppe == StuecklistenGruppe.GRUPPE_3) {
             return vertriebswunsch.getP3();
         }
-        throw new Error("Vertriebswunsch fehlt");
+        throw new RuntimeException("Vertriebswunsch fehlt");
     }
 
     @Transactional
@@ -201,7 +205,7 @@ public class DispositionEigenfertigungService {
                 case 9, 15, 20 -> { return 29; }
             }
         }
-        throw new Error("Article ID gibt es nicht!");
+        throw new RuntimeException("Article ID gibt es nicht: " + article.getId());
     }
 
     @Transactional
