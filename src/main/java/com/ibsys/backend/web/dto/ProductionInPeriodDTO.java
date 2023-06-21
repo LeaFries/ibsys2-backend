@@ -12,8 +12,6 @@ public class ProductionInPeriodDTO {
     @Positive
     private int article;
 
-    private int periodN;
-
     private int periodNplusOne;
 
     private int periodNplusTwo;
