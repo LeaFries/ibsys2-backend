@@ -70,6 +70,7 @@ public class DispositionEigenfertigungService {
         return List.of(dispositionEigenfertigungResultDTO1, dispositionEigenfertigungResultDTO2, dispositionEigenfertigungResultDTO3);
     }
 
+    @Transactional
     public DispositionEigenfertigungResultDTO dispositionEigenfertigung(final List<Integer> reihenfolge, final StuecklistenGruppe stuecklistenGruppe) {
         HashMap<Integer, Integer> dispositionResult = new HashMap<>();
         Forecast vertriebswunsch = forecastRepository.findById(1L).orElse(null);
@@ -113,6 +114,7 @@ public class DispositionEigenfertigungService {
 
                             int geplanterSicherheitsbestand = article.getGeplanterSicherheitsbestand();
                             int lagerbestandEndeVorperiode = article.getAmount();
+                            int zusaetzlicheProduktionsauftraege = article.getZuesaetlicheProduktionsauftaege();
                             if(article.getStuecklistenGruppe() == StuecklistenGruppe.ALL) {
                                 warteschlange /= 3;
                                 geplanterSicherheitsbestand /= 3;
@@ -123,6 +125,7 @@ public class DispositionEigenfertigungService {
                             int produktionsauftraege = vertriebswunschCurrentArticle
                                     + warteschlange
                                     + geplanterSicherheitsbestand
+                                    + zusaetzlicheProduktionsauftraege
                                     - lagerbestandEndeVorperiode
                                     - auftraegeInWarteschlange
                                     - auftraegeInBearbeitung;
@@ -134,6 +137,8 @@ public class DispositionEigenfertigungService {
                                     + warteschlange
                                     + " + "
                                     + geplanterSicherheitsbestand
+                                    + " + "
+                                    + zusaetzlicheProduktionsauftraege
                                     + " - "
                                     + lagerbestandEndeVorperiode
                                     + " - "
@@ -160,7 +165,8 @@ public class DispositionEigenfertigungService {
                 .build();
     }
 
-    private int getVertriebswunsch(StuecklistenGruppe stuecklistenGruppe, Forecast vertriebswunsch) {
+    @Transactional
+    public int getVertriebswunsch(StuecklistenGruppe stuecklistenGruppe, Forecast vertriebswunsch) {
         if(stuecklistenGruppe == StuecklistenGruppe.GRUPPE_1) {
             return vertriebswunsch.getP1();
         } else if(stuecklistenGruppe == StuecklistenGruppe.GRUPPE_2) {
@@ -171,7 +177,8 @@ public class DispositionEigenfertigungService {
         throw new Error("Vertriebswunsch fehlt");
     }
 
-    private int getVorgaengerArtikelId(Article article, StuecklistenGruppe stuecklistenGruppe) {
+    @Transactional
+    public int getVorgaengerArtikelId(Article article, StuecklistenGruppe stuecklistenGruppe) {
         if(stuecklistenGruppe == StuecklistenGruppe.GRUPPE_1) {
             switch (article.getId()) {
                 case 26, 51 -> { return 1; }
@@ -197,6 +204,7 @@ public class DispositionEigenfertigungService {
         throw new Error("Article ID gibt es nicht!");
     }
 
+    @Transactional
     public int sumUpAuftraegeInWarteschlange(int id) {
         ArrayList<WaitinglistWorkplace> waitinglistWorkplaces = waitinglistWorkplaceRepository.findByItem(id);
         ArrayList<WaitingliststockWaitinglist> waitingliststockWaitinglists = waitingliststockWaitlinglistRepository.findByItem(id);

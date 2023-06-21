@@ -7,12 +7,10 @@
         https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
 
     <changeSet id="003-production-table" author="">
-        <createSequence sequenceName="production_id_seq"/>
         <createTable tableName="production">
-            <column name="id" type="bigint" defaultValueSequenceNext="production_id_seq">
-                <constraints primaryKey="true" nullable="false"/>
+            <column name="article" type="integer">
+                <constraints primaryKey="true" />
             </column>
-            <column name="article" type="integer"/>
             <column name="quantity" type="integer"/>
         </createTable>
     </changeSet>
