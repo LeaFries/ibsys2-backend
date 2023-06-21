@@ -48,7 +48,6 @@ public class ProductionPlanService {
         List<ProductionInPeriod> productionInPeriods = productionInPeriodRepository.findAll();
 
         for(int i = 0; i < productionInPeriods.size(); i++) {
-            productionInPeriods.get(i).setPeriodN(newProductionInPeriods.get(i).getPeriodN());
             productionInPeriods.get(i).setPeriodNplusOne(newProductionInPeriods.get(i).getPeriodNplusOne());
             productionInPeriods.get(i).setPeriodNplusTwo(newProductionInPeriods.get(i).getPeriodNplusTwo());
             productionInPeriods.get(i).setPeriodNplusThree(newProductionInPeriods.get(i).getPeriodNplusThree());
