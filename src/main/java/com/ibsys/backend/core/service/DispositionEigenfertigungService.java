@@ -79,269 +79,7 @@ public class DispositionEigenfertigungService {
         log.debug("");
         DispositionEigenfertigungResultDTO dispositionEigenfertigungResultDTO122 = dispositionEigenfertigung(List.of(3,26,31,16,17,30,6,12,29,9,15,20), StuecklistenGruppe.GRUPPE_3);
 
-        return List.of(dispositionEigenfertigungResultDTOP1, dispositionEigenfertigungResultDTOP2, dispositionEigenfertigungResultDTOP3);
-    }
-
-    @Transactional
-    public DispositionEigenfertigungResultDTO dispositionEigenfertigungP1(final List<Integer> reihenfolge) {
-        HashMap<Integer, Integer> dispositionResult = new HashMap<>();
-        Forecast vertriebswunsch = forecastRepository.findById(1L).orElse(null);
-        List<Article> allArticles = articleRepository.findAll();
-        List<Production> productions = new ArrayList<>();
-        List<Article> resultArticles = new ArrayList<>();
-
-        reihenfolge.stream()
-                .forEach(
-                        index -> {
-                            List<Article> articles = allArticles.stream().filter(allArticle -> allArticle.getId() == index).toList();
-                            Article article = articles.get(0);
-                            int vertriebswunschCurrentArticle = vertriebswunsch.getP1();
-                            int auftraegeInWarteschlange = sumUpAuftraegeInWarteschlange(article.getId());
-                            OrdersInWorkWorkplace ordersInWorkWorkplace = ordersInWorkWorkplaceRepository.findByItem(article.getId()).orElse(null);
-                            int auftraegeInBearbeitung = 0;
-                            if(ordersInWorkWorkplace != null) {
-                                auftraegeInBearbeitung = ordersInWorkWorkplace.getAmount();
-                            }
-                            article.setWarteschlange(auftraegeInWarteschlange);
-                            int vorgaengerArtikelId = 0;
-                            switch (article.getId()) {
-                                case 26, 51 -> vorgaengerArtikelId = 1;
-                                case 16, 17, 50 -> vorgaengerArtikelId = 51;
-                                case 4, 10, 49 -> vorgaengerArtikelId = 50;
-                                case 7, 13, 18 -> vorgaengerArtikelId = 49;
-                            }
-                            int warteschlange = 0;
-                            if(article.getId() != 1) {
-                                Article lastArticle = articleRepository.findById(vorgaengerArtikelId).orElse(null);
-                                if (lastArticle.getWarteschlange() > 0) {
-                                    warteschlange = lastArticle.getWarteschlange();
-                                }
-                            }
-                            if(article.getId() != 1) {
-                                vertriebswunschCurrentArticle = dispositionResult.get(vorgaengerArtikelId);
-                            }
-                            int geplanterSicherheitsbestand = article.getGeplanterSicherheitsbestand();
-                            int lagerbestandEndeVorperiode = article.getAmount();
-                            if(article.getStuecklistenGruppe() == StuecklistenGruppe.ALL) {
-                                warteschlange /= 3;
-                                geplanterSicherheitsbestand /= 3;
-                                lagerbestandEndeVorperiode /= 3;
-                                auftraegeInWarteschlange /= 3;
-                                auftraegeInBearbeitung /= 3;
-                            }
-                            int produktionsauftraege = vertriebswunschCurrentArticle
-                                    + warteschlange
-                                    + geplanterSicherheitsbestand
-                                    - lagerbestandEndeVorperiode
-                                    - auftraegeInWarteschlange
-                                    - auftraegeInBearbeitung;
-                            String rechnung = "Article "
-                                    + article.getId()
-                                    + " | "
-                                    + vertriebswunschCurrentArticle
-                                    + " + "
-                                    + warteschlange
-                                    + " + "
-                                    + geplanterSicherheitsbestand
-                                    + " - "
-                                    + lagerbestandEndeVorperiode
-                                    + " - "
-                                    + auftraegeInWarteschlange
-                                    + " - "
-                                    + auftraegeInBearbeitung
-                                    + " = "
-                                    + produktionsauftraege;
-                            log.debug(rechnung);
-                            dispositionResult.put(article.getId(), produktionsauftraege);
-                            resultArticles.add(article);
-                            Production production = Production.builder()
-                                    .article(article.getId())
-                                    .quantity(produktionsauftraege)
-                                    .build();
-                            productions.add(production);
-                        }
-                );
-        articleRepository.saveAll(resultArticles);
-        productionRepository.saveAll(productions);
-
-        return DispositionEigenfertigungResultDTO.builder()
-                .produktGruppe(1)
-                .articlesProduktionsmenge(dispositionResult)
-                .build();
-    }
-
-    @Transactional
-    public DispositionEigenfertigungResultDTO dispositionEigenfertigungP2(final List<Integer> reihenfolge) {
-        HashMap<Integer, Integer> dispositionResult = new HashMap<>();
-        Forecast vertriebswunsch = forecastRepository.findById(1L).orElse(null);
-        List<Article> allArticles = articleRepository.findAll();
-        List<Production> productions = new ArrayList<>();
-        List<Article> resultArticles = new ArrayList<>();
-
-        reihenfolge.stream()
-                .forEach(
-                        index -> {
-                            List<Article> articles = allArticles.stream().filter(allArticle -> allArticle.getId() == index).toList();
-                            Article article = articles.get(0);
-                            int vertriebswunschCurrentArticle = vertriebswunsch.getP2();
-                            int auftraegeInWarteschlange = sumUpAuftraegeInWarteschlange(article.getId());
-                            OrdersInWorkWorkplace ordersInWorkWorkplace = ordersInWorkWorkplaceRepository.findByItem(article.getId()).orElse(null);
-                            int auftraegeInBearbeitung = 0;
-                            if(ordersInWorkWorkplace != null) {
-                                auftraegeInBearbeitung = ordersInWorkWorkplace.getAmount();
-                            }
-                            article.setWarteschlange(auftraegeInWarteschlange);
-                            int vorgaengerArtikelId = 0;
-                            switch (article.getId()) {
-                                case 26, 56 -> vorgaengerArtikelId = 2;
-                                case 16, 17, 55 -> vorgaengerArtikelId = 56;
-                                case 5, 11, 54 -> vorgaengerArtikelId = 55;
-                                case 8, 14, 19 -> vorgaengerArtikelId = 54;
-                            }
-                            int warteschlange = 0;
-                            if(article.getId() != 2) {
-                                Article lastArticle = articleRepository.findById(vorgaengerArtikelId).orElse(null);
-                                if (lastArticle.getWarteschlange() > 0) {
-                                    warteschlange = lastArticle.getWarteschlange();
-                                }
-                            }
-                            if(article.getId() != 2) {
-                                vertriebswunschCurrentArticle = dispositionResult.get(vorgaengerArtikelId);
-                            }
-                            int geplanterSicherheitsbestand = article.getGeplanterSicherheitsbestand();
-                            int lagerbestandEndeVorperiode = article.getAmount();
-                            if(article.getStuecklistenGruppe() == StuecklistenGruppe.ALL) {
-                                warteschlange /= 3;
-                                geplanterSicherheitsbestand /= 3;
-                                lagerbestandEndeVorperiode /= 3;
-                                auftraegeInWarteschlange /= 3;
-                                auftraegeInBearbeitung /= 3;
-                            }
-                            int produktionsauftraege = vertriebswunschCurrentArticle
-                                    + warteschlange
-                                    + geplanterSicherheitsbestand
-                                    - lagerbestandEndeVorperiode
-                                    - auftraegeInWarteschlange
-                                    - auftraegeInBearbeitung;
-                            String rechnung = "Article "
-                                    + article.getId()
-                                    + " | "
-                                    + vertriebswunschCurrentArticle
-                                    + " + "
-                                    + warteschlange
-                                    + " + "
-                                    + geplanterSicherheitsbestand
-                                    + " - "
-                                    + lagerbestandEndeVorperiode
-                                    + " - "
-                                    + auftraegeInWarteschlange
-                                    + " - "
-                                    + auftraegeInBearbeitung
-                                    + " = "
-                                    + produktionsauftraege;
-                            log.debug(rechnung);
-                            dispositionResult.put(article.getId(), produktionsauftraege);
-                            resultArticles.add(article);
-                            Production production = Production.builder()
-                                    .article(article.getId())
-                                    .quantity(produktionsauftraege)
-                                    .build();
-                            productions.add(production);
-                        }
-                );
-        articleRepository.saveAll(resultArticles);
-        productionRepository.saveAll(productions);
-        return DispositionEigenfertigungResultDTO.builder()
-                .produktGruppe(2)
-                .articlesProduktionsmenge(dispositionResult)
-                .build();
-    }
-
-    @Transactional
-    public DispositionEigenfertigungResultDTO dispositionEigenfertigungP3(final List<Integer> reihenfolge) {
-        HashMap<Integer, Integer> dispositionResult = new HashMap<>();
-        Forecast vertriebswunsch = forecastRepository.findById(1L).orElse(null);
-        List<Article> allArticles = articleRepository.findAll();
-        List<Production> productions = new ArrayList<>();
-        List<Article> resultArticles = new ArrayList<>();
-
-        reihenfolge.stream()
-                .forEach(
-                        index -> {
-                            List<Article> articles = allArticles.stream().filter(allArticle -> allArticle.getId() == index).toList();
-                            Article article = articles.get(0);
-                            int vertriebswunschCurrentArticle = vertriebswunsch.getP3();
-                            int auftraegeInWarteschlange = sumUpAuftraegeInWarteschlange(article.getId());
-                            OrdersInWorkWorkplace ordersInWorkWorkplace = ordersInWorkWorkplaceRepository.findByItem(article.getId()).orElse(null);
-                            int auftraegeInBearbeitung = 0;
-                            if(ordersInWorkWorkplace != null) {
-                                auftraegeInBearbeitung = ordersInWorkWorkplace.getAmount();
-                            }
-                            article.setWarteschlange(auftraegeInWarteschlange);
-                            int vorgaengerArtikelId = 0;
-                            switch (article.getId()) {
-                                case 26, 31 -> vorgaengerArtikelId = 3;
-                                case 16, 17, 30 -> vorgaengerArtikelId = 31;
-                                case 6, 12, 29 -> vorgaengerArtikelId = 30;
-                                case 9, 15, 20 -> vorgaengerArtikelId = 29;
-                            }
-                            int warteschlange = 0;
-                            if(article.getId() != 3) {
-                                Article lastArticle = articleRepository.findById(vorgaengerArtikelId).orElse(null);
-                                if (lastArticle.getWarteschlange() > 0) {
-                                    warteschlange = lastArticle.getWarteschlange();
-                                }
-                            }
-                            if(article.getId() != 3) {
-                                vertriebswunschCurrentArticle = dispositionResult.get(vorgaengerArtikelId);
-                            }
-                            int geplanterSicherheitsbestand = article.getGeplanterSicherheitsbestand();
-                            int lagerbestandEndeVorperiode = article.getAmount();
-                            if(article.getStuecklistenGruppe() == StuecklistenGruppe.ALL) {
-                                warteschlange /= 3;
-                                geplanterSicherheitsbestand /= 3;
-                                lagerbestandEndeVorperiode /= 3;
-                                auftraegeInWarteschlange /= 3;
-                                auftraegeInBearbeitung /= 3;
-                            }
-                            int produktionsauftraege = vertriebswunschCurrentArticle
-                                    + warteschlange
-                                    + geplanterSicherheitsbestand
-                                    - lagerbestandEndeVorperiode
-                                    - auftraegeInWarteschlange
-                                    - auftraegeInBearbeitung;
-                            String rechnung = "Article "
-                                    + article.getId()
-                                    + " | "
-                                    + vertriebswunschCurrentArticle
-                                    + " + "
-                                    + warteschlange
-                                    + " + "
-                                    + geplanterSicherheitsbestand
-                                    + " - "
-                                    + lagerbestandEndeVorperiode
-                                    + " - "
-                                    + auftraegeInWarteschlange
-                                    + " - "
-                                    + auftraegeInBearbeitung
-                                    + " = "
-                                    + produktionsauftraege;
-                            log.debug(rechnung);
-                            dispositionResult.put(article.getId(), produktionsauftraege);
-                            resultArticles.add(article);
-                            Production production = Production.builder()
-                                    .article(article.getId())
-                                    .quantity(produktionsauftraege)
-                                    .build();
-                            productions.add(production);
-                        }
-                );
-        articleRepository.saveAll(resultArticles);
-        productionRepository.saveAll(productions);
-        return DispositionEigenfertigungResultDTO.builder()
-                .produktGruppe(3)
-                .articlesProduktionsmenge(dispositionResult)
-                .build();
+        return List.of(dispositionEigenfertigungResultDTOP1, dispositionEigenfertigungResultDTOP2, dispositionEigenfertigungResultDTOP3, dispositionEigenfertigungResultDTO, dispositionEigenfertigungResultDTO12, dispositionEigenfertigungResultDTO122);
     }
 
     public DispositionEigenfertigungResultDTO dispositionEigenfertigung(final List<Integer> reihenfolge, final StuecklistenGruppe stuecklistenGruppe) {
@@ -350,6 +88,7 @@ public class DispositionEigenfertigungService {
         List<Article> allArticles = articleRepository.findAll();
         List<Production> productions = new ArrayList<>();
         List<Article> resultArticles = new ArrayList<>();
+        List<OrdersInWorkWorkplace> allOrdersInWorkWorkplaces = ordersInWorkWorkplaceRepository.findAll();
 
         reihenfolge
                 .forEach(
@@ -360,7 +99,10 @@ public class DispositionEigenfertigungService {
 
                             int auftraegeInWarteschlange = sumUpAuftraegeInWarteschlange(article.getId());
 
-                            OrdersInWorkWorkplace ordersInWorkWorkplace = ordersInWorkWorkplaceRepository.findByItem(article.getId()).orElse(null);
+                            OrdersInWorkWorkplace ordersInWorkWorkplace = allOrdersInWorkWorkplaces.stream()
+                                    .filter(workplace -> workplace.getItem() == article.getId())
+                                    .findFirst()
+                                    .orElse(null);
 
                             int auftraegeInBearbeitung = 0;
 
@@ -370,19 +112,15 @@ public class DispositionEigenfertigungService {
 
                             article.setWarteschlange(auftraegeInWarteschlange);
 
-                            int vorgaengerArtikelId = getVorgaengerArtikelId(article, stuecklistenGruppe);
-
                             int warteschlange = 0;
 
                             if(!IntStream.rangeClosed(1,3).boxed().toList().contains(article.getId())) {
+                                int vorgaengerArtikelId = getVorgaengerArtikelId(article, stuecklistenGruppe);
+                                vertriebswunschCurrentArticle = dispositionResult.get(vorgaengerArtikelId);
                                 Article lastArticle = articleRepository.findById(vorgaengerArtikelId).orElse(null);
                                 if (lastArticle.getWarteschlange() > 0) {
                                     warteschlange = lastArticle.getWarteschlange();
                                 }
-                            }
-
-                            if(!IntStream.rangeClosed(1,3).boxed().toList().contains(article.getId())) {
-                                vertriebswunschCurrentArticle = dispositionResult.get(vorgaengerArtikelId);
                             }
 
                             int geplanterSicherheitsbestand = article.getGeplanterSicherheitsbestand();
@@ -429,7 +167,7 @@ public class DispositionEigenfertigungService {
         articleRepository.saveAll(resultArticles);
         productionRepository.saveAll(productions);
         return DispositionEigenfertigungResultDTO.builder()
-                .produktGruppe(3)
+                .produktGruppe(stuecklistenGruppe.toString())
                 .articlesProduktionsmenge(dispositionResult)
                 .build();
     }

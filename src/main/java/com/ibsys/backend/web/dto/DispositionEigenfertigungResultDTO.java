@@ -16,6 +16,6 @@ import java.util.Map;
 @EqualsAndHashCode
 @ToString
 public class DispositionEigenfertigungResultDTO {
-    private int produktGruppe;
+    private String produktGruppe;
     Map<Integer, Integer> articlesProduktionsmenge;
 }
