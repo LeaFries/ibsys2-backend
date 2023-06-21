@@ -2,8 +2,10 @@ package com.ibsys.backend.core.service;
 
 import com.ibsys.backend.core.domain.entity.*;
 import com.ibsys.backend.core.repository.*;
+import com.ibsys.backend.web.dto.DispositionEigenfertigungArticleResultDTO;
 import com.ibsys.backend.web.dto.DispositionEigenfertigungInputDTO;
 import com.ibsys.backend.web.dto.DispositionEigenfertigungResultDTO;
+import com.ibsys.backend.web.dto.mapper.DispositionResultMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -24,6 +26,9 @@ public class DispositionEigenfertigungService {
     private final WaitingliststockWaitlinglistRepository waitingliststockWaitlinglistRepository;
     private final ProductionRepository productionRepository;
     private final ProductionInPeriodRepository productionInPeriodRepository;
+    private final DispositionEigenfertigungRepository dispositionEigenfertigungRepository;
+
+    private final DispositionResultMapper dispositionResultMapper;
 
     @Transactional
     public void updateArticles(final Map<Integer, Integer> geplanterSicherheitsbestand, final Map<Integer, Integer> setZuesaetlicheProduktionsauftaege) {
@@ -72,12 +77,13 @@ public class DispositionEigenfertigungService {
 
     @Transactional
     public DispositionEigenfertigungResultDTO dispositionEigenfertigung(final List<Integer> reihenfolge, final StuecklistenGruppe stuecklistenGruppe) {
-        HashMap<Integer, Integer> dispositionResult = new HashMap<>();
+        List<DispositionEigenfertigungArticleResultDTO> dispositionResult = new ArrayList<>();
         Forecast vertriebswunsch = forecastRepository.findById(1L).orElse(null);
         List<Article> allArticles = articleRepository.findAll();
         List<Production> productions = new ArrayList<>();
         List<Article> resultArticles = new ArrayList<>();
         List<OrdersInWorkWorkplace> allOrdersInWorkWorkplaces = ordersInWorkWorkplaceRepository.findAll();
+        List<DispositionEigenfertigungResult> dispositionEigenfertigungResults = new ArrayList<>();
 
         reihenfolge
                 .forEach(
@@ -109,8 +115,14 @@ public class DispositionEigenfertigungService {
 
                             if(!IntStream.rangeClosed(1,3).boxed().toList().contains(article.getId())) {
                                 int vorgaengerArtikelId = getVorgaengerArtikelId(article, stuecklistenGruppe);
-                                vertriebswunschCurrentArticle = dispositionResult.get(vorgaengerArtikelId);
+
+                                vertriebswunschCurrentArticle = dispositionResult.stream()
+                                        .filter(resultArticle -> resultArticle.getArticleNumber() == vorgaengerArtikelId)
+                                        .findFirst()
+                                        .get().getProduktionFuerKommendePeriode();
+
                                 Article lastArticle = articleRepository.findById(vorgaengerArtikelId).orElse(null);
+
                                 if (lastArticle.getWarteschlange() > 0) {
                                     warteschlange = lastArticle.getWarteschlange();
                                 }
@@ -120,12 +132,27 @@ public class DispositionEigenfertigungService {
                             int lagerbestandEndeVorperiode = article.getAmount();
                             int zusaetzlicheProduktionsauftraege = article.getZuesaetlicheProduktionsauftaege();
                             if(article.getStuecklistenGruppe() == StuecklistenGruppe.ALL) {
+                                int ausgleich = determineCompensation(warteschlange, stuecklistenGruppe);
                                 warteschlange /= 3;
+                                warteschlange += ausgleich;
+
+                                ausgleich = determineCompensation(geplanterSicherheitsbestand, stuecklistenGruppe);
                                 geplanterSicherheitsbestand /= 3;
+                                geplanterSicherheitsbestand += ausgleich;
+
+                                ausgleich = determineCompensation(lagerbestandEndeVorperiode, stuecklistenGruppe);
                                 lagerbestandEndeVorperiode /= 3;
+                                lagerbestandEndeVorperiode += ausgleich;
+
+                                ausgleich = determineCompensation(auftraegeInWarteschlange, stuecklistenGruppe);
                                 auftraegeInWarteschlange /= 3;
+                                auftraegeInWarteschlange += ausgleich;
+
+                                ausgleich = determineCompensation(auftraegeInBearbeitung, stuecklistenGruppe);
                                 auftraegeInBearbeitung /= 3;
+                                auftraegeInBearbeitung += ausgleich;
                             }
+
                             int produktionsauftraege = vertriebswunschCurrentArticle
                                     + warteschlange
                                     + geplanterSicherheitsbestand
@@ -152,7 +179,31 @@ public class DispositionEigenfertigungService {
                                     + " = "
                                     + produktionsauftraege;
                             log.debug(rechnung);
-                            dispositionResult.put(article.getId(), produktionsauftraege);
+                            dispositionEigenfertigungResults.add(DispositionEigenfertigungResult.builder()
+                                            .dispositinEigenfertigungResultId(DispositinEigenfertigungResultId.builder()
+                                                    .articleNumber(article.getId())
+                                                    .stuecklistenGruppe(stuecklistenGruppe)
+                                                    .build())
+                                            .vertriebswunsch(vertriebswunschCurrentArticle)
+                                            .warteschlange(warteschlange)
+                                            .geplanterSicherheitsbestand(geplanterSicherheitsbestand)
+                                            .lagerbestandEndeVorperiode(lagerbestandEndeVorperiode)
+                                            .auftraegeInWarteschlange(auftraegeInWarteschlange)
+                                            .auftraegeInBearbeitung(auftraegeInBearbeitung)
+                                            .produktionFuerKommendePeriode(produktionsauftraege)
+                                            .zusaetzlicheProduktionsauftraege(zusaetzlicheProduktionsauftraege)
+                                    .build());
+                            dispositionResult.add(DispositionEigenfertigungArticleResultDTO.builder()
+                                            .articleNumber(article.getId())
+                                            .vertriebswunsch(vertriebswunschCurrentArticle)
+                                            .warteschlange(warteschlange)
+                                            .geplanterSicherheitsbestand(geplanterSicherheitsbestand)
+                                            .zusaetzlicheProduktionsauftraege(zusaetzlicheProduktionsauftraege)
+                                            .lagerbestandEndeVorperiode(lagerbestandEndeVorperiode)
+                                            .auftraegeInWarteschlange(auftraegeInWarteschlange)
+                                            .auftraegeInBearbeitung(auftraegeInBearbeitung)
+                                            .produktionFuerKommendePeriode(produktionsauftraege)
+                                    .build());
                             resultArticles.add(article);
                             Production production = Production.builder()
                                     .article(article.getId())
@@ -163,9 +214,10 @@ public class DispositionEigenfertigungService {
                 );
         articleRepository.saveAll(resultArticles);
         productionRepository.saveAll(productions);
+        dispositionEigenfertigungRepository.saveAll(dispositionEigenfertigungResults);
         return DispositionEigenfertigungResultDTO.builder()
                 .produktGruppe(stuecklistenGruppe.toString())
-                .articlesProduktionsmenge(dispositionResult)
+                .articles(dispositionResult)
                 .build();
     }
 
@@ -219,6 +271,52 @@ public class DispositionEigenfertigungService {
                 .mapToInt(WaitingliststockWaitinglist::getAmount)
                 .sum();
         return waitinglistWorkplaceSum + waitingliststockSum;
+    }
+
+    @Transactional
+    public int determineCompensation(int value, StuecklistenGruppe stuecklistenGruppe) {
+        int ausgleich = 0;
+        if(value % 3 != 0 && (stuecklistenGruppe == StuecklistenGruppe.GRUPPE_1 || stuecklistenGruppe == StuecklistenGruppe.GRUPPE_2)) {
+            ausgleich = 1;
+            if(value % 3 == 1 && stuecklistenGruppe == StuecklistenGruppe.GRUPPE_2) {
+                ausgleich = 0;
+            }
+        }
+        return ausgleich;
+    }
+
+    @Transactional(readOnly = true)
+    public List<DispositionEigenfertigungResultDTO> get() {
+        List<DispositionEigenfertigungResult> dispositionEigenfertigungResults = dispositionEigenfertigungRepository.findAll();
+
+        List<DispositionEigenfertigungArticleResultDTO> dispositionP1Articles = dispositionEigenfertigungResults.stream()
+                .filter(article -> article.getDispositinEigenfertigungResultId().getStuecklistenGruppe() == StuecklistenGruppe.GRUPPE_1)
+                .map(dispositionResultMapper::toDTO)
+                .toList();
+        DispositionEigenfertigungResultDTO resultDTOP1 = DispositionEigenfertigungResultDTO.builder()
+                .produktGruppe(StuecklistenGruppe.GRUPPE_1.toString())
+                .articles(dispositionP1Articles)
+                .build();
+
+        List<DispositionEigenfertigungArticleResultDTO> dispositionP2Articles = dispositionEigenfertigungResults.stream()
+                .filter(article -> article.getDispositinEigenfertigungResultId().getStuecklistenGruppe() == StuecklistenGruppe.GRUPPE_2)
+                .map(dispositionResultMapper::toDTO)
+                .toList();
+        DispositionEigenfertigungResultDTO resultDTOP2 = DispositionEigenfertigungResultDTO.builder()
+                .produktGruppe(StuecklistenGruppe.GRUPPE_2.toString())
+                .articles(dispositionP2Articles)
+                .build();
+
+        List<DispositionEigenfertigungArticleResultDTO> dispositionP3Articles = dispositionEigenfertigungResults.stream()
+                .filter(article -> article.getDispositinEigenfertigungResultId().getStuecklistenGruppe() == StuecklistenGruppe.GRUPPE_3)
+                .map(dispositionResultMapper::toDTO)
+                .toList();
+        DispositionEigenfertigungResultDTO resultDTOP3 = DispositionEigenfertigungResultDTO.builder()
+                .produktGruppe(StuecklistenGruppe.GRUPPE_3.toString())
+                .articles(dispositionP3Articles)
+                .build();
+
+        return List.of(resultDTOP1, resultDTOP2, resultDTOP3);
     }
 
 }

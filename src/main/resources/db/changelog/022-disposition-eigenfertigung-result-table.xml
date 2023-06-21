@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="022-disposition-eigenfertigung-result-table" author="">
+
+        <createTable tableName="disposition_eigenfertigung_result">
+            <column name="article_number" type="number" />
+            <column name="stuecklisten_gruppe" type="varchar(100)" />
+            <column name="vertriebswunsch" type="number" />
+            <column name="warteschlange" type="number" />
+            <column name="geplanter_sicherheitsbestand" type="number" />
+            <column name="lagerbestand_ende_vorperiode" type="text" />
+            <column name="auftraege_in_wartschlange" type="text" />
+            <column name="auftraege_in_bearbeitung" type="number" />
+            <column name="produktion_fuer_kommende_periode" type="number" />
+            <column name="zusaetzliche_produktionsauftraege" type="number" />
+        </createTable>
+
+    </changeSet>
+
+    <changeSet id="022-disposition-eigenfertigung-result-table-primary-key" author="">
+
+        <addPrimaryKey tableName="disposition_eigenfertigung_result" columnNames="article_number, stuecklisten_gruppe" />
+
+    </changeSet>
+
+</databaseChangeLog>

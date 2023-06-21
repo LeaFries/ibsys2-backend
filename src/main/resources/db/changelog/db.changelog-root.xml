@@ -27,6 +27,7 @@
     <include file="019-capacityPlan-table.xml" relativeToChangelogFile="true" />
     <include file="020-waitingliststock-waitinglist-table.xml" relativeToChangelogFile="true" />
     <include file="021-futureInwardStockmovement-table.xml" relativeToChangelogFile="true"/>
+    <include file="022-disposition-eigenfertigung-result-table.xml" relativeToChangelogFile="true" />
 
 
 </databaseChangeLog>
