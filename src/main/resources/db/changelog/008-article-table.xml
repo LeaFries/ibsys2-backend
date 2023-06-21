@@ -19,6 +19,7 @@
             <column name="geplanter_sicherheitsbestand" type="number" />
             <column name="warteschlange" type="number" />
             <column name="stuecklisten_gruppe" type="varchar(100)" />
+            <column name="zusaetzliche_produktionsauftraege" type="number" />
         </createTable>
 
     </changeSet>

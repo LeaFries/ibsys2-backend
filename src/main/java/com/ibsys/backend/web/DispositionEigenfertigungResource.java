@@ -13,8 +13,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 
 @RestController
@@ -33,12 +31,8 @@ public class DispositionEigenfertigungResource {
     }
 
     @GetMapping
-    public ResponseEntity<DispositionEigenfertigungInputDTO> test() {
-        return ResponseEntity.ok(DispositionEigenfertigungInputDTO.builder()
-                        .geplanterSicherheitsbestand(new HashMap<>(
-                                Collections.singletonMap(1, 1)
-                        ))
-                .build());
+    public ResponseEntity<List<DispositionEigenfertigungResultDTO>> test() {
+        return ResponseEntity.ok(dispositionEigenfertigungService.get());
     }
 
 }

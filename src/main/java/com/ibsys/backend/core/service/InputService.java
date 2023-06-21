@@ -44,6 +44,9 @@ public class InputService {
     private final PurchasePartDispositionRepository purchasePartDispositionRepository;
     private final WaitingliststockWaitlinglistRepository waitingliststockWaitlinglistRepository;
     private final FutureInwardStockmovementRepository futureInwardStockmovementRepository;
+    private final DispositionEigenfertigungRepository dispositionEigenfertigungRepository;
+
+    private final DispositionEigenfertigungService dispositionEigenfertigungService;
 
     private final ArticleMapper articleMapper;
     private final ForecastMapper forecastMapper;
@@ -74,6 +77,8 @@ public class InputService {
         importWaitingliststockWaitinglist(inputDTO);
 
         importFutureInwardStockmovement(inputDTO);
+
+        importDispositionEigenfertigung();
     }
 
     @Transactional
@@ -120,13 +125,87 @@ public class InputService {
     }
 
     @Transactional
+    public void importDispositionEigenfertigung() {
+        List<OrdersInWorkWorkplace> allOrdersInWorkWorkplaces = ordersInWorkWorkplaceRepository.findAll();
+        List<DispositionEigenfertigungResult> dispositionEigenfertigungResults = dispositionEigenfertigungRepository.findAll();
+        dispositionEigenfertigungResults.forEach(result -> {
+            result.setAuftraegeInWarteschlange(dispositionEigenfertigungService.sumUpAuftraegeInWarteschlange(
+                    result.getDispositinEigenfertigungResultId().getArticleNumber())
+            );
+            OrdersInWorkWorkplace ordersInWorkWorkplace = allOrdersInWorkWorkplaces.stream()
+                    .filter(workplace -> workplace.getItem() == result.getDispositinEigenfertigungResultId().getArticleNumber())
+                    .findFirst()
+                    .orElse(null);
+
+            int auftraegeInBearbeitung = 0;
+
+            if (ordersInWorkWorkplace != null) {
+                auftraegeInBearbeitung = ordersInWorkWorkplace.getAmount();
+            }
+            result.setAuftraegeInBearbeitung(auftraegeInBearbeitung);
+        });
+        dispositionEigenfertigungRepository.saveAll(dispositionEigenfertigungResults);
+    }
+
+    @Transactional
     public void importArticles(List<Article> articles) {
+        List<DispositionEigenfertigungResult> dispositionEigenfertigungResults = new ArrayList<>();
         articles = articles.stream().map(article -> {
             switch (article.getId()) {
-                case 1, 4, 7, 10, 13, 18, 51, 50, 49 -> article.setStuecklistenGruppe(StuecklistenGruppe.GRUPPE_1);
-                case 2, 5, 8, 11, 14, 19, 65, 55, 54 -> article.setStuecklistenGruppe(StuecklistenGruppe.GRUPPE_2);
-                case 3, 20, 6, 9, 12, 15, 31, 30, 29 -> article.setStuecklistenGruppe(StuecklistenGruppe.GRUPPE_3);
-                case 26, 16, 17 -> article.setStuecklistenGruppe(StuecklistenGruppe.ALL);
+                case 1, 4, 7, 10, 13, 18, 51, 50, 49 -> {
+                    article.setStuecklistenGruppe(StuecklistenGruppe.GRUPPE_1);
+                    dispositionEigenfertigungResults.add(DispositionEigenfertigungResult.builder()
+                                    .dispositinEigenfertigungResultId(DispositinEigenfertigungResultId.builder()
+                                            .articleNumber(article.getId())
+                                            .stuecklistenGruppe(StuecklistenGruppe.GRUPPE_1)
+                                            .build())
+                                    .lagerbestandEndeVorperiode(article.getAmount())
+                            .build());
+                }
+                case 2, 5, 8, 11, 14, 19, 65, 55, 54 -> {
+                    article.setStuecklistenGruppe(StuecklistenGruppe.GRUPPE_2);
+                    dispositionEigenfertigungResults.add(DispositionEigenfertigungResult.builder()
+                            .dispositinEigenfertigungResultId(DispositinEigenfertigungResultId.builder()
+                                    .articleNumber(article.getId())
+                                    .stuecklistenGruppe(StuecklistenGruppe.GRUPPE_2)
+                                    .build())
+                            .lagerbestandEndeVorperiode(article.getAmount())
+                            .build());
+                }
+                case 3, 20, 6, 9, 12, 15, 31, 30, 29 -> {
+                    article.setStuecklistenGruppe(StuecklistenGruppe.GRUPPE_3);
+                    dispositionEigenfertigungResults.add(DispositionEigenfertigungResult.builder()
+                            .dispositinEigenfertigungResultId(DispositinEigenfertigungResultId.builder()
+                                    .articleNumber(article.getId())
+                                    .stuecklistenGruppe(StuecklistenGruppe.GRUPPE_3)
+                                    .build())
+                            .lagerbestandEndeVorperiode(article.getAmount())
+                            .build());
+                }
+                case 26, 16, 17 -> {
+                    article.setStuecklistenGruppe(StuecklistenGruppe.ALL);
+                    dispositionEigenfertigungResults.add(DispositionEigenfertigungResult.builder()
+                            .dispositinEigenfertigungResultId(DispositinEigenfertigungResultId.builder()
+                                    .articleNumber(article.getId())
+                                    .stuecklistenGruppe(StuecklistenGruppe.GRUPPE_1)
+                                    .build())
+                            .lagerbestandEndeVorperiode(article.getAmount())
+                            .build());
+                    dispositionEigenfertigungResults.add(DispositionEigenfertigungResult.builder()
+                            .dispositinEigenfertigungResultId(DispositinEigenfertigungResultId.builder()
+                                    .articleNumber(article.getId())
+                                    .stuecklistenGruppe(StuecklistenGruppe.GRUPPE_2)
+                                    .build())
+                            .lagerbestandEndeVorperiode(article.getAmount())
+                            .build());
+                    dispositionEigenfertigungResults.add(DispositionEigenfertigungResult.builder()
+                            .dispositinEigenfertigungResultId(DispositinEigenfertigungResultId.builder()
+                                    .articleNumber(article.getId())
+                                    .stuecklistenGruppe(StuecklistenGruppe.GRUPPE_3)
+                                    .build())
+                            .lagerbestandEndeVorperiode(article.getAmount())
+                            .build());
+                }
                 default -> article.setStuecklistenGruppe(null);
             }
             return article;
@@ -143,6 +222,7 @@ public class InputService {
 
         purchasePartDispositionRepository.saveAllAndFlush(purchasePartDispositions);
         articleRepository.saveAllAndFlush(articles);
+        dispositionEigenfertigungRepository.saveAll(dispositionEigenfertigungResults);
     }
 
     @Transactional

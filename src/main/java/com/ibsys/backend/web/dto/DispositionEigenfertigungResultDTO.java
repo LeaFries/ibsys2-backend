@@ -5,17 +5,19 @@ import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
 
-import java.util.Map;
+import java.util.List;
 
 @Builder
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
 @ToString
 public class DispositionEigenfertigungResultDTO {
-    private int produktGruppe;
-    Map<Integer, Integer> articlesProduktionsmenge;
+    private String produktGruppe;
+    List<DispositionEigenfertigungArticleResultDTO> articles;
 }
