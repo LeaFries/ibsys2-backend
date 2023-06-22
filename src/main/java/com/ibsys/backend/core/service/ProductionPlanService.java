@@ -58,6 +58,10 @@ public class ProductionPlanService {
         return productionInPeriods;
     }
 
+    public List<ProductionInPeriod> findProductionInPeriods() {
+        return productionInPeriodRepository.findAll();
+    }
+
     public List<ProductionPlan> findProductionPlan() {
         List<ProductionPlan> productionPlans = productionPlanRepository.findAll();
         Optional<Forecast> forecast = forecastRepository.findById(1L);

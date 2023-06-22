@@ -45,6 +45,8 @@ public class OutputService {
 
     @Transactional
     public List<OrderItemDTO> addOrderItems(List<OrderItemDTO> orderItemDTOS) {
+        orderRepository.deleteAll();
+
         List<OrderItem> orderItems = orderItemMapper.toOrderItemList(orderItemDTOS);
 
         orderRepository.saveAllAndFlush(orderItems);

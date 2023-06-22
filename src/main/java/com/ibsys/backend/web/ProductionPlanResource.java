@@ -34,12 +34,18 @@ public class ProductionPlanResource {
         return ResponseEntity.ok(productionPlanService.addProductionPlan(productionPlans));
     }
 
-    @Operation(summary = "This endpoint is supposed to be manually filled with the planned production in period")
-    @PostMapping("/production")
+    @Operation(summary = "3. This endpoint is supposed to be manually filled with the production program")
+    @PostMapping("/production/new")
     public ResponseEntity<List<ProductionInPeriod>> addProductionInPeriod(
             @RequestBody List<ProductionInPeriodDTO> productionInPeriodDTOS) {
 
         return ResponseEntity.ok(productionPlanService.addProductionInPeriod(productionInPeriodDTOS));
+    }
+
+    @Operation(summary = "2. find the production program for display")
+    @GetMapping("/production/all")
+    public ResponseEntity<List<ProductionInPeriod>> findProductionInPeriod() {
+        return ResponseEntity.ok(productionPlanService.findProductionInPeriods());
     }
 
     @Operation(summary = "Shows the calculation of the planned bike stock")
