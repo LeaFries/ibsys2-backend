@@ -1,8 +1,10 @@
 package com.ibsys.backend.web.dto;
 
 import com.ibsys.backend.core.domain.entity.Workplace;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
@@ -10,6 +12,8 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
+@NoArgsConstructor
+@AllArgsConstructor
 public class WaitinglistWorkplaceDTO {
 
     private int period;
