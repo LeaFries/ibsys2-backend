@@ -19,13 +19,13 @@ public class PurchasePartDispositionResource {
     private final PurchasePartDispositionService purchasePartDispositionService;
     private final OutputService outputService;
 
-    @Operation(summary = "Provides the purchase part disposition")
+    @Operation(summary = "4. Provides the purchase part disposition")
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<PurchasePartDisposition>> findInput() {
         return ResponseEntity.ok(purchasePartDispositionService.findPurchasePartDisposition());
     }
 
-    @Operation(summary = "This endpoint feeds our output data with the orders")
+    @Operation(summary = "5. This endpoint feeds our output data with the orders")
     @PostMapping("/output")
     public ResponseEntity<List<OrderItemDTO>> addOrderItem(@RequestBody List<OrderItemDTO> orderItemDTOS) {
 

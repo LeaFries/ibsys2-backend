@@ -23,7 +23,7 @@ public class DispositionEigenfertigungResource {
 
     private final DispositionEigenfertigungService dispositionEigenfertigungService;
 
-    @Operation(summary = "Starts the Disposition Eigenfertigung")
+    @Operation(summary = "1. Starts the Disposition Eigenfertigung")
     @PostMapping
     public ResponseEntity<List<DispositionEigenfertigungResultDTO>> startDispositionEigenfertigung(@RequestBody final DispositionEigenfertigungInputDTO inputDTOS) {
         List<DispositionEigenfertigungResultDTO> result = dispositionEigenfertigungService.dispositionEigenfertigungStart(inputDTOS);
