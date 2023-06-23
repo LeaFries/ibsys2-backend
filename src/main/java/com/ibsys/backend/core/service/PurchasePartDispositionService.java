@@ -23,6 +23,10 @@ public class PurchasePartDispositionService {
     private final ForecastRepository forecastRepository;
     private final FutureInwardStockmovementRepository futureInwardStockmovementRepository;
 
+    public List<KQuantityNeed> findKquantityNeeds() {
+        return kQuantityNeedRepository.findAll();
+    }
+
     public List<PurchasePartDisposition> findPurchasePartDisposition() {
 
         List<KQuantityNeed> kQuantityNeeds = kQuantityNeedRepository.findAll();
