@@ -134,20 +134,20 @@ public class PurchasePartDispositionService {
                 }
             }
 
-            if ((ppD.getInitialStock() + incomingAmountN - ppD.getRequirementN() > 0)) {
+            if (((ppD.getInitialStock() + incomingAmountN + incomingAmountNplusOne + incomingAmountNplusTwo + incomingAmountNplusThree - ppD.getRequirementN()) >= 0)) {
                 lastingPeriod++;
-                if ((ppD.getInitialStock() + incomingAmountNplusOne - ppD.getRequirementN() - ppD.getRequirementNplusOne() > 0)) {
+                if (((ppD.getInitialStock() + incomingAmountN + incomingAmountNplusOne + incomingAmountNplusTwo + incomingAmountNplusThree - ppD.getRequirementN() - ppD.getRequirementNplusOne()) >= 0)) {
                     lastingPeriod++;
-                    if((ppD.getInitialStock() + incomingAmountNplusTwo
+                    if(((ppD.getInitialStock() + incomingAmountN + incomingAmountNplusOne + incomingAmountNplusTwo + incomingAmountNplusThree
                             - ppD.getRequirementN()
                             - ppD.getRequirementNplusOne()
-                            - ppD.getRequirementNplusTwo() > 0)) {
+                            - ppD.getRequirementNplusTwo()) >= 0)) {
                         lastingPeriod++;
-                        if((ppD.getInitialStock() + incomingAmountNplusThree
+                        if(((ppD.getInitialStock() + incomingAmountN + incomingAmountNplusOne + incomingAmountNplusTwo + incomingAmountNplusThree
                                 - ppD.getRequirementN()
                                 - ppD.getRequirementNplusOne()
                                 - ppD.getRequirementNplusTwo()
-                                - ppD.getRequirementNplusThree() > 0)) {
+                                - ppD.getRequirementNplusThree()) >= 0)) {
                             lastingPeriod++;
                         }
                     }
