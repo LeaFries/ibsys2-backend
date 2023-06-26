@@ -48,6 +48,7 @@ public class DispositionEigenfertigungService {
 
     @Transactional
     public List<DispositionEigenfertigungResultDTO> dispositionEigenfertigungStart(final DispositionEigenfertigungInputDTO inputDTO) {
+        productionRepository.deleteAllInBatch();
         updateArticles(inputDTO.getGeplanterSicherheitsbestand(), inputDTO.getZuesaetzlicheProduktionsauftraege());
         DispositionEigenfertigungResultDTO dispositionEigenfertigungResultDTO1 = dispositionEigenfertigung(List.of(1,26,51,16,17,50,4,10,49,7,13,18), StuecklistenGruppe.GRUPPE_1);
         log.debug("");
@@ -214,7 +215,6 @@ public class DispositionEigenfertigungService {
                 );
         articleRepository.saveAll(resultArticles);
         saveProductions(productions);
-        productionRepository.saveAll(productions);
         dispositionEigenfertigungRepository.saveAll(dispositionEigenfertigungResults);
         return DispositionEigenfertigungResultDTO.builder()
                 .produktGruppe(stuecklistenGruppe.toString())
