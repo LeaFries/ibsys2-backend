@@ -3,6 +3,7 @@ package com.ibsys.backend.core.service;
 import com.ibsys.backend.core.domain.aggregate.Output;
 import com.ibsys.backend.core.domain.entity.Forecast;
 import com.ibsys.backend.core.domain.entity.OrderItem;
+import com.ibsys.backend.core.domain.entity.Production;
 import com.ibsys.backend.core.domain.entity.SellWish;
 import com.ibsys.backend.core.repository.*;
 import com.ibsys.backend.web.dto.OrderItemDTO;
@@ -11,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,7 +33,15 @@ public class OutputService {
         Output output = new Output();
 
         output.setOrderItems(orderRepository.findAll());
-        output.setProductions(productionRepository.findAll());
+        List<Production> productionList = productionRepository.findAll();
+        List<Production> result = new ArrayList<>();
+        productionList.stream().forEach(production -> {
+            if(production.getQuantity() > 0) {
+                result.add(production);
+            }
+        });
+
+        output.setProductions(result);
         output.setQualityControl(qualityControlRepository.findById(1L).get());
         output.setSellDirects(sellDirectRepository.findAll());
 
