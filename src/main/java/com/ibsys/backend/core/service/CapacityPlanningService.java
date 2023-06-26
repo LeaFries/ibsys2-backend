@@ -126,22 +126,25 @@ public class CapacityPlanningService {
 
             //Overtime
             OverTime overTime = new OverTime();
+            int overtime = 0;
             overTime.setStation(key);
             if (sum <= 2400) {
                 overTime.setShift(1);
-                overTime.setOvertime(0);
+                overTime.setOvertime(overtime);
             } else if (sum <= 3600) {
                 overTime.setShift(1);
-                overTime.setOvertime(sum - 2400);
+                overtime = (sum - 2400)/5;
+                overTime.setOvertime(overtime);
             } else if (sum <= 4800) {
                 overTime.setShift(2);
-                overTime.setOvertime(0);
+                overTime.setOvertime(overtime);
             } else if (sum <= 6000) {
                 overTime.setShift(2);
-                overTime.setOvertime(sum - 4800);
+                overtime = (sum - 4800)/5;
+                overTime.setOvertime(overtime);
             } else {
                 overTime.setShift(3);
-                overTime.setOvertime(0);
+                overTime.setOvertime(overtime);
             }
 
             OverTime overTimeFromDB = overtimeRepository.findByStation(key);
