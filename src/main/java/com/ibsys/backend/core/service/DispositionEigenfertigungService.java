@@ -213,7 +213,6 @@ public class DispositionEigenfertigungService {
                         }
                 );
         articleRepository.saveAll(resultArticles);
-        saveProductions(productions);
         productionRepository.saveAll(productions);
         dispositionEigenfertigungRepository.saveAll(dispositionEigenfertigungResults);
         return DispositionEigenfertigungResultDTO.builder()
@@ -279,14 +278,10 @@ public class DispositionEigenfertigungService {
     @Transactional
     public int sumUpAuftraegeInWarteschlange(int id) {
         ArrayList<WaitinglistWorkplace> waitinglistWorkplaces = waitinglistWorkplaceRepository.findByItem(id);
-        ArrayList<WaitingliststockWaitinglist> waitingliststockWaitinglists = waitingliststockWaitlinglistRepository.findByItem(id);
-        int waitinglistWorkplaceSum = waitinglistWorkplaces.stream()
+        return waitinglistWorkplaces.stream()
                 .mapToInt(WaitinglistWorkplace::getAmount)
-                .sum();
-        int waitingliststockSum = waitingliststockWaitinglists.stream()
-                .mapToInt(WaitingliststockWaitinglist::getAmount)
-                .sum();
-        return waitinglistWorkplaceSum + waitingliststockSum;
+                .findFirst()
+                .orElse(0);
     }
 
     @Transactional
