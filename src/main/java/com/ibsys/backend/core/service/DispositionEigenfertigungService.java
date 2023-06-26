@@ -213,7 +213,6 @@ public class DispositionEigenfertigungService {
                         }
                 );
         articleRepository.saveAll(resultArticles);
-        saveProductions(productions);
         productionRepository.saveAll(productions);
         dispositionEigenfertigungRepository.saveAll(dispositionEigenfertigungResults);
         return DispositionEigenfertigungResultDTO.builder()
