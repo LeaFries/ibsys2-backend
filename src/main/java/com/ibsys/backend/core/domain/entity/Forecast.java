@@ -9,6 +9,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
 
 import static jakarta.persistence.GenerationType.IDENTITY;
@@ -16,6 +17,7 @@ import static jakarta.persistence.GenerationType.IDENTITY;
 @Entity
 @Builder
 @Getter
+@Setter
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
@@ -23,7 +25,6 @@ import static jakarta.persistence.GenerationType.IDENTITY;
 public class Forecast {
 
     @Id
-    @GeneratedValue(strategy = IDENTITY)
     private Long id;
 
     @Column(name = "p1")
