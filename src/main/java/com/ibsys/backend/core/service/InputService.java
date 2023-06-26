@@ -57,6 +57,7 @@ public class InputService {
 
     @Transactional
     public void importForcast(Forecast forecast) {
+        forecast.setId(1L);
         forecastRepository.saveAndFlush(forecast);
     }
 
@@ -162,7 +163,7 @@ public class InputService {
                                     .lagerbestandEndeVorperiode(article.getAmount())
                             .build());
                 }
-                case 2, 5, 8, 11, 14, 19, 65, 55, 54 -> {
+                case 2, 5, 8, 11, 14, 19, 56, 55, 54 -> {
                     article.setStuecklistenGruppe(StuecklistenGruppe.GRUPPE_2);
                     dispositionEigenfertigungResults.add(DispositionEigenfertigungResult.builder()
                             .dispositinEigenfertigungResultId(DispositinEigenfertigungResultId.builder()
