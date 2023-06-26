@@ -213,12 +213,28 @@ public class DispositionEigenfertigungService {
                         }
                 );
         articleRepository.saveAll(resultArticles);
+        saveProductions(productions);
         productionRepository.saveAll(productions);
         dispositionEigenfertigungRepository.saveAll(dispositionEigenfertigungResults);
         return DispositionEigenfertigungResultDTO.builder()
                 .produktGruppe(stuecklistenGruppe.toString())
                 .articles(dispositionResult)
                 .build();
+    }
+
+    @Transactional
+    public void saveProductions(List<Production> productions) {
+        List<Production> dbProductions = productionRepository.findAll();
+        productions.forEach(
+                production -> dbProductions.forEach(
+                        dbProduction -> {
+                            if(dbProduction.getArticle() == production.getArticle()) {
+                                production.setQuantity(production.getQuantity() + dbProduction.getQuantity());
+                            }
+                        }
+                )
+        );
+        productionRepository.saveAll(productions);
     }
 
     @Transactional
@@ -317,6 +333,11 @@ public class DispositionEigenfertigungService {
                 .build();
 
         return List.of(resultDTOP1, resultDTOP2, resultDTOP3);
+    }
+
+    @Transactional(readOnly = true)
+    public List<Production> getAllProductions() {
+        return productionRepository.findAll();
     }
 
 }
