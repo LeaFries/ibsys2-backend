@@ -57,6 +57,7 @@ public class InputService {
 
     @Transactional
     public void importForcast(Forecast forecast) {
+        forecast.setId(1L);
         forecastRepository.saveAndFlush(forecast);
     }
 
